@@ -1,0 +1,35 @@
+// This is a useful library for specifying breakpoints
+// Documentation https://jescalan.github.io/rupture/
+@require 'rupture'
+
+// Add some modules
+@require './modules/colors.styl'
+
+// This file gets compiled into `public/styles.css`
+// For stylus reference http://stylus-lang.com/
+body
+  font-family Helvetica, sans-serif
+
+#sbs-group
+  margin 0 auto
+  display flex
+  max-width 1160px
+  width 100%
+  min-height 100px
+  flex-wrap rows
+.sbs-single
+  width 48%
+  position relative
+  &.empty
+    border 3px dashed #dedede
+    &:after
+      content 'Drag data here'
+      position absolute
+      top 50%
+      width 100%
+      text-align center
+      transform translate(0, -50%)
+      color #bbb
+  &:first-child
+    margin-right 2%
+  // height 100%

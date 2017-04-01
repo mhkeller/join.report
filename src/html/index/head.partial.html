@@ -1,0 +1,37 @@
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <meta property="og:site_name" content="<[= rootUrl.replace(/http(s)?:\/\//, '') ]>"/>
+  <meta property="og:type" content="article"/>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <!-- meta tags for this project -->
+  <!-- SEO headline rewritten to accomodate keywords -->
+  <title><[- title ]></title>
+
+  <!-- What is the main headline? -->
+  <meta property="og:title" content="<[- fbTitle ]>">
+  <!-- What is the share-able image -->
+  <!-- Image aspect ratio: 1.91:1 Image Dimensions: 1200x630px -->
+  <meta property="og:image" content="<[= rootUrl ]>/<[= slug ]>/img/<[= fbImg ]>"/>
+  <!-- What shows up in Facebook -->
+  <meta property="og:description" content="<[- fbDek ]>"/>
+  <!-- What shows up in search engines -->
+  <meta name="description" content="<[- seoDek ]>">
+  <!-- Some keywords if you want -->
+  <meta name="keywords" content="<[- seoKeywords ]>"/>
+  <!-- The full link to this graphic -->
+  <!-- If you're using https, change these urls -->
+  <meta property="og:url" content="<[= rootUrl ]>/<[= slug ]>/"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:site" content="<[= twHandle ]>"/>
+  <!-- What is the tweet / share statement? -->
+  <meta name="twitter:title" content="<[- twText ]>">
+  <!-- What is the tweet / share statement? -->
+  <meta name="twitter:image" content="<[= rootUrl ]>/<[= slug ]>/img/<[= twImg ]>">
+
+  <!-- Styles for this project -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css"/>

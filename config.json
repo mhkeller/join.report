@@ -1,0 +1,15 @@
+{
+  "rootUrl": "http://site.com",
+  "slug": "project-slug",
+  "title": "Join.r",
+  "seoTitle": "Search engine title",
+  "fbTitle": "Facebook title",
+  "seoDek": "Search engine dek",
+  "fbDek": "Facebook dek",
+  "seoKeywords": "Search engine keywords",
+  "twText": "Twitter text",
+  "fbImg": "project-slug-facebook.png",
+  "twImg": "project-slug-twitter.png",
+  "twHandle": "@site-handle",
+  "storyCopy": "<[~ helpers.import('src/html/story-copy.aml') ]>"
+}
