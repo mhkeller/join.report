@@ -1,4 +1,3 @@
-/* globals FileReader */
 /* --------------------------------------------
  *
  * Main.js
@@ -6,29 +5,29 @@
  * --------------------------------------------
  */
 
-var joiner = require('joiner')
-var io = require('indian-ocean/dist/indian-ocean.js')
-var d3 = require('d3')
+import {select, selectAll} from 'd3-selection'
 
-d3.selectAll('.sbs-single').on('change', readDroppedFile(displayDataset))
+import readDroppedFile from './modules/readDroppedFile'
+import bakeTable from './modules/bakeTable'
 
-function readDroppedFile (cb) {
+var statusEmpty = dragStatusChange('empty')
+var statusOver = dragStatusChange('dragover')
+var statusDrop = dragStatusChange('drop')
+var statusTable = dragStatusChange('table')
+
+selectAll('.upload-input')
+  .on('change', function () {
+    readDroppedFile.call(this, function (el, json) {
+      statusTable.call(el)
+      bakeTable(el, json)
+    })
+  })
+  .on('dragover', statusOver)
+  .on('dragleave', statusEmpty)
+  .on('drop', statusDrop)
+
+function dragStatusChange (status) {
   return function () {
-    // Only read the first file, don't allow multiple
-    var file = this.files[0]
-
-    var parser = io.discernParser(file.name)
-    var reader = new FileReader()
-
-    reader.onload = function (e) {
-      var json = parser(e.target.result)
-      cb(json)
-    }
-
-    reader.readAsBinaryString(file)
+    select(this.parentNode).attr('data-status', status)
   }
-}
-
-function displayDataset (json) {
-  console.log(json)
 }

@@ -1,18 +1,18 @@
 {
-  "name": "wsk-example-project",
+  "name": "data.join",
   "version": "1.0.0",
-  "description": "project-description",
+  "description": "Join data",
   "main": "package.json",
   "scripts": {
     "test": "standard src/js/**/*.js",
     "notify": "./build/notify-cli.js",
     "predev": "WSK_DEV=true npm run build --silent",
-    "dev:js": "node build/tasks/watchify.js & node build/tasks/js-watch.js",
+    "dev:js": "node build/tasks/rollup-watch.js & node build/tasks/js-watch.js",
     "dev:css": "node build/tasks/stylus-watch.js",
     "dev:html": "node build/tasks/html-watch.js",
     "dev:server": "node build/tasks/browser-sync.js",
     "dev:statics": "node build/tasks/statics-watch.js",
-    "build:js": "node build/tasks/browserify.js",
+    "build:js": "node build/tasks/rollup.js",
     "build:css": "node build/tasks/stylus-build.js",
     "build:css-min": "npm run build:css -- false -c",
     "build:html": "node ./build/tasks/html-build.js",
@@ -66,6 +66,8 @@
   },
   "dependencies": {
     "d3": "^4.7.4",
+    "indian-ocean": "github:mhkeller/indian-ocean#rollup",
+    "joiner": "github:mhkeller/joiner#rollup",
     "d3-selection-multi": "^1.0.1"
   }
 }

@@ -5,8 +5,9 @@
   </section>
 
   <section id="sbs-group">
-    <input type="file" class="sbs-single empty" id="dataset-a"></input>
-    <input type="file" class="sbs-single empty" id="dataset-b"></input>
+    <[ ['0', '1'].forEach(i => { ]>
+      <[= helpers.readTemplate('src/html/_partials/file-upload.partial.html', {i: i})]>
+    <[ }) ]>
   </section>
 
   <script src="js/main.pkgd.js"></script>
