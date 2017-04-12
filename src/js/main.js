@@ -5,10 +5,12 @@
  * --------------------------------------------
  */
 
-import {select, selectAll} from 'd3-selection'
+import {selectAll} from 'd3-selection'
 
 import readDroppedFile from './modules/readDroppedFile'
 import bakeTable from './modules/bakeTable'
+
+import dragStatusChange from './modules/dragStatusChange'
 
 var statusEmpty = dragStatusChange('empty')
 var statusOver = dragStatusChange('dragover')
@@ -25,9 +27,3 @@ selectAll('.upload-input')
   .on('dragover', statusOver)
   .on('dragleave', statusEmpty)
   .on('drop', statusDrop)
-
-function dragStatusChange (status) {
-  return function () {
-    select(this.parentNode).attr('data-status', status)
-  }
-}

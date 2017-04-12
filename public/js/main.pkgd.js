@@ -9424,10 +9424,49 @@ function readDroppedFile(cb) {
   reader.readAsBinaryString(file);
 }
 
-// var d3 = require('d3')
+function values(obj) {
+  var keys = Object.keys(obj);
+  var length = keys.length;
+  var values = Array(length);
+  for (var i = 0; i < length; i++) {
+    values[i] = obj[keys[i]];
+  }
+  return values;
+}
+
+function dragStatusChange(status) {
+  return function () {
+    console.log(this, this.parentNode, status);
+    select(this.parentNode).attr('data-status', status);
+  };
+}
 
 function bakeTable(el, json) {
-  console.log(el, json);
+  var container = select(el.parentNode);
+
+  if (Array.isArray(json) && json.length === 0) {
+    var errorContainer = container.append('div').classed('error-message', true).html('Your data was empty.');
+
+    errorContainer.append('div').classed('restart', true).html('Try again.').on('click', function () {
+      dragStatusChange('empty').call(el);
+      container.html('');
+    });
+  } else {
+    var table = container.append('table');
+    var thead = table.append('thead');
+    var tbody = table.append('tbody');
+
+    thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
+      return d;
+    });
+
+    var trs = tbody.selectAll('tr').data(json).enter().append('tr');
+    trs.selectAll('td').data(function (d) {
+      return values(d);
+    }).enter().append('td').html(function (d) {
+      return d;
+    });
+  }
 }
 
 /* --------------------------------------------
@@ -9448,12 +9487,6 @@ selectAll('.upload-input').on('change', function () {
     bakeTable(el, json);
   });
 }).on('dragover', statusOver).on('dragleave', statusEmpty).on('drop', statusDrop);
-
-function dragStatusChange(status) {
-  return function () {
-    select(this.parentNode).attr('data-status', status);
-  };
-}
 
 }());
 //# sourceMappingURL=main.pkgd.js.map
