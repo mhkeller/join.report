@@ -1,1 +1,93 @@
-body{font-family:Helvetica,sans-serif}#sbs-group{margin:0 auto;display:-webkit-flex;display:-ms-flexbox;display:flex;max-width:1160px;width:100%;min-height:100px;-webkit-flex-wrap:rows;-ms-flex-wrap:rows;flex-wrap:rows}.sbs-single{width:48%;position:relative;}.sbs-single.empty{border:3px dashed #dedede;}.sbs-single.empty:after{content:'Drag data here';position:absolute;top:50%;width:100%;text-align:center;-webkit-transform:translate(0,-50%);-ms-transform:translate(0,-50%);transform:translate(0,-50%);color:#bbb}.sbs-single:first-child{margin-right:2%}/*# sourceMappingURL=styles.css.map */
+body {
+  font-family: Helvetica, sans-serif;
+}
+#sbs-group {
+  margin: 0 auto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 1160px;
+  width: 100%;
+  height: 300px;
+}
+.sbs-single {
+  width: 48%;
+  position: relative;
+  height: 100%;
+}
+.sbs-single .upload-input {
+  opacity: 0;
+}
+.sbs-single .upload-label,
+.sbs-single .upload-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: none;
+}
+.sbs-single .upload-label {
+  border: 3px dashed #66baff;
+}
+.sbs-single .upload-label:after {
+  position: absolute;
+  color: #666;
+  content: 'Drop files here or click to upload';
+  top: 50%;
+  text-align: center;
+  width: 100%;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+.sbs-single[data-status="empty"] .upload-label,
+.sbs-single[data-status="dragover"] .upload-label,
+.sbs-single[data-status="drop"] .upload-label,
+.sbs-single[data-status="empty"] .upload-input,
+.sbs-single[data-status="dragover"] .upload-input,
+.sbs-single[data-status="drop"] .upload-input {
+  display: inline-block;
+}
+.sbs-single[data-status="dragover"] .upload-label {
+  border-color: #f00;
+}
+.sbs-single[data-status="dragover"] .upload-label:after {
+  content: 'Drop drop drop!';
+}
+.sbs-single[data-status="drop"] {
+  pointer-events: none;
+}
+.sbs-single[data-status="drop"] .upload-label {
+  border: 3px solid #000;
+}
+.sbs-single[data-status="drop"] .upload-label:after {
+  content: 'Processing...';
+  -webkit-animation: rotateAnimation 1600ms linear infinite;
+          animation: rotateAnimation 1600ms linear infinite;
+}
+.sbs-single:first-child {
+  margin-right: 2%;
+}
+@-webkit-keyframes rotateAnimation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes rotateAnimation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+/*# sourceMappingURL=styles.css.map */
