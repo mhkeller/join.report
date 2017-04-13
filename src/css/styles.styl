@@ -5,6 +5,9 @@
 // Add some modules
 @require './modules/colors.styl'
 
+@require './modules/uploading.styl'
+@require './modules/table-container.styl'
+
 // This file gets compiled into `public/styles.css`
 // For stylus reference http://stylus-lang.com/
 body
@@ -20,58 +23,8 @@ body
   width 48%
   position relative
   height 100%
-  .upload-input
-    opacity 0
-  .upload-label,
-  .upload-input
-    position absolute
-    top 0
-    left 0
-    width 100%
-    height 100%
-    cursor pointer
-    display none
-  .upload-label
-    border 3px dashed #66baff
-    &:after
-      position absolute
-      color #666
-      content 'Drop files here or click to upload'
-      top 50%
-      text-align center
-      width 100%
-      transform translate(0, -50%)
-  &[data-status="empty"],
-  &[data-status="dragover"],
-  &[data-status="drop"]
-    .upload-label,
-    .upload-input
-      display inline-block
-  &[data-status="dragover"]
-    .upload-label
-      border-color red
-      &:after
-        content 'Drop drop drop!'
-  &[data-status="drop"]
-    pointer-events none
-    .upload-label
-      border 3px solid #000
-      &:after
-        content 'Processing...'
-        animation rotateAnimation 1600ms linear infinite
   &:first-child
     margin-right 2%
-  .error-message
-    width 100%
-    position relative
-    text-align center
-    top 50%
-    transform translate(0, -50%)
-  .restart
-    color blue
-    cursor pointer
-    &:hover
-      text-decoration underline
 
 @keyframes rotateAnimation
   0%

@@ -1,0 +1,41 @@
+.sbs-single
+  .upload-input
+    opacity 0
+  .upload-container
+    display none
+  .upload-container,
+  .upload-label,
+  .upload-input
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    cursor pointer
+  .upload-label
+    border 3px dashed #66baff
+    &:after
+      position absolute
+      color #666
+      content 'Drop files here or click to upload'
+      top 50%
+      text-align center
+      width 100%
+      transform translate(0, -50%)
+  &[data-status="empty"],
+  &[data-status="dragover"],
+  &[data-status="drop"]
+    .upload-container
+      display block
+  &[data-status="dragover"]
+    .upload-label
+      border-color red
+      &:after
+        content 'Drop drop drop!'
+  &[data-status="drop"]
+    pointer-events none
+    .upload-label
+      border 3px solid #000
+      &:after
+        content 'Processing...'
+        animation rotateAnimation 1600ms linear infinite
