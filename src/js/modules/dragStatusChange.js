@@ -1,8 +1,8 @@
 import {select} from 'd3-selection'
+import {default as parent} from './getParentByClass'
 
 export default function dragStatusChange (status) {
   return function () {
-    console.log(this, this.parentNode, status)
-    select(this.parentNode).attr('data-status', status)
+    select(parent(this, 'sbs-single')).attr('data-status', status)
   }
 }
