@@ -9434,31 +9434,53 @@ function values(obj) {
   return values;
 }
 
+/* --------------------------------------------
+ *
+ * getParentByClass
+ * Walk the parent elements of the first argument to test if it has the desired class.
+ * If found, return the element, otherwise return null.
+ *
+ */
+
+function getParentByClass(el, klass) {
+  var test = false;
+  var element = el;
+
+  while (!test) {
+    element = element.parentNode;
+    if (element === null || element.className === undefined) break;
+    test = element.className.indexOf(klass) !== -1;
+  }
+
+  return test ? element : null;
+}
+
 function dragStatusChange(status) {
   return function () {
-    console.log(this, this.parentNode, status);
-    select(this.parentNode).attr('data-status', status);
+    select(getParentByClass(this, 'sbs-single')).attr('data-status', status);
   };
 }
 
 function bakeTable(el, json) {
-  var container = select(el.parentNode);
+  var tableContainer = select(getParentByClass(el, 'sbs-single')).append('div').classed('table-container', true);
 
   if (Array.isArray(json) && json.length === 0) {
-    var errorContainer = container.append('div').classed('error-message', true).html('Your data was empty.');
+    (function () {
+      var errorContainer = tableContainer.append('div').classed('error-message', true).html('Your data was empty.');
 
-    errorContainer.append('div').classed('restart', true).html('Try again.').on('click', function () {
-      dragStatusChange('empty').call(el);
-      container.html('');
-    });
+      errorContainer.append('div').classed('restart', true).html('Try again.').on('click', function () {
+        dragStatusChange('empty').call(el);
+        errorContainer.remove();
+      });
+    })();
   } else {
-    var table = container.append('table');
+    var table = tableContainer.append('table');
     var thead = table.append('thead');
     var tbody = table.append('tbody');
 
     thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
       return d;
-    });
+    }).on('click', function (d) {});
 
     var trs = tbody.selectAll('tr').data(json).enter().append('tr');
     trs.selectAll('td').data(function (d) {
