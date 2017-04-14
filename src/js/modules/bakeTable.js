@@ -40,8 +40,6 @@ export default function bakeTable (el, json) {
       .append('tr')
       .classed('table-row', true)
 
-    window.x = trs
-
     trs.selectAll('td').data(d => pairs(d)).enter()
       .append('td')
       .html(d => d[1])
@@ -64,14 +62,11 @@ export default function bakeTable (el, json) {
         }
       })
 
-    // For deletion
+    // Deleting rows
     thead.append('th').text('')
 
     var deletes = trs.append('td')
       .classed('row-delete', true)
-      // .on('click', function () {
-      //   event.stopPropagation()
-      // })
 
     deletes.append('a')
       .attr('href', '#')
@@ -90,10 +85,6 @@ export default function bakeTable (el, json) {
           select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row')
           d.___deleted___ = true
         }
-
-        // updateDownloads('data')
-        // scaleMap()
-        // if (mapOptions.colorType == 'choropleth') recolor()
 
         return false
       })
