@@ -9546,8 +9546,6 @@ function bakeTable(el, json) {
 
       var trs = tbody.selectAll('tr').data(json).enter().append('tr').classed('table-row', true);
 
-      window.x = trs;
-
       trs.selectAll('td').data(function (d) {
         return pairs$1(d);
       }).enter().append('td').html(function (d) {
@@ -9570,13 +9568,11 @@ function bakeTable(el, json) {
         }
       });
 
-      // For deletion
+      // Deleting rows
       thead.append('th').text('');
 
       deletes = trs.append('td').classed('row-delete', true);
-      // .on('click', function () {
-      //   event.stopPropagation()
-      // })
+
 
       deletes.append('a').attr('href', '#').on('click', function (d, i) {
         event.stopPropagation();
@@ -9593,10 +9589,6 @@ function bakeTable(el, json) {
           select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row');
           d.___deleted___ = true;
         }
-
-        // updateDownloads('data')
-        // scaleMap()
-        // if (mapOptions.colorType == 'choropleth') recolor()
 
         return false;
       }).attr('title', 'Delete this feature').html('<span>&times;</span>&nbsp;Remove');
