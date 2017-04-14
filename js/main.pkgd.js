@@ -9550,12 +9550,21 @@ function bakeTable(el, json) {
         return values(d);
       }).enter().append('td').html(function (d) {
         return d;
+      }).on('click', function () {
+        var el = select(this);
+        var editable = JSON.parse(el.attr('contenteditable') || 'false');
+        if (!editable) {
+          el.attr('contentEditable', true);
+          el.node().focus();
+        }
+      }).on('keypress', function () {
+        if (event.keyCode === 13 || event.key === 'Enter') {
+          select(this).attr('contentEditable', false);
+        }
       });
 
       // For deletion
       thead.append('th').text('');
-
-      window.x = trs;
 
       deletes = trs.append('td').classed('row-delete', true).on('click', function () {
         event.stopPropagation();

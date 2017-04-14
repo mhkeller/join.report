@@ -120,6 +120,12 @@
   border: 1px solid #ccc;
   padding: 5px;
 }
+.table-container td {
+  outline: 0px solid transparent !important;
+}
+.table-container td[contenteditable="true"] {
+  border: 2px solid #00f;
+}
 .table-container th:last-child,
 .table-container td:last-child {
   border-color: transparent;
