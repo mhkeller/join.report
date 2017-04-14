@@ -130,6 +130,13 @@
 .table-container th:last-child:after {
   content: '';
 }
+.table-container tr[data-deleted="true"] td:not(:last-child) {
+  text-decoration: line-through;
+  color: #ccc;
+}
+.table-container tr[data-deleted="true"] a:hover {
+  color: #ccc !important;
+}
 .table-container .row-delete {
   font-size: 11px;
 }

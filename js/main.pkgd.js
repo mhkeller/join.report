@@ -9424,16 +9424,6 @@ function readDroppedFile(cb) {
   reader.readAsBinaryString(file);
 }
 
-function values(obj) {
-  var keys = Object.keys(obj);
-  var length = keys.length;
-  var values = Array(length);
-  for (var i = 0; i < length; i++) {
-    values[i] = obj[keys[i]];
-  }
-  return values;
-}
-
 /* --------------------------------------------
  *
  * getParentByClass
@@ -9453,6 +9443,16 @@ function getParentByClass(el, klass) {
   }
 
   return test ? element : null;
+}
+
+function values(obj) {
+  var keys = Object.keys(obj);
+  var length = keys.length;
+  var values = Array(length);
+  for (var i = 0; i < length; i++) {
+    values[i] = obj[keys[i]];
+  }
+  return values;
 }
 
 function dragStatusChange(status) {
@@ -9544,7 +9544,7 @@ function bakeTable(el, json) {
         trs.sort(sortTableRows(trs.data(), this.innerHTML, asc));
       });
 
-      var trs = tbody.selectAll('tr').data(json).enter().append('tr');
+      var trs = tbody.selectAll('tr').data(json).enter().append('tr').classed('table-row', true);
 
       trs.selectAll('td').data(function (d) {
         return values(d);
@@ -9564,16 +9564,17 @@ function bakeTable(el, json) {
         event.stopPropagation();
         event.preventDefault();
 
-        // var isDeleted = select('tr#tr' + i).classed('deleted')
-        // if (isDeleted) {
-        //   select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this feature')
-        //   currentFile.skip = currentFile.skip.filter(function (s) { return s != i })
-        // } else {
-        //   d3.select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this feature')
-        //   if (currentFile.skip.indexOf(i) == -1) currentFile.skip.push(i)
-        // }
+        var tableRow = select(getParentByClass(this, 'table-row'));
+        var isDeleted = tableRow.attr('data-deleted') === 'true';
+        if (isDeleted) {
+          select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this row');
+          tableRow.attr('data-deleted', 'false');
+        } else {
+          tableRow.attr('data-deleted', 'true');
+          select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row');
+        }
 
-        // attributesBody.select('tr#tr' + i).classed('deleted', !isDeleted)
+        // tbody.select('tr#tr' + i).classed('deleted', !isDeleted)
         // map.select('path#path' + i).style('display', isDeleted ? 'block' : 'none')
 
         // updateDownloads('data')
