@@ -9445,14 +9445,14 @@ function getParentByClass(el, klass) {
   return test ? element : null;
 }
 
-function values(obj) {
+function pairs$1(obj) {
   var keys = Object.keys(obj);
   var length = keys.length;
-  var values = Array(length);
+  var pairs = Array(length);
   for (var i = 0; i < length; i++) {
-    values[i] = obj[keys[i]];
+    pairs[i] = [keys[i], obj[keys[i]]];
   }
-  return values;
+  return pairs;
 }
 
 function dragStatusChange(status) {
@@ -9546,10 +9546,12 @@ function bakeTable(el, json) {
 
       var trs = tbody.selectAll('tr').data(json).enter().append('tr').classed('table-row', true);
 
+      window.x = trs;
+
       trs.selectAll('td').data(function (d) {
-        return values(d);
+        return pairs$1(d);
       }).enter().append('td').html(function (d) {
-        return d;
+        return d[1];
       }).on('click', function () {
         trs.selectAll('td').attr('contentEditable', null);
         var el = select(this);
@@ -9558,9 +9560,13 @@ function bakeTable(el, json) {
           el.attr('contentEditable', true);
           el.node().focus();
         }
-      }).on('keypress', function () {
+      }).on('keypress', function (d) {
         if (event.keyCode === 13 || event.key === 'Enter') {
-          select(this).attr('contentEditable', false);
+          var _el = select(this);
+          _el.attr('contentEditable', false);
+          var input = _el.html();
+          var parentD = select(getParentByClass(this, 'table-row')).datum();
+          parentD[d[0]] = input;
         }
       });
 
