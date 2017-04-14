@@ -9552,7 +9552,7 @@ function bakeTable(el, json) {
         return pairs$1(d);
       }).enter().append('td').html(function (d) {
         return d[1];
-      }).on('click', function () {
+      }).on('click', function (d) {
         trs.selectAll('td').attr('contentEditable', null);
         var el = select(this);
         var editable = JSON.parse(el.attr('contentEditable') || 'false');
@@ -9573,10 +9573,10 @@ function bakeTable(el, json) {
       // For deletion
       thead.append('th').text('');
 
-      deletes = trs.append('td').classed('row-delete', true).on('click', function () {
-        event.stopPropagation();
-      });
-
+      deletes = trs.append('td').classed('row-delete', true);
+      // .on('click', function () {
+      //   event.stopPropagation()
+      // })
 
       deletes.append('a').attr('href', '#').on('click', function (d, i) {
         event.stopPropagation();
@@ -9589,7 +9589,7 @@ function bakeTable(el, json) {
           tableRow.attr('data-deleted', 'false');
           delete d.___deleted___;
         } else {
-          tableRow.attr('data-deleted', 'true');
+          tableRow.attr('data-deleted', 'true').selectAll('td').attr('contentEditable', null);
           select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row');
           d.___deleted___ = true;
         }
