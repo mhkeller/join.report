@@ -3,6 +3,7 @@ import {select} from 'd3-selection'
 import values from './values'
 import dragStatusChange from './dragStatusChange'
 import {default as parent} from './getParentByClass'
+import sortTableRows from './sortTableRows'
 
 export default function bakeTable (el, json) {
   var tableContainer = select(parent(el, 'sbs-single')).append('div')
@@ -29,13 +30,17 @@ export default function bakeTable (el, json) {
       .append('th')
       .html(d => d)
       .on('click', function (d) {
+        thead.select('th.sorted').classed('sorted', false)
+        var asc = !JSON.parse(this.dataset.asc || 'false')
+        select(this).classed('sorted', true).attr('data-asc', asc)
+        trs.sort(sortTableRows(trs.data(), this.innerHTML, asc))
       })
 
     let trs = tbody.selectAll('tr').data(json).enter()
       .append('tr')
+
     trs.selectAll('td').data(d => values(d)).enter()
       .append('td')
       .html(d => d)
   }
 }
-

@@ -9461,6 +9461,60 @@ function dragStatusChange(status) {
   };
 }
 
+function sortTableRows(data, column, asc) {
+  return function (a, b) {
+    var numeric = true;
+
+    data.forEach(function (d, i) {
+      if (numeric && Object.keys(d).indexOf(column) > -1 && typeof d[column] !== 'number') {
+        numeric = false;
+      }
+    });
+
+    // Do numeric sort if all numbers, otherwise lexicographic
+    if (numeric) {
+      var s1 = void 0;
+      var s2 = void 0;
+      if (asc === true) {
+        s1 = a[column];
+        s2 = b[column];
+      } else {
+        s1 = b[column];
+        s2 = a[column];
+      }
+      if (typeof s1 !== 'number') return 1;
+      if (typeof s2 !== 'number') return -1;
+
+      s1 = parseFloat(s1);
+      s2 = parseFloat(s2);
+
+      if (s1 < s2) return -1;
+      if (s2 < s1) return 1;
+      return 0;
+    } else {
+      var _s = void 0;
+      var _s2 = void 0;
+      if (asc === false) {
+        _s = a[column];
+        _s2 = b[column];
+      } else {
+        _s = b[column];
+        _s2 = a[column];
+      }
+
+      if (!_s) return 1;
+      if (!_s2) return -1;
+
+      if (typeof _s !== 'string') _s = JSON.stringify(_s);
+      if (typeof _s2 !== 'string') _s2 = JSON.stringify(_s2);
+
+      if (_s < _s2) return -1;
+      if (_s2 < _s) return 1;
+      return 0;
+    }
+  };
+}
+
 function bakeTable(el, json) {
   var tableContainer = select(getParentByClass(el, 'sbs-single')).append('div').classed('table-container', true);
 
@@ -9474,20 +9528,28 @@ function bakeTable(el, json) {
       });
     })();
   } else {
-    var table = tableContainer.append('table');
-    var thead = table.append('thead');
-    var tbody = table.append('tbody');
+    (function () {
+      var table = tableContainer.append('table');
+      var thead = table.append('thead');
+      var tbody = table.append('tbody');
 
-    thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
-      return d;
-    }).on('click', function (d) {});
+      thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
+        return d;
+      }).on('click', function (d) {
+        thead.select('th.sorted').classed('sorted', false);
+        var asc = !JSON.parse(this.dataset.asc || 'false');
+        select(this).classed('sorted', true).attr('data-asc', asc);
+        trs.sort(sortTableRows(trs.data(), this.innerHTML, asc));
+      });
 
-    var trs = tbody.selectAll('tr').data(json).enter().append('tr');
-    trs.selectAll('td').data(function (d) {
-      return values(d);
-    }).enter().append('td').html(function (d) {
-      return d;
-    });
+      var trs = tbody.selectAll('tr').data(json).enter().append('tr');
+
+      trs.selectAll('td').data(function (d) {
+        return values(d);
+      }).enter().append('td').html(function (d) {
+        return d;
+      });
+    })();
   }
 }
 

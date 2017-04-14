@@ -17,6 +17,27 @@
     margin 0 auto
   th
     text-align center
+    user-select none
+    cursor pointer
+    &:after
+      display inline-block
+      vertical-align top
+      content '↑↓'
+      positoin relative
+      margin-top -3px
+      padding-left 3px
+      color #ccc
+      letter-spacing -2px
+    &.sorted
+      &[data-asc="true"]:after,
+      &[data-asc="false"]:after
+        color #f0c
+        padding-right 6px
+      &[data-asc="true"]:after
+        content '↑'
+      &[data-asc="false"]:after
+        content '↓'
+
   td,
   th
     border 1px solid #ccc
