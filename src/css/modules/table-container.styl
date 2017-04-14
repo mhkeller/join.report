@@ -1,3 +1,5 @@
+$hover-color = #eee
+
 .table-container
   width 100%
   height 100%
@@ -15,10 +17,20 @@
   table
     border-collapse collapse
     margin 0 auto
+  tr
+    &:hover
+      background-color $hover-color
+      cursor pointer
+      td:last-child
+        border-top 1px solid $hover-color
+        border-bottom 1px solid $hover-color
   th
+    white-space nowrap
     text-align center
     user-select none
     cursor pointer
+    &:hover
+      background-color $hover-color
     &:after
       display inline-block
       vertical-align top
@@ -42,3 +54,24 @@
   th
     border 1px solid #ccc
     padding 5px
+  th:last-child,
+  td:last-child
+    border-color transparent
+  th:last-child
+    pointer-events none
+    &:after
+      content ''
+  .row-delete
+    font-size 11px
+    &:hover
+      cursor default
+    a
+      text-decoration none
+      color #ccc
+      user-select none
+      &:hover
+        text-decoration underline
+        color red
+    span
+      position relative
+      font-weight bold

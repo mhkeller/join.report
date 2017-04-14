@@ -1,4 +1,4 @@
-import {select} from 'd3-selection'
+import {select, event} from 'd3-selection'
 
 import values from './values'
 import dragStatusChange from './dragStatusChange'
@@ -42,5 +42,41 @@ export default function bakeTable (el, json) {
     trs.selectAll('td').data(d => values(d)).enter()
       .append('td')
       .html(d => d)
+
+    // For deletion
+    thead.append('th').text('')
+
+    var deletes = trs.append('td')
+      .classed('row-delete', true)
+      .on('click', function () {
+        event.stopPropagation()
+      })
+
+    deletes.append('a')
+      .attr('href', '#')
+      .on('click', function (d, i) {
+        event.stopPropagation()
+        event.preventDefault()
+
+        // var isDeleted = select('tr#tr' + i).classed('deleted')
+        // if (isDeleted) {
+        //   select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this feature')
+        //   currentFile.skip = currentFile.skip.filter(function (s) { return s != i })
+        // } else {
+        //   d3.select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this feature')
+        //   if (currentFile.skip.indexOf(i) == -1) currentFile.skip.push(i)
+        // }
+
+        // attributesBody.select('tr#tr' + i).classed('deleted', !isDeleted)
+        // map.select('path#path' + i).style('display', isDeleted ? 'block' : 'none')
+
+        // updateDownloads('data')
+        // scaleMap()
+        // if (mapOptions.colorType == 'choropleth') recolor()
+
+        return false
+      })
+      .attr('title', 'Delete this feature')
+      .html('<span>&times;</span>&nbsp;Remove')
   }
 }

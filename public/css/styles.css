@@ -74,13 +74,25 @@
   border-collapse: collapse;
   margin: 0 auto;
 }
+.table-container tr:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+.table-container tr:hover td:last-child {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
 .table-container th {
+  white-space: nowrap;
   text-align: center;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
   cursor: pointer;
+}
+.table-container th:hover {
+  background-color: #eee;
 }
 .table-container th:after {
   display: inline-block;
@@ -107,6 +119,38 @@
 .table-container th {
   border: 1px solid #ccc;
   padding: 5px;
+}
+.table-container th:last-child,
+.table-container td:last-child {
+  border-color: transparent;
+}
+.table-container th:last-child {
+  pointer-events: none;
+}
+.table-container th:last-child:after {
+  content: '';
+}
+.table-container .row-delete {
+  font-size: 11px;
+}
+.table-container .row-delete:hover {
+  cursor: default;
+}
+.table-container .row-delete a {
+  text-decoration: none;
+  color: #ccc;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.table-container .row-delete a:hover {
+  text-decoration: underline;
+  color: #f00;
+}
+.table-container .row-delete span {
+  position: relative;
+  font-weight: bold;
 }
 body {
   font-family: Helvetica, sans-serif;
