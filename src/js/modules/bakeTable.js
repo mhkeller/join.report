@@ -47,6 +47,8 @@ export default function bakeTable (el, json) {
     // For deletion
     thead.append('th').text('')
 
+    window.x = trs
+
     var deletes = trs.append('td')
       .classed('row-delete', true)
       .on('click', function () {
@@ -64,13 +66,12 @@ export default function bakeTable (el, json) {
         if (isDeleted) {
           select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this row')
           tableRow.attr('data-deleted', 'false')
+          delete d.___deleted___
         } else {
           tableRow.attr('data-deleted', 'true')
           select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row')
+          d.___deleted___ = true
         }
-
-        // tbody.select('tr#tr' + i).classed('deleted', !isDeleted)
-        // map.select('path#path' + i).style('display', isDeleted ? 'block' : 'none')
 
         // updateDownloads('data')
         // scaleMap()
