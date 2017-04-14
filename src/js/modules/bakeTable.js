@@ -1,7 +1,7 @@
 import {select, event} from 'd3-selection'
 import {default as parent} from './getParentByClass'
 
-import values from './values'
+import pairs from './pairs'
 import dragStatusChange from './dragStatusChange'
 import sortTableRows from './sortTableRows'
 
@@ -40,9 +40,11 @@ export default function bakeTable (el, json) {
       .append('tr')
       .classed('table-row', true)
 
-    trs.selectAll('td').data(d => values(d)).enter()
+    window.x = trs
+
+    trs.selectAll('td').data(d => pairs(d)).enter()
       .append('td')
-      .html(d => d)
+      .html(d => d[1])
       .on('click', function () {
         trs.selectAll('td').attr('contentEditable', null)
         var el = select(this)
@@ -52,9 +54,13 @@ export default function bakeTable (el, json) {
           el.node().focus()
         }
       })
-      .on('keypress', function () {
+      .on('keypress', function (d) {
         if (event.keyCode === 13 || event.key === 'Enter') {
-          select(this).attr('contentEditable', false)
+          let el = select(this)
+          el.attr('contentEditable', false)
+          let input = el.html()
+          var parentD = select(parent(this, 'table-row')).datum()
+          parentD[d[0]] = input
         }
       })
 
