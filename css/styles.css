@@ -72,9 +72,36 @@
 }
 .table-container table {
   border-collapse: collapse;
+  margin: 0 auto;
 }
 .table-container th {
   text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+}
+.table-container th:after {
+  display: inline-block;
+  vertical-align: top;
+  content: '↑↓';
+  positoin: relative;
+  margin-top: -3px;
+  padding-left: 3px;
+  color: #ccc;
+  letter-spacing: -2px;
+}
+.table-container th.sorted[data-asc="true"]:after,
+.table-container th.sorted[data-asc="false"]:after {
+  color: #f0c;
+  padding-right: 6px;
+}
+.table-container th.sorted[data-asc="true"]:after {
+  content: '↑';
+}
+.table-container th.sorted[data-asc="false"]:after {
+  content: '↓';
 }
 .table-container td,
 .table-container th {
