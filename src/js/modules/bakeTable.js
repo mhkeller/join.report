@@ -1,8 +1,8 @@
 import {select, event} from 'd3-selection'
+import {default as parent} from './getParentByClass'
 
 import values from './values'
 import dragStatusChange from './dragStatusChange'
-import {default as parent} from './getParentByClass'
 import sortTableRows from './sortTableRows'
 
 export default function bakeTable (el, json) {
@@ -38,6 +38,7 @@ export default function bakeTable (el, json) {
 
     let trs = tbody.selectAll('tr').data(json).enter()
       .append('tr')
+      .classed('table-row', true)
 
     trs.selectAll('td').data(d => values(d)).enter()
       .append('td')
@@ -58,16 +59,17 @@ export default function bakeTable (el, json) {
         event.stopPropagation()
         event.preventDefault()
 
-        // var isDeleted = select('tr#tr' + i).classed('deleted')
-        // if (isDeleted) {
-        //   select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this feature')
-        //   currentFile.skip = currentFile.skip.filter(function (s) { return s != i })
-        // } else {
-        //   d3.select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this feature')
-        //   if (currentFile.skip.indexOf(i) == -1) currentFile.skip.push(i)
-        // }
+        var tableRow = select(parent(this, 'table-row'))
+        var isDeleted = tableRow.attr('data-deleted') === 'true'
+        if (isDeleted) {
+          select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this row')
+          tableRow.attr('data-deleted', 'false')
+        } else {
+          tableRow.attr('data-deleted', 'true')
+          select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row')
+        }
 
-        // attributesBody.select('tr#tr' + i).classed('deleted', !isDeleted)
+        // tbody.select('tr#tr' + i).classed('deleted', !isDeleted)
         // map.select('path#path' + i).style('display', isDeleted ? 'block' : 'none')
 
         // updateDownloads('data')

@@ -61,6 +61,13 @@ $hover-color = #eee
     pointer-events none
     &:after
       content ''
+  tr[data-deleted="true"]
+    td:not(:last-child)
+      text-decoration line-through
+      color #ccc
+    a
+      &:hover
+        color #ccc !important
   .row-delete
     font-size 11px
     &:hover
