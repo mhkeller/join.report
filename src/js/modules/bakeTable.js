@@ -50,10 +50,14 @@ export default function bakeTable (el, json) {
     ths.append('input')
       .attr('type', 'radio')
       .attr('name', sbsId)
-      .on('click', function () {
-        console.log('here')
+      .attr('value', d => d)
+      .on('click', (d, i) => {
         event.stopPropagation()
-        trs.selectAll('td').attr('contentEditable', null)
+        thead.selectAll('th').classed('active', (q) => q === d)
+
+        trs.selectAll('td')
+          .attr('contentEditable', null)
+          .classed('active', q => q[0] === d)
       })
 
     let trs = tbody.selectAll('tr').data(json).enter()

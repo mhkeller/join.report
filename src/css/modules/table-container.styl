@@ -30,6 +30,9 @@ $hover-color = #eee
     text-align center
     user-select none
     cursor pointer
+    // &:not(input):hover
+    //   cursor pointer
+    //   text-decoration underline
 
     input[type='radio']
       position absolute
@@ -63,6 +66,9 @@ $hover-color = #eee
   th
     border 1px solid #ccc
     padding 5px
+    &.active
+      z-index -1
+      background-color yellow
   td
     outline 0px solid transparent !important
     &[contenteditable="true"]
