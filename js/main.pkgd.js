@@ -9552,10 +9552,17 @@ function bakeTable(el, json) {
         trs.sort(sortTableRows(trs.data(), d, asc));
       });
 
-      ths.append('input').attr('type', 'radio').attr('name', sbsId).on('click', function () {
-        console.log('here');
+      ths.append('input').attr('type', 'radio').attr('name', sbsId).attr('value', function (d) {
+        return d;
+      }).on('click', function (d, i) {
         event.stopPropagation();
-        trs.selectAll('td').attr('contentEditable', null);
+        thead.selectAll('th').classed('active', function (q) {
+          return q === d;
+        });
+
+        trs.selectAll('td').attr('contentEditable', null).classed('active', function (q) {
+          return q[0] === d;
+        });
       });
 
       var trs = tbody.selectAll('tr').data(json).enter().append('tr').classed('table-row', true);

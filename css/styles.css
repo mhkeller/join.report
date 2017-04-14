@@ -129,6 +129,11 @@
   border: 1px solid #ccc;
   padding: 5px;
 }
+.table-container td.active,
+.table-container th.active {
+  z-index: -1;
+  background-color: #ff0;
+}
 .table-container td {
   outline: 0px solid transparent !important;
 }
@@ -176,6 +181,9 @@
 }
 body {
   font-family: Helvetica, sans-serif;
+}
+#intro {
+  margin-bottom: 30px;
 }
 #sbs-group {
   margin: 0 auto;
