@@ -44,8 +44,9 @@ export default function bakeTable (el, json) {
       .append('td')
       .html(d => d)
       .on('click', function () {
+        trs.selectAll('td').attr('contentEditable', null)
         var el = select(this)
-        var editable = JSON.parse(el.attr('contenteditable') || 'false')
+        var editable = JSON.parse(el.attr('contentEditable') || 'false')
         if (!editable) {
           el.attr('contentEditable', true)
           el.node().focus()
