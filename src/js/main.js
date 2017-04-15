@@ -13,15 +13,17 @@ import bakeTable from './modules/bakeTable'
 
 import dragStatusChange from './modules/dragStatusChange'
 import titleSequence from './modules/titleSequence'
+import join from './modules/join'
 
 const statusEmpty = dragStatusChange('empty')
 const statusOver = dragStatusChange('dragover')
 const statusDrop = dragStatusChange('drop')
 const statusTable = dragStatusChange('table')
 
-var dispatch = Dispatch('join', 'change-title')
+var dispatch = Dispatch('col-selected', 'join', 'change-title')
 
 titleSequence(dispatch)
+join(dispatch)
 
 selectAll('.upload-input')
   .on('change', function () {

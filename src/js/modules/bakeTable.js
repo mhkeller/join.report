@@ -57,7 +57,7 @@ export default function bakeTable (el, json, dispatch) {
         event.stopPropagation()
         tableContainer.attr('data-col-selected', 'true')
         thead.selectAll('th').classed('active', (q) => q === d)
-        dispatch.call('join', parent(this, 'sbs-group'))
+        dispatch.call('col-selected', parent(this, 'sbs-group'))
         trs.selectAll('td').attr('contentEditable', null)
       })
 
