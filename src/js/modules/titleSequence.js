@@ -18,20 +18,22 @@ export default function titleSequence (dispatch) {
     'ready': function () {
       let inst = select('#instructions')
 
-      inst.select('h2')
+      let h2 = inst.select('h2')
         .html('Ready to join!')
 
-      inst.selectAll('p').remove()
+      inst.selectAll('.inst-el').remove()
 
       inst.append('a')
-        .attr('class', 'button button-primary join-button')
+        .attr('class', 'button button-primary join-button inst-el')
         .attr('role', 'button')
         .attr('href', '#')
         .html('Go for it')
-        .on('click', () => {
+        .on('click', function () {
           event.stopPropagation()
           event.preventDefault()
           dispatch.call('join')
+          select(this).classed('processing', true).html('Please hold...')
+          h2.html('Processing...')
         })
     }
   }
