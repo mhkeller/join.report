@@ -1,3 +1,35 @@
+nav {
+  position: relative;
+  width: calc(100% - 10px);
+  height: 20px;
+  margin: 5px auto 0 auto;
+}
+#title,
+#by {
+  position: absolute;
+  top: 0;
+}
+#title a,
+#by a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;
+}
+#title a:hover,
+#by a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#title {
+  left: 0;
+  font-weight: bold;
+}
+#by {
+  right: 0;
+}
+#instructions {
+  margin-bottom: 30px;
+}
 .sbs-single .upload-input {
   opacity: 0;
 }
@@ -181,9 +213,7 @@
 }
 body {
   font-family: Helvetica, sans-serif;
-}
-#intro {
-  margin-bottom: 30px;
+  margin: 0;
 }
 #sbs-group {
   margin: 0 auto;

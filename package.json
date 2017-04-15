@@ -66,6 +66,7 @@
   },
   "dependencies": {
     "d3": "^4.7.4",
+    "d3-dispatch": "^1.0.3",
     "d3-selection-multi": "^1.0.1",
     "indian-ocean": "github:mhkeller/indian-ocean#rollup",
     "joiner": "github:mhkeller/joiner#rollup",

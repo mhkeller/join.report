@@ -11,6 +11,7 @@ import readDroppedFile from './modules/readDroppedFile'
 import bakeTable from './modules/bakeTable'
 
 import dragStatusChange from './modules/dragStatusChange'
+import titleSequence from './modules/titleSequence'
 
 var statusEmpty = dragStatusChange('empty')
 var statusOver = dragStatusChange('dragover')
