@@ -3,6 +3,7 @@ nav {
   width: calc(100% - 10px);
   height: 20px;
   margin: 5px auto 0 auto;
+  color: #000;
 }
 #title,
 #by {
@@ -28,7 +29,21 @@ nav {
   right: 0;
 }
 #instructions {
-  margin-bottom: 30px;
+  margin: 20px auto 30px auto;
+  width: 100%;
+  max-width: 1160px;
+  text-align: center;
+}
+#instructions h2 {
+  font-size: 32px;
+  margin: 5px 0 15px 0;
+  color: #fff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+#instructions p {
+  font-size: 18px;
+  max-width: 740px;
+  margin: 8px auto;
 }
 .sbs-single .upload-input {
   opacity: 0;
@@ -49,16 +64,33 @@ nav {
 .sbs-single .upload-label {
   border: 3px dashed #66baff;
 }
+.sbs-single .upload-label:before,
 .sbs-single .upload-label:after {
   position: absolute;
-  color: #666;
-  content: 'Drop files here or click to upload';
-  top: 50%;
   text-align: center;
   width: 100%;
   -webkit-transform: translate(0, -50%);
       -ms-transform: translate(0, -50%);
           transform: translate(0, -50%);
+  content: 'Drop files or click to upload';
+}
+.sbs-single .upload-label:after {
+  top: 60%;
+  color: #666;
+  font-size: 16px;
+}
+.sbs-single .upload-label:before {
+  top: 40%;
+  font-size: 36px;
+  color: #000;
+  opacity: 0.25;
+  font-weight: bold;
+}
+.sbs-single:first-child .upload-label:before {
+  content: 'Existing data';
+}
+.sbs-single:last-child .upload-label:before {
+  content: 'New data to add';
 }
 .sbs-single[data-status="empty"] .upload-container,
 .sbs-single[data-status="dragover"] .upload-container,
@@ -83,8 +115,24 @@ nav {
           animation: rotateAnimation 1600ms linear infinite;
 }
 .table-container {
+  position: relative;
   width: 100%;
   height: 100%;
+  -webkit-transform: translate(0, 18px);
+      -ms-transform: translate(0, 18px);
+          transform: translate(0, 18px);
+}
+.table-container[data-col-selected='false']:before {
+  content: 'pick a column to join on';
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  left: calc(50% - 27.5px);
+  -webkit-transform: translate(-50%, -275%);
+      -ms-transform: translate(-50%, -275%);
+          transform: translate(-50%, -275%);
+  color: #ff0;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 .table-container .error-message {
   width: 100%;
@@ -134,6 +182,7 @@ nav {
   -webkit-transform: translate(0, -150%);
       -ms-transform: translate(0, -150%);
           transform: translate(0, -150%);
+  cursor: pointer;
 }
 .table-container th:after {
   display: inline-block;
@@ -190,7 +239,7 @@ nav {
   color: #ccc !important;
 }
 .table-container .row-delete {
-  font-size: 11px;
+  font-size: 12px;
 }
 .table-container .row-delete:hover {
   cursor: default;

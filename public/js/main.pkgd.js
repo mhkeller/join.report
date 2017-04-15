@@ -9523,7 +9523,7 @@ var escKeys = {
 function bakeTable(el, json) {
   var sbsContainer = select(getParentByClass(el, 'sbs-single'));
   var sbsId = sbsContainer.attr('id');
-  var tableContainer = sbsContainer.append('div').classed('table-container', true).on('click', function (d) {
+  var tableContainer = sbsContainer.append('div').classed('table-container', true).attr('data-col-selected', 'false').on('click', function (d) {
     select(this).selectAll('td').attr('contentEditable', null);
   });
 
@@ -9556,6 +9556,7 @@ function bakeTable(el, json) {
         return d;
       }).on('click', function (d, i) {
         event.stopPropagation();
+        tableContainer.attr('data-col-selected', 'true');
         thead.selectAll('th').classed('active', function (q) {
           return q === d;
         });

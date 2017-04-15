@@ -15,6 +15,7 @@ export default function bakeTable (el, json) {
   var sbsId = sbsContainer.attr('id')
   let tableContainer = sbsContainer.append('div')
     .classed('table-container', true)
+    .attr('data-col-selected', 'false')
     .on('click', function (d) {
       select(this).selectAll('td').attr('contentEditable', null)
     })
@@ -53,6 +54,7 @@ export default function bakeTable (el, json) {
       .attr('value', d => d)
       .on('click', (d, i) => {
         event.stopPropagation()
+        tableContainer.attr('data-col-selected', 'true')
         thead.selectAll('th').classed('active', (q) => q === d)
 
         trs.selectAll('td')

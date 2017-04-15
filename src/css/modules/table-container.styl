@@ -1,8 +1,21 @@
 $hover-color = #eee
+$remove-width = 55px
 
 .table-container
+  position relative
   width 100%
   height 100%
+  transform translate(0, 18px)
+  &[data-col-selected='false']
+    &:before
+      content 'pick a column to join on'
+      position absolute
+      top 0
+      font-size 14px
+      left "calc(50% - %s)" % ($remove-width / 2)
+      transform translate(-50%, -275%)
+      color yellow
+      text-shadow -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   .error-message
     width 100%
     position relative
@@ -42,7 +55,7 @@ $hover-color = #eee
       top 0
       left 0
       transform translate(0, -150%)
-
+      cursor pointer
     &:after
       display inline-block
       vertical-align top
@@ -89,7 +102,7 @@ $hover-color = #eee
       &:hover
         color #ccc !important
   .row-delete
-    font-size 11px
+    font-size 12px
     &:hover
       cursor default
     a

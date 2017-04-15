@@ -14,14 +14,31 @@
     cursor pointer
   .upload-label
     border 3px dashed #66baff
+    &:before,
     &:after
       position absolute
-      color #666
-      content 'Drop files here or click to upload'
-      top 50%
       text-align center
       width 100%
       transform translate(0, -50%)
+      content 'Drop files or click to upload'
+    &:after
+      top 60%
+      color #666
+      font-size 16px
+    &:before
+      top 40%
+      font-size 36px
+      color #000
+      opacity .25
+      font-weight bold
+  &:first-child
+    .upload-label
+      &:before
+        content 'Existing data'
+  &:last-child
+    .upload-label
+      &:before
+        content 'New data to add'
   &[data-status="empty"],
   &[data-status="dragover"],
   &[data-status="drop"]
