@@ -10,7 +10,7 @@ let escKeys = {
   keys: ['Escape', 'Enter']
 }
 
-export default function bakeTable (el, json) {
+export default function bakeTable (el, json, dispatch) {
   var sbsContainer = select(parent(el, 'sbs-single'))
   var sbsId = sbsContainer.attr('id')
   let tableContainer = sbsContainer.append('div')
@@ -53,14 +53,12 @@ export default function bakeTable (el, json) {
       .attr('type', 'radio')
       .attr('name', sbsId)
       .attr('value', d => d)
-      .on('click', (d, i) => {
+      .on('click', function (d, i) {
         event.stopPropagation()
         tableContainer.attr('data-col-selected', 'true')
         thead.selectAll('th').classed('active', (q) => q === d)
-
-        trs.selectAll('td')
-          .attr('contentEditable', null)
-          .classed('active', q => q[0] === d)
+        dispatch.call('join', parent(this, 'sbs-group'))
+        trs.selectAll('td').attr('contentEditable', null)
       })
 
     let trs = tbody.selectAll('tr').data(json).enter()

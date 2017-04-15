@@ -861,6 +861,89 @@ var selectAll = function(selector) {
       : new Selection([selector == null ? [] : selector], root);
 };
 
+var noop = {value: function() {}};
+
+function dispatch$1() {
+  for (var i = 0, n = arguments.length, _ = {}, t; i < n; ++i) {
+    if (!(t = arguments[i] + "") || (t in _)) throw new Error("illegal type: " + t);
+    _[t] = [];
+  }
+  return new Dispatch(_);
+}
+
+function Dispatch(_) {
+  this._ = _;
+}
+
+function parseTypenames$1(typenames, types) {
+  return typenames.trim().split(/^|\s+/).map(function(t) {
+    var name = "", i = t.indexOf(".");
+    if (i >= 0) name = t.slice(i + 1), t = t.slice(0, i);
+    if (t && !types.hasOwnProperty(t)) throw new Error("unknown type: " + t);
+    return {type: t, name: name};
+  });
+}
+
+Dispatch.prototype = dispatch$1.prototype = {
+  constructor: Dispatch,
+  on: function(typename, callback) {
+    var _ = this._,
+        T = parseTypenames$1(typename + "", _),
+        t,
+        i = -1,
+        n = T.length;
+
+    // If no callback was specified, return the callback of the given type and name.
+    if (arguments.length < 2) {
+      while (++i < n) if ((t = (typename = T[i]).type) && (t = get(_[t], typename.name))) return t;
+      return;
+    }
+
+    // If a type was specified, set the callback for the given type and name.
+    // Otherwise, if a null callback was specified, remove callbacks of the given name.
+    if (callback != null && typeof callback !== "function") throw new Error("invalid callback: " + callback);
+    while (++i < n) {
+      if (t = (typename = T[i]).type) _[t] = set(_[t], typename.name, callback);
+      else if (callback == null) for (t in _) _[t] = set(_[t], typename.name, null);
+    }
+
+    return this;
+  },
+  copy: function() {
+    var copy = {}, _ = this._;
+    for (var t in _) copy[t] = _[t].slice();
+    return new Dispatch(copy);
+  },
+  call: function(type, that) {
+    if ((n = arguments.length - 2) > 0) for (var args = new Array(n), i = 0, n, t; i < n; ++i) args[i] = arguments[i + 2];
+    if (!this._.hasOwnProperty(type)) throw new Error("unknown type: " + type);
+    for (t = this._[type], i = 0, n = t.length; i < n; ++i) t[i].value.apply(that, args);
+  },
+  apply: function(type, that, args) {
+    if (!this._.hasOwnProperty(type)) throw new Error("unknown type: " + type);
+    for (var t = this._[type], i = 0, n = t.length; i < n; ++i) t[i].value.apply(that, args);
+  }
+};
+
+function get(type, name) {
+  for (var i = 0, n = type.length, c; i < n; ++i) {
+    if ((c = type[i]).name === name) {
+      return c.value;
+    }
+  }
+}
+
+function set(type, name, callback) {
+  for (var i = 0, n = type.length; i < n; ++i) {
+    if (type[i].name === name) {
+      type[i] = noop, type = type.slice(0, i).concat(type.slice(i + 1));
+      break;
+    }
+  }
+  if (callback != null) type.push({name: name, value: callback});
+  return type;
+}
+
 // https://github.com/mhkeller/indian-ocean Version 2.0.2. Copyright 2017 undefined.
 function objectConverter(columns) {
   return new Function("d", "return {" + columns.map(function (name, i) {
@@ -1152,15 +1235,15 @@ var versions = {};
 var release = {};
 var config = {};
 
-function noop() {}
+function noop$1() {}
 
-var on = noop;
-var addListener = noop;
-var once = noop;
-var off = noop;
-var removeListener = noop;
-var removeAllListeners = noop;
-var emit = noop;
+var on = noop$1;
+var addListener = noop$1;
+var once = noop$1;
+var off = noop$1;
+var removeListener = noop$1;
+var removeAllListeners = noop$1;
+var emit = noop$1;
 
 function binding(name) {
     throw new Error('process.binding is not supported');
@@ -2675,7 +2758,7 @@ function constructYamlSet(data) {
   return data !== null ? data : {};
 }
 
-var set = new Type$15('tag:yaml.org,2002:set', {
+var set$1 = new Type$15('tag:yaml.org,2002:set', {
   kind: 'mapping',
   resolve: resolveYamlSet,
   construct: constructYamlSet
@@ -2686,7 +2769,7 @@ var Schema$1 = schema;
 var default_safe = new Schema$1({
   include: [core],
   implicit: [timestamp, merge],
-  explicit: [binary, omap, pairs, set]
+  explicit: [binary, omap, pairs, set$1]
 });
 
 var Type$16 = type;
@@ -9520,7 +9603,7 @@ var escKeys = {
   keys: ['Escape', 'Enter']
 };
 
-function bakeTable(el, json) {
+function bakeTable(el, json, dispatch) {
   var sbsContainer = select(getParentByClass(el, 'sbs-single'));
   var sbsId = sbsContainer.attr('id');
   var tableContainer = sbsContainer.append('div').classed('table-container', true).attr('data-col-selected', 'false').on('click', function (d) {
@@ -9561,10 +9644,8 @@ function bakeTable(el, json) {
         thead.selectAll('th').classed('active', function (q) {
           return q === d;
         });
-
-        trs.selectAll('td').attr('contentEditable', null).classed('active', function (q) {
-          return q[0] === d;
-        });
+        dispatch.call('join', getParentByClass(this, 'sbs-group'));
+        trs.selectAll('td').attr('contentEditable', null);
       });
 
       var trs = tbody.selectAll('tr').data(json).enter().append('tr').classed('table-row', true);
@@ -9618,6 +9699,19 @@ function bakeTable(el, json) {
   }
 }
 
+function joinCheck() {
+  return selectAll('.table-container input:checked').size() === 2;
+}
+
+function titleSequence(dispatch) {
+  dispatch.on('join.change-title', performJoin);
+
+  function performJoin(stepInfo, dir) {
+    joinCheck();
+    console.log('here', this);
+  }
+}
+
 /* --------------------------------------------
  *
  * Main.js
@@ -9630,10 +9724,14 @@ var statusOver = dragStatusChange('dragover');
 var statusDrop = dragStatusChange('drop');
 var statusTable = dragStatusChange('table');
 
+var dispatch$$1 = dispatch$1('join');
+
+titleSequence(dispatch$$1);
+
 selectAll('.upload-input').on('change', function () {
   readDroppedFile.call(this, function (el, json) {
     statusTable.call(el);
-    bakeTable(el, json);
+    bakeTable(el, json, dispatch$$1);
   });
 }).on('dragover', statusOver).on('dragleave', statusEmpty).on('drop', statusDrop);
 

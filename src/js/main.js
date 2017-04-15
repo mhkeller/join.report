@@ -6,6 +6,7 @@
  */
 
 import {selectAll} from 'd3-selection'
+import {dispatch as Dispatch} from 'd3-dispatch'
 
 import readDroppedFile from './modules/readDroppedFile'
 import bakeTable from './modules/bakeTable'
@@ -13,16 +14,20 @@ import bakeTable from './modules/bakeTable'
 import dragStatusChange from './modules/dragStatusChange'
 import titleSequence from './modules/titleSequence'
 
-var statusEmpty = dragStatusChange('empty')
-var statusOver = dragStatusChange('dragover')
-var statusDrop = dragStatusChange('drop')
-var statusTable = dragStatusChange('table')
+const statusEmpty = dragStatusChange('empty')
+const statusOver = dragStatusChange('dragover')
+const statusDrop = dragStatusChange('drop')
+const statusTable = dragStatusChange('table')
+
+var dispatch = Dispatch('join')
+
+titleSequence(dispatch)
 
 selectAll('.upload-input')
   .on('change', function () {
     readDroppedFile.call(this, function (el, json) {
       statusTable.call(el)
-      bakeTable(el, json)
+      bakeTable(el, json, dispatch)
     })
   })
   .on('dragover', statusOver)
