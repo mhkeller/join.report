@@ -13,6 +13,7 @@
     height 100%
     cursor pointer
   .upload-label
+    // border 3px dashed #1cfa05
     border 3px dashed #66baff
     &:before,
     &:after
@@ -46,7 +47,8 @@
       display block
   &[data-status="dragover"]
     .upload-label
-      border-color red
+      border-color lighten(#66baff, 50%)
+      // border-color red
       &:after
         content 'Drop drop drop!'
   &[data-status="drop"]

@@ -11,7 +11,9 @@ $remove-width = 55px
       content 'pick a column to join on'
       position absolute
       top 0
-      font-size 14px
+      font-size 16px
+      letter-spacing 1px
+      word-spacing -2px
       left "calc(50% - %s)" % ($remove-width / 2)
       transform translate(-50%, -275%)
       color yellow
@@ -77,11 +79,14 @@ $remove-width = 55px
 
   td,
   th
-    border 1px solid #ccc
+    border 1px solid #000
     padding 5px
+    position relative
     &.active
-      z-index -1
+      position relative
       background-color yellow
+      background-origin padding-box
+      background-clip padding-box
   td
     outline 0px solid transparent !important
     &[contenteditable="true"]
