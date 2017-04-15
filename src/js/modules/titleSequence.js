@@ -1,4 +1,4 @@
-import {select} from 'd3-selection'
+import {select, event} from 'd3-selection'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -23,10 +23,14 @@ export default function titleSequence (dispatch) {
 
       inst.selectAll('p').remove()
 
-      inst.append('button')
-        .classed('join-button', true)
-        .html('Go for it.')
+      inst.append('a')
+        .attr('class', 'button button-primary join-button')
+        .attr('role', 'button')
+        .attr('href', '#')
+        .html('Go for it')
         .on('click', () => {
+          event.stopPropagation()
+          event.preventDefault()
           dispatch.call('join')
         })
     }

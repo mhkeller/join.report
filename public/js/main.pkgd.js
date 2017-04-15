@@ -9717,7 +9717,9 @@ function titleSequence(dispatch) {
 
       inst.selectAll('p').remove();
 
-      inst.append('button').classed('join-button', true).html('Go for it.').on('click', function () {
+      inst.append('a').attr('class', 'button button-primary join-button').attr('role', 'button').attr('href', '#').html('Go for it').on('click', function () {
+        event.stopPropagation();
+        event.preventDefault();
         dispatch.call('join');
       });
     }
