@@ -9717,7 +9717,7 @@ function titleSequence(dispatch) {
 
       inst.selectAll('p').remove();
 
-      inst.append('button').html('Go for it.').on('click', function () {
+      inst.append('button').classed('join-button', true).html('Go for it.').on('click', function () {
         dispatch.call('join');
       });
     }
@@ -9726,13 +9726,6 @@ function titleSequence(dispatch) {
 
 var commonjsGlobal$2 = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-/**
- * Removes all key-value entries from the list cache.
- *
- * @private
- * @name clear
- * @memberOf ListCache
- */
 function listCacheClear$1() {
   this.__data__ = [];
   this.size = 0;
@@ -10594,6 +10587,16 @@ var MapCache = _MapCache;
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
 
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
 var getNative$3 = _getNative;
 
 var defineProperty$1 = function () {
@@ -10664,28 +10667,14 @@ var assignValue$2 = _assignValue;
 var baseAssignValue$2 = _baseAssignValue;
 
 /**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
+ * Copies properties of `source` to `object`.
  *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
  */
 function isObjectLike$2(value) {
   return value != null && typeof value == 'object';
@@ -10893,13 +10882,6 @@ function isLength$1(value) {
 
 var isLength_1 = isLength$1;
 
-/**
- * The base implementation of `_.unary` without support for storing metadata.
- *
- * @private
- * @param {Function} func The function to cap arguments for.
- * @returns {Function} Returns the new capped function.
- */
 function baseUnary$1(func) {
   return function (value) {
     return func(value);
@@ -11006,11 +10988,11 @@ module.exports = cloneBuffer;
 });
 
 /**
- * Appends the elements of `values` to `array`.
+ * Copies the values of `source` to `array`.
  *
  * @private
- * @param {Array} array The array to modify.
- * @param {Array} values The values to append.
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
  * @returns {Array} Returns `array`.
  */
 function arrayPush$1(array, values) {
@@ -11442,7 +11424,16 @@ var isIndex$2 = _isIndex;
 var isObject$6 = isObject_1$1;
 var toKey$2 = _toKey;
 
-/** Used to stand-in for `undefined` hash values. */
+/**
+ * The base implementation of `_.set`.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {Array|string} path The path of the property to set.
+ * @param {*} value The value to set.
+ * @param {Function} [customizer] The function to customize path creation.
+ * @returns {Object} Returns `object`.
+ */
 var HASH_UNDEFINED$2 = '__lodash_hash_undefined__';
 
 /**

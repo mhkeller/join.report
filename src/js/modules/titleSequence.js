@@ -24,6 +24,7 @@ export default function titleSequence (dispatch) {
       inst.selectAll('p').remove()
 
       inst.append('button')
+        .classed('join-button', true)
         .html('Go for it.')
         .on('click', () => {
           dispatch.call('join')
