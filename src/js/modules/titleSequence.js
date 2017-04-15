@@ -1,10 +1,7 @@
-import joinCheck from './joinCheck'
-
 export default function titleSequence (dispatch) {
-  dispatch.on('join.change-title', performJoin)
+  dispatch.on('change-title', changeTitle)
 
-  function performJoin (stepInfo, dir) {
-    joinCheck()
-    console.log('here', this)
+  function changeTitle (stepInfo, dir) {
+
   }
 }

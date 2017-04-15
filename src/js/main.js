@@ -19,7 +19,7 @@ const statusOver = dragStatusChange('dragover')
 const statusDrop = dragStatusChange('drop')
 const statusTable = dragStatusChange('table')
 
-var dispatch = Dispatch('join')
+var dispatch = Dispatch('join', 'change-title')
 
 titleSequence(dispatch)
 
