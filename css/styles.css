@@ -98,7 +98,7 @@ nav {
   display: block;
 }
 .sbs-single[data-status="dragover"] .upload-label {
-  border-color: #f00;
+  border-color: #b3ddff;
 }
 .sbs-single[data-status="dragover"] .upload-label:after {
   content: 'Drop drop drop!';
@@ -126,7 +126,9 @@ nav {
   content: 'pick a column to join on';
   position: absolute;
   top: 0;
-  font-size: 14px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  word-spacing: -2px;
   left: calc(50% - 27.5px);
   -webkit-transform: translate(-50%, -275%);
       -ms-transform: translate(-50%, -275%);
@@ -207,13 +209,16 @@ nav {
 }
 .table-container td,
 .table-container th {
-  border: 1px solid #ccc;
+  border: 1px solid #000;
   padding: 5px;
+  position: relative;
 }
 .table-container td.active,
 .table-container th.active {
-  z-index: -1;
+  position: relative;
   background-color: #ff0;
+  background-origin: padding-box;
+  background-clip: padding-box;
 }
 .table-container td {
   outline: 0px solid transparent !important;

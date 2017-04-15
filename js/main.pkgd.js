@@ -9547,6 +9547,7 @@ function bakeTable(el, json) {
       }).on('click', function (d) {
         event.stopPropagation();
         thead.select('th.sorted').classed('sorted', false);
+        tbody.selectAll('td').attr('contentEditable', null);
         var asc = !JSON.parse(this.dataset.asc || 'false');
         select(this).classed('sorted', true).attr('data-asc', asc);
         trs.sort(sortTableRows(trs.data(), d, asc));
