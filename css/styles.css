@@ -238,12 +238,6 @@ nav {
           user-select: none;
   cursor: pointer;
 }
-.table-container th.active {
-  position: relative;
-  background-color: #ff0;
-  background-origin: padding-box;
-  background-clip: padding-box;
-}
 .table-container th input[type='radio'] {
   position: absolute;
   width: 100%;
@@ -280,6 +274,13 @@ nav {
 .table-container th {
   border: 1px solid #000;
   padding: 5px;
+}
+.table-container td.active,
+.table-container th.active {
+  position: relative;
+  background-color: #ff0;
+  background-origin: padding-box;
+  background-clip: padding-box;
 }
 .table-container td {
   outline: 0px solid transparent !important;
