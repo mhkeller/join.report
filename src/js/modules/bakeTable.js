@@ -94,6 +94,11 @@ export default function bakeTable (el, json, dispatch) {
     let deletes = trs.append('td')
       .classed('row-delete', true)
 
+    let removeStr = '<span class="remove-row">&times;</span>'
+    let removeTitle = 'Remove this row'
+    let restoreStr = '<span class="restore-row">&#8634;</span>'
+    let restoreTitle = 'Restore this row'
+
     deletes.append('a')
       .attr('href', '#')
       .on('click', function (d, i) {
@@ -102,18 +107,18 @@ export default function bakeTable (el, json, dispatch) {
         let tableRow = select(parent(this, 'table-row'))
         let isDeleted = tableRow.attr('data-deleted') === 'true'
         if (isDeleted) {
-          select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this row')
+          select(this).html(removeStr).attr('title', removeTitle)
           tableRow.attr('data-deleted', 'false')
           delete d.___deleted___
         } else {
           tableRow.attr('data-deleted', 'true')
-          select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row')
+          select(this).html(restoreStr).attr('title', restoreTitle)
           d.___deleted___ = true
         }
 
         return false
       })
-      .attr('title', 'Delete this feature')
-      .html('<span>&times;</span>&nbsp;Remove')
+      .attr('title', removeTitle)
+      .html(removeStr)
   }
 }

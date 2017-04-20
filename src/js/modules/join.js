@@ -14,5 +14,6 @@ export default function join (dispatch) {
   }
 
   function performJoin () {
+    // joiner()
   }
 }
