@@ -44,15 +44,6 @@ $remove-width = 55px
     text-align center
     user-select none
     cursor pointer
-    &.active
-      position relative
-      background-color yellow
-      background-origin padding-box
-      background-clip padding-box
-    // &:not(input):hover
-    //   cursor pointer
-    //   text-decoration underline
-
     input[type='radio']
       position absolute
       width 100%
@@ -85,6 +76,14 @@ $remove-width = 55px
   th
     border 1px solid #000
     padding 5px
+    &.active
+      position relative
+      background-color yellow
+      background-origin padding-box
+      background-clip padding-box
+      // &:not(input):hover
+      //   cursor pointer
+      //   text-decoration underline
   td
     outline 0px solid transparent !important
     &[contenteditable="true"]

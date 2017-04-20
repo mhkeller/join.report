@@ -10072,6 +10072,9 @@ function bakeTable(el, json, dispatch) {
       thead.selectAll('th').classed('active', function (q) {
         return q === d;
       });
+      tbody.selectAll('td').classed('active', function (q) {
+        return q[0] === d;
+      });
       dispatch.call('col-selected', getParentByClass(this, 'sbs-group'));
       trs.selectAll('td').attr('contentEditable', null);
     });
