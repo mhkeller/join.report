@@ -27,9 +27,13 @@ join(dispatch)
 
 selectAll('.upload-input')
   .on('change', function () {
-    readDroppedFile.call(this, function (el, json) {
-      statusTable.call(el)
-      bakeTable(el, json, dispatch)
+    readDroppedFile.call(this, function (err, el, json) {
+      if (err) {
+        console.error(err)
+      } else {
+        statusTable.call(el)
+        bakeTable(el, json, dispatch)
+      }
     })
   })
   .on('dragover', statusOver)
