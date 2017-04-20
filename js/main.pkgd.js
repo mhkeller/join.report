@@ -10106,23 +10106,28 @@ function bakeTable(el, json, dispatch) {
 
     var deletes = trs.append('td').classed('row-delete', true);
 
+    var removeStr = '<span class="remove-row">&times;</span>';
+    var removeTitle = 'Remove this row';
+    var restoreStr = '<span class="restore-row">&#8634;</span>';
+    var restoreTitle = 'Restore this row';
+
     deletes.append('a').attr('href', '#').on('click', function (d, i) {
       event.preventDefault();
 
       var tableRow = select(getParentByClass(this, 'table-row'));
       var isDeleted = tableRow.attr('data-deleted') === 'true';
       if (isDeleted) {
-        select(this).html('<span>&times;</span>&nbsp;Remove').attr('title', 'Remove this row');
+        select(this).html(removeStr).attr('title', removeTitle);
         tableRow.attr('data-deleted', 'false');
         delete d.___deleted___;
       } else {
         tableRow.attr('data-deleted', 'true');
-        select(this).html('<span>+</span>&nbsp;Restore').attr('title', 'Restore this row');
+        select(this).html(restoreStr).attr('title', restoreTitle);
         d.___deleted___ = true;
       }
 
       return false;
-    }).attr('title', 'Delete this feature').html('<span>&times;</span>&nbsp;Remove');
+    }).attr('title', removeTitle).html(removeStr);
   }
 }
 
@@ -12584,7 +12589,9 @@ function join(dispatch) {
     }
   }
 
-  function performJoin() {}
+  function performJoin() {
+    // joiner()
+  }
 }
 
 /* --------------------------------------------

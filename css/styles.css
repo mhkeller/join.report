@@ -305,7 +305,9 @@ nav {
   color: #ccc !important;
 }
 .table-container .row-delete {
-  font-size: 12px;
+  position: relative;
+  width: 8px;
+  font-size: 18px;
 }
 .table-container .row-delete:hover {
   cursor: default;
@@ -323,8 +325,18 @@ nav {
   color: #f00;
 }
 .table-container .row-delete span {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
   font-weight: bold;
+}
+.table-container .row-delete span.restore-row {
+  font-size: 23px;
+}
+.table-container .row-delete span.restore-row:hover {
+  color: #008000;
 }
 body {
   font-family: Helvetica, sans-serif;
