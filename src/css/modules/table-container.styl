@@ -4,8 +4,8 @@ $remove-width = 55px
 .table-container
   position relative
   width 100%
-  height 100%
-  transform translate(0, 18px)
+  // height 100%
+  transform translate(0, 24px)
   &[data-col-selected='false']
     &:before
       content 'pick a column to join on'
@@ -105,23 +105,24 @@ $remove-width = 55px
         color #ccc !important
   .row-delete
     position relative
-    width 8px
+    // width 32px
     font-size 16px
+    // background-color #fc0
     &:hover
       cursor default
     a
       text-decoration none
       color #ccc
       user-select none
-      &:hover
-        text-decoration underline
-        color red
     span
       position absolute
       top 50%
-      left 50%
-      transform translate(-50%, -50%)
+      left 2px
+      transform translate(0, -50%)
       font-weight bold
+      &:hover
+        text-decoration underline
+        color red
       &.restore-row
         font-size 20px
         &:hover

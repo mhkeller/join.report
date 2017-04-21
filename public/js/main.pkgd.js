@@ -10109,9 +10109,9 @@ function bakeTable(el, json, dispatch) {
 
     var deletes = trs.append('td').classed('row-delete', true);
 
-    var removeStr = '<span class="remove-row">&times;</span>';
+    var removeStr = '<span class="remove-row">&times;</span>&nbsp;&nbsp;&nbsp;&nbsp;';
     var removeTitle = 'Remove this row';
-    var restoreStr = '<span class="restore-row">&#8634;</span>';
+    var restoreStr = '<span class="restore-row">&#8634;</span>&nbsp;&nbsp;&nbsp;&nbsp;';
     var restoreTitle = 'Restore this row';
 
     deletes.append('a').attr('href', '#').on('click', function (d, i) {

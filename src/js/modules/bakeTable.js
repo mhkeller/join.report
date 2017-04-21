@@ -95,9 +95,9 @@ export default function bakeTable (el, json, dispatch) {
     let deletes = trs.append('td')
       .classed('row-delete', true)
 
-    let removeStr = '<span class="remove-row">&times;</span>'
+    let removeStr = '<span class="remove-row">&times;</span>&nbsp;&nbsp;&nbsp;&nbsp;'
     let removeTitle = 'Remove this row'
-    let restoreStr = '<span class="restore-row">&#8634;</span>'
+    let restoreStr = '<span class="restore-row">&#8634;</span>&nbsp;&nbsp;&nbsp;&nbsp;'
     let restoreTitle = 'Restore this row'
 
     deletes.append('a')
