@@ -182,12 +182,17 @@ nav {
   content: 'Processing...';
   animation: rotateAnimation 1600ms linear infinite;
 }
+.sbs-single[data-status="table"] {
+  border: 1px solid #ccc;
+  overflow: scroll;
+  padding-left: 10px;
+  background-clip: padding-box;
+}
 .table-container {
   position: relative;
   width: 100%;
-  height: 100%;
-  -ms-transform: translate(0, 18px);
-      transform: translate(0, 18px);
+  -ms-transform: translate(0, 24px);
+      transform: translate(0, 24px);
 }
 .table-container[data-col-selected='false']:before {
   content: 'pick a column to join on';
@@ -307,7 +312,6 @@ nav {
 }
 .table-container .row-delete {
   position: relative;
-  width: 8px;
   font-size: 16px;
 }
 .table-container .row-delete:hover {
@@ -321,17 +325,17 @@ nav {
       -ms-user-select: none;
           user-select: none;
 }
-.table-container .row-delete a:hover {
-  text-decoration: underline;
-  color: #f00;
-}
 .table-container .row-delete span {
   position: absolute;
   top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
+  left: 2px;
+  -ms-transform: translate(0, -50%);
+      transform: translate(0, -50%);
   font-weight: bold;
+}
+.table-container .row-delete span:hover {
+  text-decoration: underline;
+  color: #f00;
 }
 .table-container .row-delete span.restore-row {
   font-size: 20px;
@@ -352,8 +356,8 @@ body {
   height: 300px;
 }
 .sbs-single {
-  width: 48%;
   position: relative;
+  width: 48%;
   height: 100%;
 }
 .sbs-single:first-child {
