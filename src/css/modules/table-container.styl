@@ -1,22 +1,30 @@
 $hover-color = #eee
 $remove-width = 55px
 
+.sbs-single
+  &[data-status="table"]
+    border 1px solid #ccc
+.table-group
+  width 100%
+  height 100%
+.pick-column
+  display block
+  position absolute
+  top 0
+  font-size 16px
+  padding 0 4px
+  left 50%
+  transform translate(-50%, -115%)
+  background-color yellow
+  color #000
+  &[data-col-selected='true']
+    display none
 .table-container
   position relative
-  width 100%
-  // height 100%
-  transform translate(0, 24px)
-  &[data-col-selected='false']
-    &:before
-      content 'pick a column to join on'
-      position absolute
-      top 0
-      font-size 16px
-      padding 0 4px
-      left "calc(50% - %s)" % ($remove-width / 2)
-      transform translate(-50%, -275%)
-      background-color yellow
-      color #000
+  padding-left 10px
+  width calc(100% - 10px) // Match padding-left value
+  height 100%
+  overflow scroll
   .error-message
     width 100%
     position relative
@@ -30,7 +38,7 @@ $remove-width = 55px
       text-decoration underline
   table
     border-collapse collapse
-    margin 0 auto
+    margin 24px auto 20px auto
   tr
     &:hover
       background-color $hover-color

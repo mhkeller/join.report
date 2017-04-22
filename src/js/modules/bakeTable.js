@@ -13,9 +13,16 @@ let escKeys = {
 export default function bakeTable (el, json, dispatch) {
   var sbsContainer = select(parent(el, 'sbs-single'))
   var sbsId = sbsContainer.attr('id')
-  let tableContainer = sbsContainer.append('div')
-    .classed('table-container', true)
+  let tableGroup = sbsContainer.append('div')
+    .classed('table-group', true)
+
+  let pickColumn = tableGroup.append('div')
+    .classed('pick-column', true)
     .attr('data-col-selected', 'false')
+    .html('pick a column to join on')
+
+  let tableContainer = tableGroup.append('div')
+    .classed('table-container', true)
     .on('click', function (d) {
       select(this).selectAll('td').attr('contentEditable', null)
     })
@@ -55,7 +62,7 @@ export default function bakeTable (el, json, dispatch) {
       .attr('value', d => d)
       .on('click', function (d, i) {
         event.stopPropagation()
-        tableContainer.attr('data-col-selected', 'true')
+        pickColumn.attr('data-col-selected', 'true')
         thead.selectAll('th').classed('active', (q) => q === d)
         tbody.selectAll('td').classed('active', (q) => q[0] === d)
         dispatch.call('col-selected', parent(this, 'sbs-group'))
