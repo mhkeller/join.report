@@ -208,12 +208,10 @@ nav {
   content: url("../img/trashcan.svg");
 }
 .table-btn[data-which="download"] {
-  font-size: 23px;
-  font-weight: bold;
-  padding: 0 3px;
+  width: 20px;
 }
 .table-btn[data-which="download"]:after {
-  content: '⤓';
+  content: url("../img/download.svg");
 }
 .table-btn-group,
 .pick-column {
