@@ -1,4 +1,5 @@
 import joiner from 'joiner'
+import * as datastore from './datastore'
 
 import joinCheck from './joinCheck'
 
@@ -9,11 +10,15 @@ export default function join (dispatch) {
   function checkForJoin () {
     var readyToJoin = joinCheck()
     if (readyToJoin) {
+      dispatch.call('get-keys')
       dispatch.call('change-title', window, 'ready')
     }
   }
 
   function performJoin () {
-    // joiner()
+    console.log(datastore.getAll())
+    // joiner({
+
+    // })
   }
 }

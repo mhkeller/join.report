@@ -12594,7 +12594,48 @@ var difference = baseRest$2(function (array, values) {
     return isArrayLikeObject$2(array) ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject$2, true)) : [];
 });
 
+var datastore = [];
+var slug = 'dataset-';
+
+function idToOrder(id) {
+  return +id.replace(slug, '');
+}
+
+function setKey(id, key) {
+  var record = datastore.filter(function (d) {
+    return d.order === idToOrder(id);
+  })[0];
+  record.joinKey = key;
+}
+
+function add(id, json) {
+  var obj = {
+    order: idToOrder(id),
+    json: json
+  };
+  datastore.push(obj);
+}
+
+function getAll() {
+  return datastore.sort(function (a, b) {
+    if (a.order < b.order) {
+      return -1;
+    } else if (a.order > b.order) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
+
 function joinCheck() {
+  var els = selectAll('.table-container input:checked');
+  var twoChecked = els.size() === 2;
+  if (twoChecked) {
+    els.nodes().forEach(function (el) {
+      setKey(getParentByClass(el, 'sbs-single').id, el.value);
+    });
+  }
   return selectAll('.table-container input:checked').size() === 2;
 }
 
@@ -12605,12 +12646,16 @@ function join(dispatch) {
   function checkForJoin() {
     var readyToJoin = joinCheck();
     if (readyToJoin) {
+      dispatch.call('get-keys');
       dispatch.call('change-title', window, 'ready');
     }
   }
 
   function performJoin() {
-    // joiner()
+    console.log(getAll());
+    // joiner({
+
+    // })
   }
 }
 
@@ -12625,8 +12670,7 @@ var statusEmpty = dragStatusChange('empty');
 var statusOver = dragStatusChange('dragover');
 var statusDrop = dragStatusChange('drop');
 var statusTable = dragStatusChange('table');
-
-var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title');
+var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys');
 
 titleSequence(dispatch$$1);
 join(dispatch$$1);
@@ -12636,6 +12680,7 @@ selectAll('.upload-input').on('change', function () {
     if (err) {
       console.error(err);
     } else {
+      add(getParentByClass(el, 'sbs-single').id, json);
       statusTable.call(el);
       bakeTable(el, json, dispatch$$1);
     }
