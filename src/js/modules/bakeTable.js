@@ -21,6 +21,19 @@ export default function bakeTable (el, json, dispatch) {
     .attr('data-col-selected', 'false')
     .html('pick a column to join on')
 
+  let btnGroup = tableGroup.append('div')
+    .classed('table-btn-group', true)
+
+  btnGroup.append('div')
+    .classed('table-btn', true)
+    .attr('data-which', 'reset')
+    .on('click', resetTable)
+
+  btnGroup.append('div')
+    .classed('table-btn', true)
+    .attr('data-which', 'download')
+    .on('click', downloadTable)
+
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)
     .on('click', function (d) {
@@ -33,12 +46,9 @@ export default function bakeTable (el, json, dispatch) {
       .html('Your data was empty.')
 
     errorContainer.append('div')
-      .classed('restart', true)
+      .classed('reset', true)
       .html('Try again.')
-      .on('click', function () {
-        dragStatusChange('empty').call(el)
-        errorContainer.remove()
-      })
+      .on('click', resetTable)
   } else {
     let table = tableContainer.append('table')
     let thead = table.append('thead')
@@ -128,5 +138,15 @@ export default function bakeTable (el, json, dispatch) {
       })
       .attr('title', removeTitle)
       .html(removeStr)
+  }
+
+  function resetTable () {
+    dragStatusChange('empty').call(el)
+    tableGroup.remove()
+  }
+
+  function downloadTable () {
+    // dragStatusChange('empty').call(el)
+    // tableGroup.remove()
   }
 }

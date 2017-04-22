@@ -10041,6 +10041,12 @@ function bakeTable(el, json, dispatch) {
 
   var pickColumn = tableGroup.append('div').classed('pick-column', true).attr('data-col-selected', 'false').html('pick a column to join on');
 
+  var btnGroup = tableGroup.append('div').classed('table-btn-group', true);
+
+  btnGroup.append('div').classed('table-btn', true).attr('data-which', 'reset').on('click', resetTable);
+
+  btnGroup.append('div').classed('table-btn', true).attr('data-which', 'download').on('click', downloadTable);
+
   var tableContainer = tableGroup.append('div').classed('table-container', true).on('click', function (d) {
     select(this).selectAll('td').attr('contentEditable', null);
   });
@@ -10048,10 +10054,7 @@ function bakeTable(el, json, dispatch) {
   if (Array.isArray(json) && json.length === 0) {
     var errorContainer = tableContainer.append('div').classed('error-message', true).html('Your data was empty.');
 
-    errorContainer.append('div').classed('restart', true).html('Try again.').on('click', function () {
-      dragStatusChange('empty').call(el);
-      errorContainer.remove();
-    });
+    errorContainer.append('div').classed('reset', true).html('Try again.').on('click', resetTable);
   } else {
     var table = tableContainer.append('table');
     var thead = table.append('thead');
@@ -10135,6 +10138,16 @@ function bakeTable(el, json, dispatch) {
 
       return false;
     }).attr('title', removeTitle).html(removeStr);
+  }
+
+  function resetTable() {
+    dragStatusChange('empty').call(el);
+    tableGroup.remove();
+  }
+
+  function downloadTable() {
+    // dragStatusChange('empty').call(el)
+    // tableGroup.remove()
   }
 }
 

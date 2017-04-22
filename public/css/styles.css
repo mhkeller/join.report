@@ -189,17 +189,45 @@ nav {
   width: 100%;
   height: 100%;
 }
+.table-btn-group {
+  -ms-transform: translate(0, -22px);
+      transform: translate(0, -22px);
+}
+.table-btn {
+  opacity: 0.3;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+  min-width: 18px;
+  padding-right: 3px;
+}
+.table-btn:hover {
+  opacity: 1;
+}
+.table-btn[data-which="reset"]:after {
+  content: url("../img/trashcan.svg");
+}
+.table-btn[data-which="download"] {
+  font-size: 23px;
+  font-weight: bold;
+  padding: 0 3px;
+}
+.table-btn[data-which="download"]:after {
+  content: '⤓';
+}
+.table-btn-group,
 .pick-column {
-  display: block;
   position: absolute;
   top: 0;
+}
+.pick-column {
   font-size: 16px;
   padding: 0 4px;
   left: 50%;
-  -ms-transform: translate(-50%, -115%);
-      transform: translate(-50%, -115%);
   background-color: #ff0;
   color: #000;
+  -ms-transform: translate(-50%, -120%);
+      transform: translate(-50%, -120%);
 }
 .pick-column[data-col-selected='true'] {
   display: none;
@@ -219,11 +247,11 @@ nav {
   -ms-transform: translate(0, -50%);
       transform: translate(0, -50%);
 }
-.table-container .restart {
+.table-container .reset {
   color: #00f;
   cursor: pointer;
 }
-.table-container .restart:hover {
+.table-container .reset:hover {
   text-decoration: underline;
 }
 .table-container table {
