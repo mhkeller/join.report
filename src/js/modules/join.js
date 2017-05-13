@@ -28,5 +28,6 @@ export default function join (dispatch) {
       rightDataKey: rightData.joinKey
     })
     console.log(joinedData)
+    dispatch.call('data-did-join', null, joinedData)
   }
 }

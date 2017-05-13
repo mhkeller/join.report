@@ -20,7 +20,7 @@ const statusEmpty = dragStatusChange('empty')
 const statusOver = dragStatusChange('dragover')
 const statusDrop = dragStatusChange('drop')
 const statusTable = dragStatusChange('table')
-import {default as parent} from './modules/getParentByClass'
+import {default as parent} from './modules/utils/getParentByClass'
 
 const dispatch = Dispatch('col-selected', 'join', 'change-title', 'get-keys')
 

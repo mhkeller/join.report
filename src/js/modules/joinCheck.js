@@ -1,6 +1,6 @@
 import {selectAll} from 'd3-selection'
 import * as datastore from './datastore'
-import {default as parent} from './getParentByClass'
+import {default as parent} from './utils/getParentByClass'
 
 export default function joinCheck () {
   var els = selectAll('.table-container input:checked')

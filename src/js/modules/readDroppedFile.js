@@ -1,6 +1,6 @@
 /* globals FileReader */
 import * as io from 'indian-ocean/dist/indian-ocean.browser.es6.js'
-import readSource from './readSource'
+import readSource from './utils/readSource'
 import {openDbf} from 'shapefile'
 
 export default function readDroppedFile (cb) {

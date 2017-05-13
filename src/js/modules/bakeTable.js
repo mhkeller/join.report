@@ -1,9 +1,9 @@
 import {select, event} from 'd3-selection'
-import {default as parent} from './getParentByClass'
+import {default as parent} from './utils/getParentByClass'
 
 import pairs from './pairs'
 import dragStatusChange from './dragStatusChange'
-import sortTableRows from './sortTableRows'
+import sortTableRows from './utils/sortTableRows'
 
 let escKeys = {
   keyCodes: [27, 13],

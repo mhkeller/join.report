@@ -1,5 +1,5 @@
 import {select} from 'd3-selection'
-import {default as parent} from './getParentByClass'
+import {default as parent} from './utils/getParentByClass'
 
 export default function dragStatusChange (status) {
   return function () {
