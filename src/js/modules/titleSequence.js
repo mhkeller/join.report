@@ -1,4 +1,5 @@
 import {select, event} from 'd3-selection'
+import styleMatchStatus from './utils/styleMatchStatus'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -6,9 +7,7 @@ export default function titleSequence (dispatch) {
   // Maybe optionally pass in a `this` for other options
   function changeTitle (stepName) {
     if (steps[stepName]) {
-      // let el = steps[stepName].call(this)
       steps[stepName].call(this)
-      // slideIn(el)
     } else {
       console.error('No step info found for name:', stepName)
     }
@@ -16,9 +15,9 @@ export default function titleSequence (dispatch) {
 
   const steps = {
     'ready': function () {
-      let inst = select('#instructions')
+      const inst = select('#instructions')
 
-      let h2 = inst.select('h2')
+      const h2 = inst.select('h2')
         .html('Ready to join!')
 
       inst.selectAll('.inst-el').remove()
@@ -35,6 +34,28 @@ export default function titleSequence (dispatch) {
           select(this).classed('processing', true).html('Please hold...')
           h2.html('Processing...')
         })
+    },
+    'did-join': function () {
+      const inst = select('#instructions')
+
+      inst.select('h2')
+        .html('Join successful!')
+
+      inst.selectAll('.button').remove()
+
+      inst.append('p')
+        .classed('inst-el', true)
+        .html('Match status: ' + styleMatchStatus(this.report.matchStatus))
+
+      inst.append('p')
+        .classed('inst-el', true)
+        .classed('data-which', 'prose-summary')
+        .html(this.report.prose.summary)
+
+      inst.append('p')
+        .classed('inst-el', true)
+        .classed('data-which', 'prose-full')
+        .html(this.report.prose.full)
     }
   }
 }

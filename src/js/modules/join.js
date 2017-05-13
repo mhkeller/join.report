@@ -19,15 +19,12 @@ export default function join (dispatch) {
     var datasets = datastore.getAll()
     var leftData = datasets.filter(d => d.order === 0)[0]
     var rightData = datasets.filter(d => d.order === 1)[0]
-    console.log(leftData)
-    console.log(rightData)
     var joinedData = joiner({
       leftData: leftData.json,
       leftDataKey: leftData.joinKey,
       rightData: rightData.json,
       rightDataKey: rightData.joinKey
     })
-    console.log(joinedData)
-    dispatch.call('data-did-join', null, joinedData)
+    dispatch.call('did-join', null, joinedData)
   }
 }
