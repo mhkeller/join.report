@@ -10196,10 +10196,10 @@ function titleSequence(dispatch) {
     },
     'did-join': function didJoin() {
       var inst = select('#instructions');
-
-      inst.select('h2').html('Join successful!');
-
       inst.selectAll('.button').remove();
+      // Not sure why I need to remove this, the html update doesn't take effect
+      inst.select('h2').remove();
+      inst.append('h2').html('Join successful!');
 
       inst.append('p').classed('inst-el', true).html('Match status: ' + styleMatchStatus(this.report.matchStatus));
 
