@@ -17,7 +17,7 @@ import join from './modules/join'
 import * as datastore from './modules/datastore'
 import didJoin from './modules/didJoin'
 
-const statusEmpty = dragStatusChange('empty')
+const statusUploadReady = dragStatusChange('upload-ready')
 const statusOver = dragStatusChange('dragover')
 const statusDrop = dragStatusChange('drop')
 const statusTable = dragStatusChange('table')
@@ -48,5 +48,5 @@ selectAll('.upload-input')
     })
   })
   .on('dragover', statusOver)
-  .on('dragleave', statusEmpty)
+  .on('dragleave', statusUploadReady)
   .on('drop', statusDrop)

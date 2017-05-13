@@ -141,12 +141,10 @@ export default function bakeTable (el, json, dispatch) {
   }
 
   function resetTable () {
-    dragStatusChange('empty').call(el)
+    dragStatusChange('upload-ready').call(el)
     tableGroup.remove()
   }
 
   function downloadTable () {
-    // dragStatusChange('empty').call(el)
-    // tableGroup.remove()
   }
 }

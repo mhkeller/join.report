@@ -10,10 +10,8 @@
   </section>
 
   <section id="sbs-group-0" class="sbs-group">
-    <[ ['0', '1'].forEach(i => { ]>
-      <[= helpers.readTemplate('src/html/_partials/file-upload.partial.html', {i: i})]>
+    <[ ['upload-ready', 'upload-ready', 'empty'].forEach((status, i) => { ]>
+      <[= helpers.readTemplate('src/html/_partials/sbs-single.partial.html', {status: status, i: i})]>
     <[ }) ]>
   </section>
-<!-- <script src="https://unpkg.com/array-source@0"></script>
-<script src="https://unpkg.com/path-source@0"></script>
- -->  <script src="js/main.pkgd.js"></script>
+  <script src="js/main.pkgd.js"></script>
