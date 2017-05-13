@@ -15,9 +15,9 @@ export default function titleSequence (dispatch) {
 
   const steps = {
     'ready': function () {
-      const inst = select('#instructions')
+      let inst = select('#instructions')
 
-      const h2 = inst.select('h2')
+      let h2 = inst.select('h2')
         .html('Ready to join!')
 
       inst.selectAll('.inst-el').remove()
@@ -36,12 +36,12 @@ export default function titleSequence (dispatch) {
         })
     },
     'did-join': function () {
-      const inst = select('#instructions')
-
-      inst.select('h2')
-        .html('Join successful!')
-
+      let inst = select('#instructions')
       inst.selectAll('.button').remove()
+      // Not sure why I need to remove this, the html update doesn't take effect
+      inst.select('h2').remove()
+      inst.append('h2')
+        .html('Join successful!')
 
       inst.append('p')
         .classed('inst-el', true)
