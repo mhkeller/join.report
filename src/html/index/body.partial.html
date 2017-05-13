@@ -10,8 +10,12 @@
   </section>
 
   <section id="sbs-group-0" class="sbs-group">
-    <[ ['upload-ready', 'upload-ready', 'empty'].forEach((status, i) => { ]>
-      <[= helpers.readTemplate('src/html/_partials/sbs-single.partial.html', {status: status, i: i})]>
+    <[ const idSlug = helpers.io.readDataSync('src/js/modules/utils/idSlug.json').slug ]>
+    <[ const instances = [{status: 'upload-ready', side: 'left'}, {status: 'upload-ready', side: 'right'}, {status: 'empty', side: 'left'}] ]>
+    <[ instances.forEach(d => { ]>
+      <[ d.uid = idSlug + helpers._.uniqueId() ]>
+      <[ console.log(d) ]>
+      <[= helpers.readTemplate('src/html/_partials/sbs-single.partial.html', d)]>
     <[ }) ]>
   </section>
   <script src="js/main.pkgd.js"></script>

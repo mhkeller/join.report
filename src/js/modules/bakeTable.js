@@ -2,7 +2,7 @@ import {select, event} from 'd3-selection'
 import {default as parent} from './utils/getParentByClass'
 
 import pairs from './pairs'
-import dragStatusChange from './dragStatusChange'
+import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
 
 let escKeys = {
@@ -11,7 +11,7 @@ let escKeys = {
 }
 
 export default function bakeTable (el, json, dispatch) {
-  var sbsContainer = select(parent(el, 'sbs-single'))
+  var sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : parent(el, 'sbs-single'))
   var sbsId = sbsContainer.attr('id')
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
@@ -141,10 +141,11 @@ export default function bakeTable (el, json, dispatch) {
   }
 
   function resetTable () {
-    dragStatusChange('upload-ready').call(el)
+    sbsStatusChange('upload-ready').call(el)
     tableGroup.remove()
   }
 
   function downloadTable () {
+    // TODO
   }
 }

@@ -32,11 +32,11 @@
       color #000
       opacity .25
       font-weight bold
-  &:first-child
+  &[data-side="left"]
     .upload-label
       &:before
         content 'Existing data'
-  &:last-child
+  &&[data-side="right"]
     .upload-label
       &:before
         content 'New data to add'

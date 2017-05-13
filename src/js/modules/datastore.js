@@ -1,31 +1,15 @@
-let datastore = []
-const slug = 'dataset-'
+let datastore = {left: null, right: null}
+// const slug = require('./utils/idSlug.json') // TODO, figure out how to load this
+// const slug = 'dataset-'
 
-function idToOrder (id) {
-  return +id.replace(slug, '')
+export function setKey (side, joinKey) {
+  datastore[side].joinKey = joinKey
 }
 
-export function setKey (id, key) {
-  var record = datastore.filter(d => d.order === idToOrder(id))[0]
-  record.joinKey = key
-}
-
-export function add (id, json) {
-  var obj = {
-    order: idToOrder(id),
-    json: json
-  }
-  datastore.push(obj)
+export function add (side, json) {
+  datastore[side] = {json: json}
 }
 
 export function getAll () {
-  return datastore.sort((a, b) => {
-    if (a.order < b.order) {
-      return -1
-    } else if (a.order > b.order) {
-      return 1
-    } else {
-      return 0
-    }
-  })
+  return datastore
 }

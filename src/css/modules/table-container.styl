@@ -2,10 +2,16 @@ $hover-color = #eee
 $remove-width = 55px
 
 .sbs-single
-  &[data-status="table"]
+  &[data-status="table"],
+  &[data-status="result"]
     border 1px solid #ccc
   &[data-status="empty"]
     flex-grow 0
+  &[data-status="result"]
+    .pick-column
+      display none
+    th input
+      display none
 .table-group
   width 100%
   height 100%

@@ -17,8 +17,8 @@ export default function join (dispatch) {
 
   function performJoin () {
     var datasets = datastore.getAll()
-    var leftData = datasets.filter(d => d.order === 0)[0]
-    var rightData = datasets.filter(d => d.order === 1)[0]
+    var leftData = datasets.left
+    var rightData = datasets.right
     var joinedData = joiner({
       leftData: leftData.json,
       leftDataKey: leftData.joinKey,
