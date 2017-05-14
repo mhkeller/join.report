@@ -70,7 +70,7 @@
     "d3-dispatch": "^1.0.3",
     "d3-selection-multi": "^1.0.1",
     "indian-ocean": "github:mhkeller/indian-ocean#rollup",
-    "joiner": "^3.0.0",
+    "joiner": "github:mhkeller/indian-ocean#3.0.0",
     "shapefile": "^0.6.2",
     "underscore": "^1.8.3"
   }
