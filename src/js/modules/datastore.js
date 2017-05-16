@@ -10,6 +10,13 @@ export function add (side, json) {
   datastore[side] = {json: json}
 }
 
+export function swap () {
+  var left = datastore.left
+  var right = datastore.right
+  datastore.left = right
+  datastore.right = left
+}
+
 export function getAll () {
   return datastore
 }

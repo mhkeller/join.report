@@ -5,7 +5,7 @@
  * --------------------------------------------
  */
 
-import {selectAll} from 'd3-selection'
+import {select, selectAll} from 'd3-selection'
 import {dispatch as Dispatch} from 'd3-dispatch'
 
 import readDroppedFile from './modules/readDroppedFile'
@@ -50,3 +50,13 @@ selectAll('.upload-input')
   .on('dragover', statusOver)
   .on('dragleave', statusUploadReady)
   .on('drop', statusDrop)
+
+select('.gutter-swap').on('click', function () {
+  select('.sbs-single[data-side="left"]')
+    .attr('data-side', 'was-left')
+  select('.sbs-single[data-side="right"]')
+    .attr('data-side', 'left')
+  select('.sbs-single[data-side="was-left"]')
+    .attr('data-side', 'right')
+  datastore.swap()
+})
