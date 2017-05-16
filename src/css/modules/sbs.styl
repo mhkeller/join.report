@@ -1,0 +1,47 @@
+$gutter-width = 5%
+
+.sbs-group
+  margin 0 auto
+  display flex
+  max-width 1160px
+  width 99% - $gutter-width
+  height 300px
+  justify-content space-between
+  flex-wrap wrap
+.sbs-single
+  position relative
+  flex-grow 1
+  max-width 50%
+  height 100%
+.sbs-single
+  &[data-status="table"],
+  &[data-status="result"]
+    border 1px solid #ccc
+    flex-order 1
+  &[data-status="empty"]
+    display none
+  &[data-status="result"]
+    .pick-column
+      display none
+    th input
+      display none
+.gutter-swap
+  position relative
+  heigh 100%
+  width $gutter-width
+  &:hover
+    cursor pointer
+    &:after
+      color #000
+  &:active
+    &:after
+      color #999
+  &:after
+    position absolute
+    content '⇄'
+    color #ccc
+    text-align center
+    top 50%
+    right 0
+    bottom 0
+    left 0

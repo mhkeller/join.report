@@ -5,6 +5,7 @@
 // Add some modules
 @require './modules/colors.styl'
 
+@require './modules/sbs.styl'
 @require './modules/nav.styl'
 @require './modules/instructions.styl'
 @require './modules/uploading.styl'
@@ -12,22 +13,12 @@
 
 // This file gets compiled into `public/styles.css`
 // For stylus reference http://stylus-lang.com/
+*
+  box-sizing border-box
 body
   font-family Helvetica, sans-serif
   margin 0
-.sbs-group
-  margin 0 auto
-  display flex
-  max-width 1160px
-  width 100%
-  height 300px
-.sbs-single
-  position relative
-  flex-grow 1
-  max-width 48%
-  height 100%
-  &:first-child
-    margin-right 2%
+  font-size 14px
 
 @keyframes rotateAnimation
   0%

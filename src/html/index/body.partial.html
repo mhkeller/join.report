@@ -11,7 +11,7 @@
 
   <section id="sbs-group-0" class="sbs-group">
     <[ const idSlug = helpers.io.readDataSync('src/js/modules/utils/idSlug.json').slug ]>
-    <[ const instances = [{status: 'upload-ready', side: 'left'}, {status: 'upload-ready', side: 'right'}, {status: 'empty', side: 'left'}] ]>
+    <[ const instances = [{status: 'upload-ready', side: 'left'}, {status: 'upload-ready', side: 'right'}, {status: 'empty', side: 'result'}] ]>
     <[ instances.forEach(d => { ]>
       <[ d.uid = idSlug + helpers._.uniqueId() ]>
       <[ console.log(d) ]>

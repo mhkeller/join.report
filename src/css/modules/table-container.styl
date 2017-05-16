@@ -1,17 +1,6 @@
 $hover-color = #eee
 $remove-width = 55px
 
-.sbs-single
-  &[data-status="table"],
-  &[data-status="result"]
-    border 1px solid #ccc
-  &[data-status="empty"]
-    flex-grow 0
-  &[data-status="result"]
-    .pick-column
-      display none
-    th input
-      display none
 .table-group
   width 100%
   height 100%
@@ -38,8 +27,9 @@ $remove-width = 55px
   position absolute
   top 0
 .pick-column
-  font-size 16px
-  padding 0 4px
+  white-space nowrap
+  font-size 14px
+  // padding 0 2px
   left 50%
   background-color yellow
   color #000
