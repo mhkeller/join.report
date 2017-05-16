@@ -13540,9 +13540,12 @@ selectAll('.upload-input').on('change', function () {
 }).on('dragover', statusOver).on('dragleave', statusUploadReady).on('drop', statusDrop);
 
 select('.gutter-swap').on('click', function () {
-  select('.sbs-single[data-side="left"]').attr('data-side', 'was-left');
-  select('.sbs-single[data-side="right"]').attr('data-side', 'left');
-  select('.sbs-single[data-side="was-left"]').attr('data-side', 'right');
+  selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]').each(function () {
+    var el = select(this);
+    var side = el.attr('data-side');
+    el.attr('data-side', side === 'left' ? 'right' : 'left');
+  });
+
   swap$1();
 });
 
