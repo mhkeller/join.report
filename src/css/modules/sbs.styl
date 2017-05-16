@@ -13,22 +13,32 @@ $gutter-width = 5%
   flex-grow 1
   max-width 50%
   height 100%
+  margin-bottom 50px
 .sbs-single
+  &[data-status="table"]
+    order 2
   &[data-status="table"],
   &[data-status="result"]
     border 1px solid #ccc
-    flex-order 1
   &[data-status="empty"]
     display none
   &[data-status="result"]
-    .pick-column
-      display none
+    order 1
+    max-width 100%
+    width 100%
+    height 200px
+    .table-container table
+      margin-top 10px
+  &[data-status="result"]
+    .table-btn-group,
+    .pick-column,
     th input
       display none
 .gutter-swap
   position relative
-  heigh 100%
+  height 100%
   width $gutter-width
+  order 2
   &:hover
     cursor pointer
     &:after
@@ -41,7 +51,7 @@ $gutter-width = 5%
     content '⇄'
     color #ccc
     text-align center
-    top 50%
+    top 42%
     right 0
     bottom 0
     left 0
