@@ -340,10 +340,6 @@ nav {
   position: relative;
   white-space: nowrap;
   text-align: center;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
   cursor: pointer;
 }
 .table-container th input[type='radio'] {
