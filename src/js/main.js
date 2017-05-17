@@ -16,6 +16,8 @@ import titleSequence from './modules/titleSequence'
 import join from './modules/join'
 import * as datastore from './modules/datastore'
 import didJoin from './modules/didJoin'
+import dsDidChange from './modules/dsDidChange'
+import gutterSwap from './modules/gutterSwap'
 
 const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
@@ -28,9 +30,11 @@ const dispatch = Dispatch(
   'join',
   'change-title',
   'get-keys',
-  'did-join'
+  'did-join',
+  'ds-did-change'
 )
 
+dsDidChange(dispatch)
 didJoin(dispatch)
 titleSequence(dispatch)
 join(dispatch)
@@ -51,13 +55,4 @@ selectAll('.upload-input')
   .on('dragleave', statusUploadReady)
   .on('drop', statusDrop)
 
-select('.gutter-swap').on('click', function () {
-  selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]')
-    .each(function () {
-      var el = select(this)
-      var side = el.attr('data-side')
-      el.attr('data-side', side === 'left' ? 'right' : 'left')
-    })
-
-  datastore.swap()
-})
+select('.gutter-swap').on('click', gutterSwap(datastore))

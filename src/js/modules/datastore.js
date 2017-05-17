@@ -11,8 +11,8 @@ export function add (side, json) {
 }
 
 export function swap () {
-  var left = datastore.left
-  var right = datastore.right
+  let left = datastore.left
+  let right = datastore.right
   datastore.left = right
   datastore.right = left
 }

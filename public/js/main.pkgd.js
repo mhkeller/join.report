@@ -10030,9 +10030,18 @@ function sortTableRows(data, column, asc) {
 }
 
 var escKeys = {
-  keyCodes: [27, 13],
-  keys: ['Escape', 'Enter']
+  keyCodes: [27],
+  keys: ['Escape']
 };
+
+var returnKeys = {
+  keyCodes: [13],
+  keys: ['Enter']
+};
+
+function endContentEditable(els) {
+  els.attr('contentEditable', null);
+}
 
 function bakeTable(el, json, dispatch) {
   var sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : getParentByClass(el, 'sbs-single'));
@@ -10048,7 +10057,8 @@ function bakeTable(el, json, dispatch) {
   btnGroup.append('div').classed('table-btn', true).attr('data-which', 'download').on('click', downloadTable);
 
   var tableContainer = tableGroup.append('div').classed('table-container', true).on('click', function (d) {
-    select(this).selectAll('td').attr('contentEditable', null);
+    endContentEditable(select(this).selectAll('td'));
+    // select(this).selectAll('td').attr('contentEditable', null)
   });
 
   if (Array.isArray(json) && json.length === 0) {
@@ -10065,7 +10075,8 @@ function bakeTable(el, json, dispatch) {
     }).on('click', function (d) {
       event.stopPropagation();
       thead.select('th.sorted').classed('sorted', false);
-      tbody.selectAll('td').attr('contentEditable', null);
+      // tbody.selectAll('td').attr('contentEditable', null)
+      endContentEditable(tbody.selectAll('td'));
       var asc = !JSON.parse(this.dataset.asc || 'false');
       select(this).classed('sorted', true).attr('data-asc', asc);
       trs.sort(sortTableRows(trs.data(), d, asc));
@@ -10083,7 +10094,8 @@ function bakeTable(el, json, dispatch) {
         return q[0] === d;
       });
       dispatch.call('col-selected', getParentByClass(this, 'sbs-group'));
-      trs.selectAll('td').attr('contentEditable', null);
+      endContentEditable(trs.selectAll('td'));
+      // trs.selectAll('td').attr('contentEditable', null)
     });
 
     var trs = tbody.selectAll('tr').data(json).enter().append('tr').classed('table-row', true);
@@ -10103,11 +10115,19 @@ function bakeTable(el, json, dispatch) {
       }
     }).on('keypress', function (d) {
       if (escKeys.keyCodes.indexOf(event.keyCode) > -1 || escKeys.keys.indexOf(event.key) > -1) {
-        var _el = select(this);
-        _el.attr('contentEditable', false);
-        var input = _el.html();
+        var td = select(this);
+        endContentEditable(td);
         var parentD = select(getParentByClass(this, 'table-row')).datum();
-        parentD[d[0]] = input;
+        td.html(parentD[d[0]]);
+      } else if (returnKeys.keyCodes.indexOf(event.keyCode) > -1 || returnKeys.keys.indexOf(event.key) > -1) {
+        var _td = select(this);
+        endContentEditable(_td);
+        var _parentD = select(getParentByClass(this, 'table-row')).datum();
+        var input = _td.html();
+        if (input !== _parentD[d[0]]) {
+          _parentD[d[0]] = input;
+          dispatch.call('ds-did-change', null, el);
+        }
       }
     });
 
@@ -13459,6 +13479,13 @@ function getAll() {
   return datastore;
 }
 
+var datastore$1 = Object.freeze({
+	setKey: setKey,
+	add: add,
+	swap: swap$1,
+	getAll: getAll
+});
+
 function joinCheck() {
   var els = selectAll('.table-container input:checked');
   var twoChecked = els.size() === 2;
@@ -13510,6 +13537,31 @@ function didJoin(dispatch) {
   }
 }
 
+// import {select} from 'd3-selection'
+// import sbsStatusChange from './sbsStatusChange'
+
+// const statusResult = sbsStatusChange('result')
+
+function dsDidChange(dispatch) {
+  dispatch.on('ds-did-change', didChange);
+
+  function didChange(el) {
+    console.log('did change', el);
+  }
+}
+
+function gutterSwap(datastore) {
+  return function () {
+    selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]').each(function () {
+      var el = select(this);
+      var side = el.attr('data-side');
+      el.attr('data-side', side === 'left' ? 'right' : 'left');
+    });
+
+    datastore.swap();
+  };
+}
+
 /* --------------------------------------------
  *
  * Main.js
@@ -13521,8 +13573,9 @@ var statusUploadReady = sbsStatusChange('upload-ready');
 var statusOver = sbsStatusChange('dragover');
 var statusDrop = sbsStatusChange('drop');
 var statusTable = sbsStatusChange('table');
-var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join');
+var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join', 'ds-did-change');
 
+dsDidChange(dispatch$$1);
 didJoin(dispatch$$1);
 titleSequence(dispatch$$1);
 join(dispatch$$1);
@@ -13539,15 +13592,7 @@ selectAll('.upload-input').on('change', function () {
   });
 }).on('dragover', statusOver).on('dragleave', statusUploadReady).on('drop', statusDrop);
 
-select('.gutter-swap').on('click', function () {
-  selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]').each(function () {
-    var el = select(this);
-    var side = el.attr('data-side');
-    el.attr('data-side', side === 'left' ? 'right' : 'left');
-  });
-
-  swap$1();
-});
+select('.gutter-swap').on('click', gutterSwap(datastore$1));
 
 }());
 //# sourceMappingURL=main.pkgd.js.map

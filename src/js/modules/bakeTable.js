@@ -6,13 +6,22 @@ import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
 
 let escKeys = {
-  keyCodes: [27, 13],
-  keys: ['Escape', 'Enter']
+  keyCodes: [27],
+  keys: ['Escape']
+}
+
+let returnKeys = {
+  keyCodes: [13],
+  keys: ['Enter']
+}
+
+function endContentEditable (els) {
+  els.attr('contentEditable', null)
 }
 
 export default function bakeTable (el, json, dispatch) {
-  var sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : parent(el, 'sbs-single'))
-  var sbsId = sbsContainer.attr('id')
+  let sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : parent(el, 'sbs-single'))
+  let sbsId = sbsContainer.attr('id')
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
 
@@ -37,7 +46,8 @@ export default function bakeTable (el, json, dispatch) {
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)
     .on('click', function (d) {
-      select(this).selectAll('td').attr('contentEditable', null)
+      endContentEditable(select(this).selectAll('td'))
+      // select(this).selectAll('td').attr('contentEditable', null)
     })
 
   if (Array.isArray(json) && json.length === 0) {
@@ -60,7 +70,8 @@ export default function bakeTable (el, json, dispatch) {
       .on('click', function (d) {
         event.stopPropagation()
         thead.select('th.sorted').classed('sorted', false)
-        tbody.selectAll('td').attr('contentEditable', null)
+        // tbody.selectAll('td').attr('contentEditable', null)
+        endContentEditable(tbody.selectAll('td'))
         let asc = !JSON.parse(this.dataset.asc || 'false')
         select(this).classed('sorted', true).attr('data-asc', asc)
         trs.sort(sortTableRows(trs.data(), d, asc))
@@ -76,7 +87,8 @@ export default function bakeTable (el, json, dispatch) {
         thead.selectAll('th').classed('active', (q) => q === d)
         tbody.selectAll('td').classed('active', (q) => q[0] === d)
         dispatch.call('col-selected', parent(this, 'sbs-group'))
-        trs.selectAll('td').attr('contentEditable', null)
+        endContentEditable(trs.selectAll('td'))
+        // trs.selectAll('td').attr('contentEditable', null)
       })
 
     let trs = tbody.selectAll('tr').data(json).enter()
@@ -98,11 +110,19 @@ export default function bakeTable (el, json, dispatch) {
       })
       .on('keypress', function (d) {
         if (escKeys.keyCodes.indexOf(event.keyCode) > -1 || escKeys.keys.indexOf(event.key) > -1) {
-          let el = select(this)
-          el.attr('contentEditable', false)
-          let input = el.html()
+          let td = select(this)
+          endContentEditable(td)
           let parentD = select(parent(this, 'table-row')).datum()
-          parentD[d[0]] = input
+          td.html(parentD[d[0]])
+        } else if (returnKeys.keyCodes.indexOf(event.keyCode) > -1 || returnKeys.keys.indexOf(event.key) > -1) {
+          let td = select(this)
+          endContentEditable(td)
+          let parentD = select(parent(this, 'table-row')).datum()
+          let input = td.html()
+          if (input !== parentD[d[0]]) {
+            parentD[d[0]] = input
+            dispatch.call('ds-did-change', null, el)
+          }
         }
       })
 

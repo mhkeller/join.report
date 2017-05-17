@@ -8,7 +8,7 @@ export default function join (dispatch) {
   dispatch.on('join', performJoin)
 
   function checkForJoin () {
-    var readyToJoin = joinCheck()
+    let readyToJoin = joinCheck()
     if (readyToJoin) {
       dispatch.call('get-keys')
       dispatch.call('change-title', window, 'ready')
@@ -16,10 +16,10 @@ export default function join (dispatch) {
   }
 
   function performJoin () {
-    var datasets = datastore.getAll()
-    var leftData = datasets.left
-    var rightData = datasets.right
-    var joinedData = joiner({
+    let datasets = datastore.getAll()
+    let leftData = datasets.left
+    let rightData = datasets.right
+    let joinedData = joiner({
       leftData: leftData.json,
       leftDataKey: leftData.joinKey,
       rightData: rightData.json,
