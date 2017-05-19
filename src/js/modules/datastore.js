@@ -20,3 +20,10 @@ export function swap () {
 export function getAll () {
   return datastore
 }
+
+export function hasJoined (__) {
+  if (__ === undefined) {
+    return datastore.hasJoined
+  }
+  datastore.hasJoined = __
+}

@@ -111,9 +111,17 @@ $remove-width = 55px
       //   text-decoration underline
   td
     outline 0px solid transparent !important
+    position relative
     &[contenteditable="true"]
-      // padding 10px
-      border 2px solid blue
+      &:after
+        position absolute
+        content ' '
+        top -2px
+        right 0
+        bottom 0
+        left -2px
+        pointer-events none
+        border 2px solid blue
   th:last-child,
   td:last-child
     border-color transparent

@@ -16,7 +16,7 @@ import titleSequence from './modules/titleSequence'
 import join from './modules/join'
 import * as datastore from './modules/datastore'
 import didJoin from './modules/didJoin'
-import dsDidChange from './modules/dsDidChange'
+import setDirty from './modules/setDirty'
 import gutterSwap from './modules/gutterSwap'
 
 const statusUploadReady = sbsStatusChange('upload-ready')
@@ -31,10 +31,10 @@ const dispatch = Dispatch(
   'change-title',
   'get-keys',
   'did-join',
-  'ds-did-change'
+  'set-dirty'
 )
 
-dsDidChange(dispatch)
+setDirty(dispatch)
 didJoin(dispatch)
 titleSequence(dispatch)
 join(dispatch)

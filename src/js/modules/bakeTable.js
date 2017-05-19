@@ -15,11 +15,26 @@ let returnKeys = {
   keys: ['Enter']
 }
 
-function endContentEditable (els) {
-  els.attr('contentEditable', null)
+let disp
+
+function endContentEditable (tbodySel, skipSave) {
+  if (skipSave !== true) {
+    // let tbodySel = select(parent(els.node(), 'tbody'))
+    let cell = tbodySel.select('td[contentEditable="true"]')
+    if (cell.size() > 0) {
+      let cellData = cell.datum()
+      let cellHtml = cell.html()
+      if (cellData[1] !== cellHtml) {
+        cellData[1] = cell.html()
+        disp.call('set-dirty', null, tbodySel)
+      }
+    }
+  }
+  tbodySel.selectAll('td').attr('contentEditable', null)
 }
 
 export default function bakeTable (el, json, dispatch) {
+  disp = dispatch
   let sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : parent(el, 'sbs-single'))
   let sbsId = sbsContainer.attr('id')
   let tableGroup = sbsContainer.append('div')
@@ -46,7 +61,7 @@ export default function bakeTable (el, json, dispatch) {
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)
     .on('click', function (d) {
-      endContentEditable(select(this).selectAll('td'))
+      endContentEditable(select(this).select('tbody'))
       // select(this).selectAll('td').attr('contentEditable', null)
     })
 
@@ -61,8 +76,8 @@ export default function bakeTable (el, json, dispatch) {
       .on('click', resetTable)
   } else {
     let table = tableContainer.append('table')
-    let thead = table.append('thead')
-    let tbody = table.append('tbody')
+    let thead = table.append('thead').classed('thead', true)
+    let tbody = table.append('tbody').classed('tbody', true)
 
     let ths = thead.selectAll('th').data(Object.keys(json[0])).enter()
       .append('th')
@@ -71,7 +86,7 @@ export default function bakeTable (el, json, dispatch) {
         event.stopPropagation()
         thead.select('th.sorted').classed('sorted', false)
         // tbody.selectAll('td').attr('contentEditable', null)
-        endContentEditable(tbody.selectAll('td'))
+        endContentEditable(tbody)
         let asc = !JSON.parse(this.dataset.asc || 'false')
         select(this).classed('sorted', true).attr('data-asc', asc)
         trs.sort(sortTableRows(trs.data(), d, asc))
@@ -87,7 +102,7 @@ export default function bakeTable (el, json, dispatch) {
         thead.selectAll('th').classed('active', (q) => q === d)
         tbody.selectAll('td').classed('active', (q) => q[0] === d)
         dispatch.call('col-selected', parent(this, 'sbs-group'))
-        endContentEditable(trs.selectAll('td'))
+        endContentEditable(tbody)
         // trs.selectAll('td').attr('contentEditable', null)
       })
 
@@ -100,7 +115,8 @@ export default function bakeTable (el, json, dispatch) {
       .html(d => d[1])
       .on('click', function (d) {
         event.stopPropagation()
-        trs.selectAll('td').attr('contentEditable', null)
+        endContentEditable(tbody)
+        // trs.selectAll('td').attr('contentEditable', null)
         let el = select(this)
         let editable = JSON.parse(el.attr('contentEditable') || 'false')
         if (!editable) {
@@ -111,18 +127,12 @@ export default function bakeTable (el, json, dispatch) {
       .on('keypress', function (d) {
         if (escKeys.keyCodes.indexOf(event.keyCode) > -1 || escKeys.keys.indexOf(event.key) > -1) {
           let td = select(this)
-          endContentEditable(td)
+          endContentEditable(tbody, true)
           let parentD = select(parent(this, 'table-row')).datum()
           td.html(parentD[d[0]])
         } else if (returnKeys.keyCodes.indexOf(event.keyCode) > -1 || returnKeys.keys.indexOf(event.key) > -1) {
           let td = select(this)
-          endContentEditable(td)
-          let parentD = select(parent(this, 'table-row')).datum()
-          let input = td.html()
-          if (input !== parentD[d[0]]) {
-            parentD[d[0]] = input
-            dispatch.call('ds-did-change', null, el)
-          }
+          endContentEditable(tbody)
         }
       })
 

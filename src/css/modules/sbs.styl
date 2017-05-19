@@ -29,6 +29,24 @@ $gutter-width = 5%
     height 200px
     .table-container table
       margin-top 10px
+    &[data-dirty="true"]
+      &:before,
+      &:after
+        position absolute
+        right 0
+        bottom 0
+        left 0
+      &:before
+        content 'Your data has changed. Rejoin?'
+        top 45%
+        text-align center
+        z-index 2
+
+      &:after
+        content ' '
+        top 0
+        background-color rgba(255, 255, 255, .8)
+        z-index 1
   &[data-status="result"]
     .table-btn-group,
     .pick-column,

@@ -12,6 +12,7 @@ export default function join (dispatch) {
     if (readyToJoin) {
       dispatch.call('get-keys')
       dispatch.call('change-title', window, 'ready')
+      dispatch.call('set-dirty')
     }
   }
 
