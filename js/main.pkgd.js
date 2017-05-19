@@ -10039,11 +10039,26 @@ var returnKeys = {
   keys: ['Enter']
 };
 
-function endContentEditable(els) {
-  els.attr('contentEditable', null);
+var disp = void 0;
+
+function endContentEditable(tbodySel, skipSave) {
+  if (skipSave !== true) {
+    // let tbodySel = select(parent(els.node(), 'tbody'))
+    var cell = tbodySel.select('td[contentEditable="true"]');
+    if (cell.size() > 0) {
+      var cellData = cell.datum();
+      var cellHtml = cell.html();
+      if (cellData[1] !== cellHtml) {
+        cellData[1] = cell.html();
+        disp.call('set-dirty', null, tbodySel);
+      }
+    }
+  }
+  tbodySel.selectAll('td').attr('contentEditable', null);
 }
 
 function bakeTable(el, json, dispatch) {
+  disp = dispatch;
   var sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : getParentByClass(el, 'sbs-single'));
   var sbsId = sbsContainer.attr('id');
   var tableGroup = sbsContainer.append('div').classed('table-group', true);
@@ -10057,7 +10072,7 @@ function bakeTable(el, json, dispatch) {
   btnGroup.append('div').classed('table-btn', true).attr('data-which', 'download').on('click', downloadTable);
 
   var tableContainer = tableGroup.append('div').classed('table-container', true).on('click', function (d) {
-    endContentEditable(select(this).selectAll('td'));
+    endContentEditable(select(this).select('tbody'));
     // select(this).selectAll('td').attr('contentEditable', null)
   });
 
@@ -10067,8 +10082,8 @@ function bakeTable(el, json, dispatch) {
     errorContainer.append('div').classed('reset', true).html('Try again.').on('click', resetTable);
   } else {
     var table = tableContainer.append('table');
-    var thead = table.append('thead');
-    var tbody = table.append('tbody');
+    var thead = table.append('thead').classed('thead', true);
+    var tbody = table.append('tbody').classed('tbody', true);
 
     var ths = thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
       return d;
@@ -10076,7 +10091,7 @@ function bakeTable(el, json, dispatch) {
       event.stopPropagation();
       thead.select('th.sorted').classed('sorted', false);
       // tbody.selectAll('td').attr('contentEditable', null)
-      endContentEditable(tbody.selectAll('td'));
+      endContentEditable(tbody);
       var asc = !JSON.parse(this.dataset.asc || 'false');
       select(this).classed('sorted', true).attr('data-asc', asc);
       trs.sort(sortTableRows(trs.data(), d, asc));
@@ -10094,7 +10109,7 @@ function bakeTable(el, json, dispatch) {
         return q[0] === d;
       });
       dispatch.call('col-selected', getParentByClass(this, 'sbs-group'));
-      endContentEditable(trs.selectAll('td'));
+      endContentEditable(tbody);
       // trs.selectAll('td').attr('contentEditable', null)
     });
 
@@ -10106,7 +10121,8 @@ function bakeTable(el, json, dispatch) {
       return d[1];
     }).on('click', function (d) {
       event.stopPropagation();
-      trs.selectAll('td').attr('contentEditable', null);
+      endContentEditable(tbody);
+      // trs.selectAll('td').attr('contentEditable', null)
       var el = select(this);
       var editable = JSON.parse(el.attr('contentEditable') || 'false');
       if (!editable) {
@@ -10116,18 +10132,12 @@ function bakeTable(el, json, dispatch) {
     }).on('keypress', function (d) {
       if (escKeys.keyCodes.indexOf(event.keyCode) > -1 || escKeys.keys.indexOf(event.key) > -1) {
         var td = select(this);
-        endContentEditable(td);
+        endContentEditable(tbody, true);
         var parentD = select(getParentByClass(this, 'table-row')).datum();
         td.html(parentD[d[0]]);
       } else if (returnKeys.keyCodes.indexOf(event.keyCode) > -1 || returnKeys.keys.indexOf(event.key) > -1) {
         var _td = select(this);
-        endContentEditable(_td);
-        var _parentD = select(getParentByClass(this, 'table-row')).datum();
-        var input = _td.html();
-        if (input !== _parentD[d[0]]) {
-          _parentD[d[0]] = input;
-          dispatch.call('ds-did-change', null, el);
-        }
+        endContentEditable(tbody);
       }
     });
 
@@ -13479,11 +13489,19 @@ function getAll() {
   return datastore;
 }
 
+function hasJoined(__) {
+  if (__ === undefined) {
+    return datastore.hasJoined;
+  }
+  datastore.hasJoined = __;
+}
+
 var datastore$1 = Object.freeze({
 	setKey: setKey,
 	add: add,
 	swap: swap$1,
-	getAll: getAll
+	getAll: getAll,
+	hasJoined: hasJoined
 });
 
 function joinCheck() {
@@ -13506,6 +13524,7 @@ function join(dispatch) {
     if (readyToJoin) {
       dispatch.call('get-keys');
       dispatch.call('change-title', window, 'ready');
+      dispatch.call('set-dirty');
     }
   }
 
@@ -13529,24 +13548,23 @@ function didJoin(dispatch) {
   dispatch.on('did-join', showJoin);
 
   function showJoin(joinResult) {
+    hasJoined(true);
     dispatch.call('change-title', { report: joinResult.report }, 'did-join');
-    // const el = document.querySelector('')
+
     var el = select('.sbs-single[data-status="empty"]').node();
     statusResult.call(el);
     bakeTable(el, joinResult.data, dispatch);
   }
 }
 
-// import {select} from 'd3-selection'
-// import sbsStatusChange from './sbsStatusChange'
+function setDirty(dispatch) {
+  dispatch.on('set-dirty', setDirty);
 
-// const statusResult = sbsStatusChange('result')
-
-function dsDidChange(dispatch) {
-  dispatch.on('ds-did-change', didChange);
-
-  function didChange(el) {
-    console.log('did change', el);
+  function setDirty(tbodySel) {
+    if (hasJoined() === true) {
+      // Show that the result table is dirty
+      select('.sbs-single[data-status="result"]').attr('data-dirty', 'true');
+    }
   }
 }
 
@@ -13573,9 +13591,9 @@ var statusUploadReady = sbsStatusChange('upload-ready');
 var statusOver = sbsStatusChange('dragover');
 var statusDrop = sbsStatusChange('drop');
 var statusTable = sbsStatusChange('table');
-var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join', 'ds-did-change');
+var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join', 'set-dirty');
 
-dsDidChange(dispatch$$1);
+setDirty(dispatch$$1);
 didJoin(dispatch$$1);
 titleSequence(dispatch$$1);
 join(dispatch$$1);
