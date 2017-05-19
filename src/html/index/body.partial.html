@@ -14,7 +14,6 @@
     <[ const instances = [{status: 'upload-ready', side: 'left'}, {status: 'upload-ready', side: 'right'}, {status: 'empty', side: 'result'}] ]>
     <[ instances.forEach(d => { ]>
       <[ d.uid = idSlug + helpers._.uniqueId() ]>
-      <[ console.log(d) ]>
       <[= helpers.readTemplate('src/html/_partials/sbs-single.partial.html', d)]>
     <[ }) ]>
   </section>

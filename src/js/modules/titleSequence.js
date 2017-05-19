@@ -23,8 +23,7 @@ export default function titleSequence (dispatch) {
       inst.selectAll('.inst-el').remove()
 
       inst.append('a')
-        .attr('class', 'button button-primary join-button inst-el')
-        .attr('role', 'button')
+        .attr('class', 'button button-primary join-button')
         .attr('href', '#')
         .html('Go for it')
         .on('click', function () {

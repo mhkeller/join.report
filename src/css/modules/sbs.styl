@@ -30,6 +30,9 @@ $gutter-width = 5%
     .table-container table
       margin-top 10px
     &[data-dirty="true"]
+      .rejoin-button-container
+        display block
+        z-index 2
       &:before,
       &:after
         position absolute
@@ -52,6 +55,12 @@ $gutter-width = 5%
     .pick-column,
     th input
       display none
+  .rejoin-button-container
+    position absolute
+    top 60%
+    transform translate(-50%, -50%)
+    display none
+    left 50%
 .gutter-swap
   position relative
   height 100%

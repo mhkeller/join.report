@@ -3,6 +3,12 @@
     <label for="file-upload-<[= uid ]>" class="upload-label"></label>
     <input id="file-upload-<[= uid ]>" class="upload-input" type="file"/>
   </div>
+<[ if (side === 'result') { ]>
+  <div class="rejoin-button-container">
+    <a href="#" class="button button-sm">No thanks</a>
+    <a href="#" class="button button-sm button-primary">Rejoin</a>
+  </div>
+<[ } ]>
 </div>
 <[ if (side === 'left') { ]>
 <div class="gutter-swap"></div>
