@@ -51,3 +51,23 @@
       box-shadow inset 0 0.15em 0.3em rgba(27,31,35,0.15)
     &:focus
       box-shadow 0 0 0 0.2em rgba(52,208,88,0.3)
+  &.processing
+    color rgba(255,255,255,0.75)
+    background-color #94d3a2
+    background-image none
+    border-color rgba(27,31,35,0.2)
+    box-shadow none
+    pointer-events none
+    padding-right 25px
+    &:after
+      content ' '
+      background url(../img/spinny.gif) center center no-repeat
+      position relative
+      top 5px
+      right 5px
+      opacity .75
+      height 18px
+      width 18px
+      display inline-block
+      position absolute
+      background-size contain

@@ -12,11 +12,12 @@ export default function join (dispatch) {
     if (readyToJoin) {
       dispatch.call('get-keys')
       dispatch.call('change-title', window, 'ready')
-      dispatch.call('set-dirty')
+      dispatch.call('set-dirty', null, true)
     }
   }
 
-  function performJoin () {
+  function performJoin (buttonSel) {
+    buttonSel.classed('processing', true).html('Please hold...')
     let datasets = datastore.getAll()
     let leftData = datasets.left
     let rightData = datasets.right

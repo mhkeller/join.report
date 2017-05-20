@@ -25,13 +25,12 @@ export default function titleSequence (dispatch) {
       inst.append('a')
         .attr('class', 'button button-primary join-button')
         .attr('href', '#')
-        .html('Go for it')
+        .html('Go for it!')
         .on('click', function () {
           event.stopPropagation()
           event.preventDefault()
-          dispatch.call('join')
-          select(this).classed('processing', true).html('Please hold...')
           h2.html('Processing...')
+          dispatch.call('join', null, select(this))
         })
     },
     'did-join': function () {

@@ -21,11 +21,15 @@
       text-align center
       width 100%
       transform translate(0, -50%)
-      content 'Drop files or click to upload'
     &:after
       top 60%
       color #666
       font-size 14px
+      content 'Drop files or click to upload'
+      +below(404px)
+        width 80%
+        left 50%
+        transform translate(-50%, 0)
     &:before
       top 40%
       font-size 28px

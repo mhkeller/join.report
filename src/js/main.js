@@ -5,7 +5,7 @@
  * --------------------------------------------
  */
 
-import {select, selectAll} from 'd3-selection'
+import {select, selectAll, event} from 'd3-selection'
 import {dispatch as Dispatch} from 'd3-dispatch'
 
 import readDroppedFile from './modules/readDroppedFile'
@@ -56,3 +56,16 @@ selectAll('.upload-input')
   .on('drop', statusDrop)
 
 select('.gutter-swap').on('click', gutterSwap(datastore))
+
+select('.rejoin-button-container .button[data-which="cancel"]')
+  .on('click', function (d) {
+    event.preventDefault()
+    event.stopPropagation()
+    dispatch.call('set-dirty', null, false)
+  })
+select('.rejoin-button-container .button[data-which="join"]')
+  .on('click', function (d) {
+    event.preventDefault()
+    event.stopPropagation()
+    dispatch.call('join', null, select(this))
+  })

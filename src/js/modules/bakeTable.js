@@ -26,7 +26,9 @@ function endContentEditable (tbodySel, skipSave) {
       let cellHtml = cell.html()
       if (cellData[1] !== cellHtml) {
         cellData[1] = cell.html()
-        disp.call('set-dirty', null, tbodySel)
+        if (select(parent(tbodySel.node(), 'sbs-single')).attr('data-side') !== 'result') {
+          disp.call('set-dirty', null, true)
+        }
       }
     }
   }
@@ -37,6 +39,12 @@ export default function bakeTable (el, json, dispatch) {
   disp = dispatch
   let sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : parent(el, 'sbs-single'))
   let sbsId = sbsContainer.attr('id')
+
+  let tableGroupTest = sbsContainer.select('.table-group')
+  if (tableGroupTest.size() > 0) {
+    tableGroupTest.remove()
+  }
+
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
 
@@ -131,7 +139,7 @@ export default function bakeTable (el, json, dispatch) {
           let parentD = select(parent(this, 'table-row')).datum()
           td.html(parentD[d[0]])
         } else if (returnKeys.keyCodes.indexOf(event.keyCode) > -1 || returnKeys.keys.indexOf(event.key) > -1) {
-          let td = select(this)
+          // let td = select(this)
           endContentEditable(tbody)
         }
       })
