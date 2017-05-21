@@ -6,10 +6,6 @@ export function setKey (side, joinKey) {
   datastore[side].joinKey = joinKey
 }
 
-// export function add (side, json) {
-//   datastore[side] = {json: json}
-// }
-
 export function swap () {
   let left = datastore.left
   let right = datastore.right
@@ -20,7 +16,9 @@ export function swap () {
 export function getAll () {
   let sides = ['left', 'right']
   sides.forEach(side => {
-    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group').datum()
+    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group')
+      .datum()
+      .filter(row => row.___deleted___ !== true)
   })
   return datastore
 }

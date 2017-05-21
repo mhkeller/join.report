@@ -172,6 +172,7 @@ export default function bakeTable (el, json, dispatch) {
           select(this).html(restoreStr).attr('title', restoreTitle)
           d.___deleted___ = true
         }
+        dispatch.call('set-dirty', null, true)
 
         return false
       })
