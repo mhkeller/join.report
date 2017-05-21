@@ -10173,6 +10173,7 @@ function bakeTable(el, json, dispatch) {
         select(this).html(restoreStr).attr('title', restoreTitle);
         d.___deleted___ = true;
       }
+      dispatch.call('set-dirty', null, true);
 
       return false;
     }).attr('title', removeTitle).html(removeStr);
@@ -13479,10 +13480,6 @@ function setKey(side, joinKey) {
   datastore[side].joinKey = joinKey;
 }
 
-// export function add (side, json) {
-//   datastore[side] = {json: json}
-// }
-
 function swap$1() {
   var left = datastore.left;
   var right = datastore.right;
@@ -13493,7 +13490,9 @@ function swap$1() {
 function getAll() {
   var sides = ['left', 'right'];
   sides.forEach(function (side) {
-    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group').datum();
+    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group').datum().filter(function (row) {
+      return row.___deleted___ !== true;
+    });
   });
   return datastore;
 }
