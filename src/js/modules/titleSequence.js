@@ -36,6 +36,7 @@ export default function titleSequence (dispatch) {
     'did-join': function () {
       let inst = select('#instructions')
       inst.selectAll('.button').remove()
+      inst.selectAll('.inst-el').remove()
       // Not sure why I need to remove this, the html update doesn't take effect
       inst.select('h2').remove()
       inst.append('h2')
