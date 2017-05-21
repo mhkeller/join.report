@@ -10029,6 +10029,23 @@ function pairs$1(obj) {
   return pairs;
 }
 
+var formats = [{
+  name: 'csv',
+  format: formatters.csv
+}, {
+  name: 'tsv',
+  format: formatters.tsv
+}, {
+  name: 'psv',
+  format: formatters.psv
+}, {
+  name: 'json',
+  format: formatters.json
+}, {
+  name: 'geojson',
+  format: formatters.geojson
+}];
+
 var escKeys = {
   keyCodes: [27],
   keys: ['Escape']
@@ -10079,7 +10096,13 @@ function bakeTable(el, json, dispatch) {
 
   btnGroup.append('div').classed('table-btn', true).attr('data-which', 'reset').on('click', resetTable);
 
-  btnGroup.append('div').classed('table-btn', true).attr('data-which', 'download').on('click', downloadTable);
+  var downloadFormatsContainer = btnGroup.append('div').classed('table-btn', true).attr('data-which', 'download').append('div').classed('download-formats', true);
+
+  downloadFormatsContainer.selectAll('.download-format').data(formats).enter().append('div').classed('download-format', true).html(function (d) {
+    return d.name;
+  }).on('click', downloadData);
+
+  // .on('mouseover', downloadTable)
 
   var tableContainer = tableGroup.append('div').classed('table-container', true).on('click', function (d) {
     endContentEditable(select(this).select('tbody'));
@@ -10129,7 +10152,8 @@ function bakeTable(el, json, dispatch) {
       return pairs$1(d);
     }).enter().append('td').html(function (d) {
       return d[1];
-    }).on('click', function (d) {
+    }) // TODO, allow for multi-dimensional json
+    .on('click', function (d) {
       event.stopPropagation();
       endContentEditable(tbody);
       // trs.selectAll('td').attr('contentEditable', null)
@@ -10186,8 +10210,11 @@ function bakeTable(el, json, dispatch) {
     tableGroup.remove();
   }
 
-  function downloadTable() {
-    // TODO
+  function downloadData(d) {
+    var formattedData = d.format(tableGroup.datum().filter(function (d) {
+      return d.___deleted___ !== true;
+    }));
+    console.log(formattedData);
   }
 }
 
