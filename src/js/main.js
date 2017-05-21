@@ -23,7 +23,7 @@ const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
 const statusDrop = sbsStatusChange('drop')
 const statusTable = sbsStatusChange('table')
-import {default as parent} from './modules/utils/getParentByClass'
+// import {default as parent} from './modules/utils/getParentByClass'
 
 const dispatch = Dispatch(
   'col-selected',
@@ -45,7 +45,6 @@ selectAll('.upload-input')
       if (err) {
         console.error(err)
       } else {
-        datastore.add(parent(el, 'sbs-single').dataset.side, json)
         statusTable.call(el)
         bakeTable(el, json, dispatch)
       }
@@ -55,7 +54,8 @@ selectAll('.upload-input')
   .on('dragleave', statusUploadReady)
   .on('drop', statusDrop)
 
-select('.gutter-swap').on('click', gutterSwap(datastore))
+select('.gutter-swap')
+  .on('click', gutterSwap(dispatch, datastore))
 
 select('.rejoin-button-container .button[data-which="cancel"]')
   .on('click', function (d) {

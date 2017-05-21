@@ -9959,16 +9959,6 @@ function getParentByClass(el, klass) {
   return test ? element : null;
 }
 
-function pairs$1(obj) {
-  var keys = Object.keys(obj);
-  var length = keys.length;
-  var pairs = Array(length);
-  for (var i = 0; i < length; i++) {
-    pairs[i] = [keys[i], obj[keys[i]]];
-  }
-  return pairs;
-}
-
 function sbsStatusChange(status) {
   return function () {
     select(this.className.indexOf('sbs-single') > -1 ? this : getParentByClass(this, 'sbs-single')).attr('data-status', status);
@@ -10029,6 +10019,16 @@ function sortTableRows(data, column, asc) {
   };
 }
 
+function pairs$1(obj) {
+  var keys = Object.keys(obj);
+  var length = keys.length;
+  var pairs = Array(length);
+  for (var i = 0; i < length; i++) {
+    pairs[i] = [keys[i], obj[keys[i]]];
+  }
+  return pairs;
+}
+
 var escKeys = {
   keyCodes: [27],
   keys: ['Escape']
@@ -10069,7 +10069,7 @@ function bakeTable(el, json, dispatch) {
     tableGroupTest.remove();
   }
 
-  var tableGroup = sbsContainer.append('div').classed('table-group', true);
+  var tableGroup = sbsContainer.append('div').classed('table-group', true).datum(json);
 
   var pickColumn = tableGroup.append('div').classed('pick-column', true).attr('data-col-selected', 'false').html('pick a column to join on');
 
@@ -13473,17 +13473,15 @@ function joinDataLeft(config) {
   return { data: joinedDataWithNull, report: report };
 }
 
-var datastore = { left: null, right: null };
-// const slug = require('./utils/idSlug.json') // TODO, figure out how to load this
-// const slug = 'dataset-'
+var datastore = { left: {}, right: {} };
 
 function setKey(side, joinKey) {
   datastore[side].joinKey = joinKey;
 }
 
-function add(side, json) {
-  datastore[side] = { json: json };
-}
+// export function add (side, json) {
+//   datastore[side] = {json: json}
+// }
 
 function swap$1() {
   var left = datastore.left;
@@ -13493,6 +13491,10 @@ function swap$1() {
 }
 
 function getAll() {
+  var sides = ['left', 'right'];
+  sides.forEach(function (side) {
+    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group').datum();
+  });
   return datastore;
 }
 
@@ -13505,7 +13507,6 @@ function hasJoined(__) {
 
 var datastore$1 = Object.freeze({
 	setKey: setKey,
-	add: add,
 	swap: swap$1,
 	getAll: getAll,
 	hasJoined: hasJoined
@@ -13546,6 +13547,7 @@ function join(dispatch) {
       rightData: rightData.json,
       rightDataKey: rightData.joinKey
     });
+    buttonSel.classed('processing', false).html('Go for it!');
     dispatch.call('did-join', null, joinedData);
   }
 }
@@ -13560,6 +13562,7 @@ function didJoin(dispatch) {
     dispatch.call('change-title', { report: joinResult.report }, 'did-join');
 
     var el = select('.sbs-single[data-side="result"]').attr('data-dirty', null).node();
+
     statusResult.call(el);
     bakeTable(el, joinResult.data, dispatch);
   }
@@ -13576,7 +13579,7 @@ function setDirty(dispatch) {
   }
 }
 
-function gutterSwap(datastore) {
+function gutterSwap(dispatch, datastore) {
   return function () {
     selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]').each(function () {
       var el = select(this);
@@ -13585,6 +13588,7 @@ function gutterSwap(datastore) {
     });
 
     datastore.swap();
+    dispatch.call('set-dirty', null, true);
   };
 }
 
@@ -13599,6 +13603,8 @@ var statusUploadReady = sbsStatusChange('upload-ready');
 var statusOver = sbsStatusChange('dragover');
 var statusDrop = sbsStatusChange('drop');
 var statusTable = sbsStatusChange('table');
+// import {default as parent} from './modules/utils/getParentByClass'
+
 var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join', 'set-dirty');
 
 setDirty(dispatch$$1);
@@ -13611,14 +13617,13 @@ selectAll('.upload-input').on('change', function () {
     if (err) {
       console.error(err);
     } else {
-      add(getParentByClass(el, 'sbs-single').dataset.side, json);
       statusTable.call(el);
       bakeTable(el, json, dispatch$$1);
     }
   });
 }).on('dragover', statusOver).on('dragleave', statusUploadReady).on('drop', statusDrop);
 
-select('.gutter-swap').on('click', gutterSwap(datastore$1));
+select('.gutter-swap').on('click', gutterSwap(dispatch$$1, datastore$1));
 
 select('.rejoin-button-container .button[data-which="cancel"]').on('click', function (d) {
   event.preventDefault();

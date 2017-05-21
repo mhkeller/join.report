@@ -1,14 +1,14 @@
-let datastore = {left: null, right: null}
-// const slug = require('./utils/idSlug.json') // TODO, figure out how to load this
-// const slug = 'dataset-'
+import {select} from 'd3-selection'
+
+let datastore = {left: {}, right: {}}
 
 export function setKey (side, joinKey) {
   datastore[side].joinKey = joinKey
 }
 
-export function add (side, json) {
-  datastore[side] = {json: json}
-}
+// export function add (side, json) {
+//   datastore[side] = {json: json}
+// }
 
 export function swap () {
   let left = datastore.left
@@ -18,6 +18,10 @@ export function swap () {
 }
 
 export function getAll () {
+  let sides = ['left', 'right']
+  sides.forEach(side => {
+    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group').datum()
+  })
   return datastore
 }
 

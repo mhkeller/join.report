@@ -27,6 +27,7 @@ export default function join (dispatch) {
       rightData: rightData.json,
       rightDataKey: rightData.joinKey
     })
+    buttonSel.classed('processing', false).html('Go for it!')
     dispatch.call('did-join', null, joinedData)
   }
 }

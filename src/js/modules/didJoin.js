@@ -12,7 +12,10 @@ export default function didJoin (dispatch) {
     datastore.hasJoined(true)
     dispatch.call('change-title', {report: joinResult.report}, 'did-join')
 
-    const el = select('.sbs-single[data-side="result"]').attr('data-dirty', null).node()
+    const el = select('.sbs-single[data-side="result"]')
+      .attr('data-dirty', null)
+      .node()
+
     statusResult.call(el)
     bakeTable(el, joinResult.data, dispatch)
   }

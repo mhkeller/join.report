@@ -1,9 +1,9 @@
 import {select, event} from 'd3-selection'
 import {default as parent} from './utils/getParentByClass'
 
-import pairs from './pairs'
 import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
+import pairs from './utils/pairs'
 
 let escKeys = {
   keyCodes: [27],
@@ -47,6 +47,7 @@ export default function bakeTable (el, json, dispatch) {
 
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
+    .datum(json)
 
   let pickColumn = tableGroup.append('div')
     .classed('pick-column', true)

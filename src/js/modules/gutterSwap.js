@@ -1,6 +1,6 @@
 import {select, selectAll} from 'd3-selection'
 
-export default function gutterSwap (datastore) {
+export default function gutterSwap (dispatch, datastore) {
   return function () {
     selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]')
       .each(function () {
@@ -10,5 +10,6 @@ export default function gutterSwap (datastore) {
       })
 
     datastore.swap()
+    dispatch.call('set-dirty', null, true)
   }
 }
