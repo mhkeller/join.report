@@ -45,6 +45,8 @@ export default function bakeTable (el, json, dispatch) {
     tableGroupTest.remove()
   }
 
+  select('.gutter-swap').classed('hidden', false)
+
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
     .datum(json)
