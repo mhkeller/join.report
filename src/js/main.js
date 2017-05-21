@@ -23,7 +23,6 @@ const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
 const statusDrop = sbsStatusChange('drop')
 const statusTable = sbsStatusChange('table')
-// import {default as parent} from './modules/utils/getParentByClass'
 
 const dispatch = Dispatch(
   'col-selected',
@@ -63,6 +62,7 @@ select('.rejoin-button-container .button[data-which="cancel"]')
     event.stopPropagation()
     dispatch.call('set-dirty', null, false)
   })
+
 select('.rejoin-button-container .button[data-which="join"]')
   .on('click', function (d) {
     event.preventDefault()
