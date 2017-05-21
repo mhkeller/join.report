@@ -5,6 +5,8 @@ import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
 import pairs from './utils/pairs'
 
+import downloadFormats from './downloadFormats'
+
 let escKeys = {
   keyCodes: [27],
   keys: ['Escape']
@@ -64,10 +66,19 @@ export default function bakeTable (el, json, dispatch) {
     .attr('data-which', 'reset')
     .on('click', resetTable)
 
-  btnGroup.append('div')
+  let downloadFormatsContainer = btnGroup.append('div')
     .classed('table-btn', true)
     .attr('data-which', 'download')
-    .on('click', downloadTable)
+    .append('div')
+      .classed('download-formats', true)
+
+  downloadFormatsContainer.selectAll('.download-format').data(downloadFormats).enter()
+    .append('div')
+    .classed('download-format', true)
+    .html(d => d.name)
+    .on('click', downloadData)
+
+    // .on('mouseover', downloadTable)
 
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)
@@ -123,7 +134,7 @@ export default function bakeTable (el, json, dispatch) {
 
     trs.selectAll('td').data(d => pairs(d)).enter()
       .append('td')
-      .html(d => d[1])
+      .html(d => d[1]) // TODO, allow for multi-dimensional json
       .on('click', function (d) {
         event.stopPropagation()
         endContentEditable(tbody)
@@ -187,7 +198,8 @@ export default function bakeTable (el, json, dispatch) {
     tableGroup.remove()
   }
 
-  function downloadTable () {
-    // TODO
+  function downloadData (d) {
+    let formattedData = d.format(tableGroup.datum().filter(d => d.___deleted___ !== true))
+    console.log(formattedData)
   }
 }

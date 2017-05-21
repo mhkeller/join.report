@@ -1,5 +1,5 @@
 /* globals FileReader */
-import * as io from 'indian-ocean/dist/indian-ocean.browser.es6.js'
+import {discernFormat, discernParser} from 'indian-ocean/dist/indian-ocean.browser.es6.js'
 import readSource from './utils/readSource'
 import {openDbf} from 'shapefile'
 
@@ -7,7 +7,7 @@ export default function readDroppedFile (cb) {
   // Only read the first file, don't allow multiple
   var file = this.files[0]
 
-  var format = io.discernFormat(file.name)
+  var format = discernFormat(file.name)
   var fileReader = new FileReader()
   // Dbf is our only special case, read everything else in as plain text
   var reader = format !== 'dbf' ? readFileUtf : readDbf
@@ -27,7 +27,7 @@ function readDbf (reader, file, cb) {
 }
 
 function readFileUtf (reader, file, cb) {
-  var parser = io.discernParser(file.name)
+  var parser = discernParser(file.name)
   reader.onload = (e) => {
     var json = parser(e.target.result)
     cb(null, this, json)

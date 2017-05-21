@@ -357,6 +357,7 @@ nav {
       transform: translate(0, -22px);
 }
 .table-btn {
+  position: relative;
   opacity: 0.3;
   display: inline-block;
   vertical-align: top;
@@ -373,8 +374,37 @@ nav {
 .table-btn[data-which="download"] {
   width: 20px;
 }
+.table-btn[data-which="download"]:hover .download-formats {
+  display: block;
+}
 .table-btn[data-which="download"]:after {
   content: url("../img/download.svg");
+}
+.download-formats {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  -ms-transform: translate(90%, 0);
+      transform: translate(90%, 0);
+  background-color: #fff;
+  padding: 5px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.download-formats .download-format {
+  opacity: 0.3;
+  cursor: pointer;
+}
+.download-formats .download-format:active {
+  color: #999;
+}
+.download-formats .download-format:hover {
+  opacity: 1;
 }
 .table-btn-group,
 .pick-column {

@@ -7,6 +7,7 @@ $remove-width = 55px
 .table-btn-group
   transform translate(0, -22px)
 .table-btn
+  position relative
   opacity .3
   display inline-block
   vertical-align top
@@ -20,8 +21,29 @@ $remove-width = 55px
       content url('../img/trashcan.svg')
   &[data-which="download"]
     width 20px
+    &:hover
+      .download-formats
+        display block
     &:after
       content url('../img/download.svg')
+.download-formats
+  display none
+  position absolute
+  right 0
+  bottom 3px
+  transform translate(90%, 0)
+  background-color #fff
+  padding 5px
+  font-size 13px
+  border 1px solid #ccc
+  user-select none
+  .download-format
+    opacity .3
+    cursor pointer
+    &:active
+      color #999
+    &:hover
+      opacity 1
 .table-btn-group,
 .pick-column
   position absolute
