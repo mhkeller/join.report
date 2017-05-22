@@ -1,25 +1,25 @@
-import * as io from 'indian-ocean/dist/indian-ocean.browser.es6.js'
+import {formatters} from 'indian-ocean/dist/indian-ocean.browser.es6.js'
 
 const formats = [
   {
     name: 'csv',
-    format: io.formatters.csv
+    format: formatters.csv
   },
   {
     name: 'tsv',
-    format: io.formatters.tsv
+    format: formatters.tsv
   },
   {
     name: 'psv',
-    format: io.formatters.psv
+    format: formatters.psv
   },
   {
     name: 'json',
-    format: io.formatters.json
+    format: formatters.json
   },
   {
     name: 'geojson',
-    format: io.formatters.geojson
+    format: formatters.geojson
   }
 ]
 

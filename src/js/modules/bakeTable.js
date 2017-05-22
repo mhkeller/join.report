@@ -21,7 +21,6 @@ let disp
 
 function endContentEditable (tbodySel, skipSave) {
   if (skipSave !== true) {
-    // let tbodySel = select(parent(els.node(), 'tbody'))
     let cell = tbodySel.select('td[contentEditable="true"]')
     if (cell.size() > 0) {
       let cellData = cell.datum()
@@ -78,13 +77,10 @@ export default function bakeTable (el, json, dispatch) {
     .html(d => d.name)
     .on('click', downloadData)
 
-    // .on('mouseover', downloadTable)
-
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)
     .on('click', function (d) {
       endContentEditable(select(this).select('tbody'))
-      // select(this).selectAll('td').attr('contentEditable', null)
     })
 
   if (Array.isArray(json) && json.length === 0) {
@@ -107,7 +103,6 @@ export default function bakeTable (el, json, dispatch) {
       .on('click', function (d) {
         event.stopPropagation()
         thead.select('th.sorted').classed('sorted', false)
-        // tbody.selectAll('td').attr('contentEditable', null)
         endContentEditable(tbody)
         let asc = !JSON.parse(this.dataset.asc || 'false')
         select(this).classed('sorted', true).attr('data-asc', asc)
@@ -125,7 +120,6 @@ export default function bakeTable (el, json, dispatch) {
         tbody.selectAll('td').classed('active', (q) => q[0] === d)
         dispatch.call('col-selected', parent(this, 'sbs-group'))
         endContentEditable(tbody)
-        // trs.selectAll('td').attr('contentEditable', null)
       })
 
     let trs = tbody.selectAll('tr').data(json).enter()
@@ -138,7 +132,6 @@ export default function bakeTable (el, json, dispatch) {
       .on('click', function (d) {
         event.stopPropagation()
         endContentEditable(tbody)
-        // trs.selectAll('td').attr('contentEditable', null)
         let el = select(this)
         let editable = JSON.parse(el.attr('contentEditable') || 'false')
         if (!editable) {
@@ -153,7 +146,6 @@ export default function bakeTable (el, json, dispatch) {
           let parentD = select(parent(this, 'table-row')).datum()
           td.html(parentD[d[0]])
         } else if (returnKeys.keyCodes.indexOf(event.keyCode) > -1 || returnKeys.keys.indexOf(event.key) > -1) {
-          // let td = select(this)
           endContentEditable(tbody)
         }
       })
@@ -200,6 +192,14 @@ export default function bakeTable (el, json, dispatch) {
 
   function downloadData (d) {
     let formattedData = d.format(tableGroup.datum().filter(d => d.___deleted___ !== true))
-    console.log(formattedData)
+    var uri = 'data:text/csv;charset=utf-8,' + formattedData
+
+    var downloadLink = document.createElement('a')
+    downloadLink.href = uri
+    downloadLink.download = 'data.' + d.name
+
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    document.body.removeChild(downloadLink)
   }
 }
