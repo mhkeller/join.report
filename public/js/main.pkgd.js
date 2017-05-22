@@ -10206,7 +10206,8 @@ function bakeTable(el, json, dispatch) {
     var formattedData = d.format(tableGroup.datum().filter(function (d) {
       return d.___deleted___ !== true;
     }));
-    var uri = 'data:text/csv;charset=utf-8,' + formattedData;
+    var type = d.name.indexOf('json') > -1 ? 'application/json' : 'text/csv';
+    var uri = 'data:' + type + ';charset=utf-8,' + formattedData;
 
     var downloadLink = document.createElement('a');
     downloadLink.href = uri;

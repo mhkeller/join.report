@@ -192,7 +192,8 @@ export default function bakeTable (el, json, dispatch) {
 
   function downloadData (d) {
     let formattedData = d.format(tableGroup.datum().filter(d => d.___deleted___ !== true))
-    var uri = 'data:text/csv;charset=utf-8,' + formattedData
+    var type = d.name.indexOf('json') > -1 ? 'application/json' : 'text/csv'
+    var uri = 'data:' + type + ';charset=utf-8,' + formattedData
 
     var downloadLink = document.createElement('a')
     downloadLink.href = uri
