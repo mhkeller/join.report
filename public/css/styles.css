@@ -266,13 +266,19 @@ nav {
   max-width: 800px;
   margin: 0 0 3px 0;
 }
-#instructions .inst-el span {
+#instructions .inst-el .line-break {
+  display: block;
+  margin-bottom: 3px;
+}
+#instructions .inst-el .bold {
   font-weight: bold;
 }
 #instructions .inst-el[data-which="prose-full"] {
   display: none;
   max-height: 200px;
   overflow-y: scroll;
+  padding: 10px;
+  box-shadow: 0 0 6px #ccc inset;
 }
 #instructions .inst-el[data-which="prose-full"].show {
   display: block;

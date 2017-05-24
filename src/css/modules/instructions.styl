@@ -16,12 +16,17 @@
     max-width 800px
     margin 0 0 3px 0
   .inst-el
-    span
+    .line-break
+      display block
+      margin-bottom 3px
+    .bold
       font-weight bold
     &[data-which="prose-full"]
       display none
       max-height 200px
       overflow-y scroll
+      padding 10px
+      box-shadow 0 0 6px #ccc inset
       &.show
         display block
   .expand

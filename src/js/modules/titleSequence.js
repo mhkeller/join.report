@@ -47,7 +47,7 @@ export default function titleSequence (dispatch) {
 
       inst.append('p')
         .classed('inst-el', true)
-        .html('<span>Match status:</span> ' + styleMatchStatus(this.report.matchStatus))
+        .html('<span class="bold">Match status:</span> ' + styleMatchStatus(this.report.matchStatus))
 
       inst.append('p')
         .classed('inst-el', true)
@@ -69,8 +69,8 @@ export default function titleSequence (dispatch) {
         .classed('inst-el', true)
         .attr('data-which', 'prose-full')
         .html(this.report.prose.full
-            .replace(/(A|B) not/g, a => '</br>' + a)
-            .replace(/(Matches in A and B:|B not in A:|A not in B:)/g, a => '<span>' + a + '</span>')
+            .replace(/(A|B) not/g, a => '<span class="line-break"></span>' + a)
+            .replace(/(Matches in A and B:|B not in A:|A not in B:)/g, a => '<span class="bold">' + a + '</span>')
             )
     }
   }
