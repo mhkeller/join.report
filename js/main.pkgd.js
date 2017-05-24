@@ -12247,6 +12247,12 @@ function numberIsNaN (obj) {
 });
 
 var formats = [{
+  name: 'dbf',
+  format: function format(json) {
+    var buf = dbf$2.structure(json);
+    return toBuffer(buf.buffer);
+  }
+}, {
   name: 'csv',
   format: formatters.csv
 }, {
@@ -12261,13 +12267,6 @@ var formats = [{
 }, {
   name: 'geojson',
   format: formatters.geojson
-}, {
-  name: 'dbf',
-  format: function format(json) {
-    var buf = dbf$2.structure(json);
-    // return buf.buffer
-    return toBuffer(buf.buffer);
-  }
 }];
 
 // function toBuffer (buf) {
@@ -12465,8 +12464,6 @@ function bakeTable(el, json, dispatch) {
     } else {
       uri = 'data:text/csv;charset=utf-8,' + escape(formattedData);
     }
-
-    console.log(uri);
 
     var downloadLink = document.createElement('a');
     downloadLink.href = uri;
