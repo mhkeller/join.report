@@ -158,6 +158,7 @@
           appearance: none;
   text-decoration: none;
 }
+.button[data-open="true"],
 .button:active {
   background-color: #e9ecef;
   background-image: none;
@@ -186,6 +187,7 @@
   background-position: 0 -0.5em;
   border-color: rgba(27,31,35,0.5);
 }
+.button.button-primary[data-open="true"],
 .button.button-primary:active {
   background-color: #279f43;
   background-image: none;
@@ -266,6 +268,17 @@ nav {
   max-width: 800px;
   margin: 0 0 3px 0;
 }
+#instructions #download-result {
+  margin-top: 3px;
+}
+#instructions #download-result[data-open="true"] .download-formats {
+  display: block;
+  color: #000;
+  font-weight: normal;
+}
+#instructions #download-result[data-open="true"] .download-format {
+  z-index: 9;
+}
 #instructions .inst-el .line-break {
   display: block;
   margin-bottom: 3px;
@@ -286,16 +299,14 @@ nav {
 #instructions .expand {
   color: #666;
   display: inline-block;
+  min-width: 100px;
+  cursor: pointer;
 }
 #instructions .expand:hover:before {
   text-decoration: underline;
 }
-#instructions .expand:before,
-#instructions .expand:after {
-  cursor: pointer;
-}
 #instructions .expand:before {
-  content: 'Expand';
+  content: 'Show details';
 }
 #instructions .expand:after {
   position: relative;
@@ -308,7 +319,7 @@ nav {
   top: 6px;
 }
 #instructions .expand[data-open="true"]:before {
-  content: 'Close';
+  content: 'Hide';
 }
 #instructions .expand[data-open="true"]:after {
   top: 2px;

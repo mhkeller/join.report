@@ -12477,10 +12477,10 @@ function bakeTable(el, json, dispatch) {
 
 var matchStyles = {
   perfect: function perfect() {
-    return 'Perfect!  🎉';
+    return 'Perfect join!  🎉';
   },
   some: function some() {
-    return ' Some 👍';
+    return ' Some rows joined 👍';
   },
   none: function none() {
     return 'None 😢';
@@ -12563,13 +12563,26 @@ function titleSequence(dispatch) {
       inst.selectAll('.inst-el').remove();
       // Not sure why I need to remove this, the html update doesn't take effect
       inst.select('h2').remove();
-      inst.append('h2').html('Join successful!');
+      inst.append('h2').html('Join finished!');
 
       inst.append('p').classed('inst-el', true).html('<span class="bold">Match status:</span> ' + styleMatchStatus(this.report.matchStatus));
 
       inst.append('p').classed('inst-el', true).attr('data-which', 'prose-summary').html(this.report.prose.summary);
 
-      inst.append('p').classed('inst-el', true).classed('expand', true).attr('data-open', 'false').on('click', function (d) {
+      var downloadBtn = inst.append('div').attr('class', 'button button-primary button-sm').attr('id', 'download-result').html('Download as...').on('click', function (d) {
+        var sel = select(this);
+        var open = !JSON.parse(sel.attr('data-open'));
+        sel.attr('data-open', open);
+      });
+
+      var downloadFormatsContainer = downloadBtn.append('div').classed('download-formats', true);
+
+      downloadFormatsContainer.selectAll('.download-format').data(formats).enter().append('div').classed('download-format', true).html(function (d) {
+        return d.name;
+      });
+      // .on('click', downloadData)
+
+      inst.append('div').append('p').classed('inst-el', true).classed('expand', true).attr('data-open', 'false').on('click', function (d) {
         var sel = select(this);
         var open = !JSON.parse(sel.attr('data-open'));
         sel.attr('data-open', open);
