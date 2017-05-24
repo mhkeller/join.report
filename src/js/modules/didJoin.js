@@ -1,4 +1,4 @@
-import {select} from 'd3-selection'
+import {select, selectAll} from 'd3-selection'
 import sbsStatusChange from './sbsStatusChange'
 import bakeTable from './bakeTable'
 import * as datastore from './datastore'
@@ -18,5 +18,8 @@ export default function didJoin (dispatch) {
 
     statusResult.call(el)
     bakeTable(el, joinResult.data, dispatch)
+
+    selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]')
+      .attr('data-has-joined', true)
   }
 }
