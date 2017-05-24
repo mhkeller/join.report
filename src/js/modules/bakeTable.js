@@ -209,8 +209,6 @@ export default function bakeTable (el, json, dispatch) {
       uri = 'data:text/csv;charset=utf-8,' + escape(formattedData)
     }
 
-    console.log(uri)
-
     let downloadLink = document.createElement('a')
     downloadLink.href = uri
     downloadLink.download = 'data.' + d.name

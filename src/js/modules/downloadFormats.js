@@ -4,6 +4,13 @@ import buf from 'buffer/'
 
 const formats = [
   {
+    name: 'dbf',
+    format: function (json) {
+      var buf = dbf.structure(json)
+      return toBuffer(buf.buffer)
+    }
+  },
+  {
     name: 'csv',
     format: formatters.csv
   },
@@ -22,14 +29,6 @@ const formats = [
   {
     name: 'geojson',
     format: formatters.geojson
-  },
-  {
-    name: 'dbf',
-    format: function (json) {
-      var buf = dbf.structure(json)
-      // return buf.buffer
-      return toBuffer(buf.buffer)
-    }
   }
 ]
 
