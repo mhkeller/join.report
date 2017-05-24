@@ -12246,8 +12246,6 @@ function numberIsNaN (obj) {
 }
 });
 
-console.log(index$1$1);
-
 var formats = [{
   name: 'csv',
   format: formatters.csv
@@ -15730,7 +15728,6 @@ function swap$1() {
 function getAll() {
   var sides = ['left', 'right'];
   sides.forEach(function (side) {
-    console.log('data', selectAll('.sbs-single[data-side="' + side + '"] .table-row').data());
     datastore[side].json = selectAll('.sbs-single[data-side="' + side + '"] .table-row').data().filter(function (row) {
       return row.___deleted___ !== true;
     });
