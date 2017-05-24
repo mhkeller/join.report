@@ -1,5 +1,6 @@
 import {select, event} from 'd3-selection'
 import styleMatchStatus from './utils/styleMatchStatus'
+import * as datastore from './datastore'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -15,23 +16,25 @@ export default function titleSequence (dispatch) {
 
   const steps = {
     'ready': function () {
-      let inst = select('#instructions')
+      if (datastore.hasJoined() !== true) {
+        let inst = select('#instructions')
 
-      let h2 = inst.select('h2')
-        .html('Ready to join!')
+        let h2 = inst.select('h2')
+          .html('Ready to join!')
 
-      inst.selectAll('.inst-el').remove()
+        inst.selectAll('.inst-el').remove()
 
-      inst.append('a')
-        .attr('class', 'button button-primary join-button')
-        .attr('href', '#')
-        .html('Go for it!')
-        .on('click', function () {
-          event.stopPropagation()
-          event.preventDefault()
-          h2.html('Processing...')
-          dispatch.call('join', null, select(this))
-        })
+        inst.append('a')
+          .attr('class', 'button button-primary join-button')
+          .attr('href', '#')
+          .html('Go for it!')
+          .on('click', function () {
+            event.stopPropagation()
+            event.preventDefault()
+            h2.html('Processing...')
+            dispatch.call('join', null, select(this))
+          })
+      }
     },
     'did-join': function () {
       let inst = select('#instructions')
