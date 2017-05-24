@@ -12477,13 +12477,13 @@ function bakeTable(el, json, dispatch) {
 
 var matchStyles = {
   perfect: function perfect() {
-    return '🎉  Perfect!  🎉';
-  },
-  none: function none() {
-    return 'None 😢';
+    return 'Perfect!  🎉';
   },
   some: function some() {
     return ' Some 👍';
+  },
+  none: function none() {
+    return 'None 😢';
   }
 };
 
@@ -12565,11 +12565,22 @@ function titleSequence(dispatch) {
       inst.select('h2').remove();
       inst.append('h2').html('Join successful!');
 
-      inst.append('p').classed('inst-el', true).html('Match status: ' + styleMatchStatus(this.report.matchStatus));
+      inst.append('p').classed('inst-el', true).html('<span>Match status:</span> ' + styleMatchStatus(this.report.matchStatus));
 
-      inst.append('p').classed('inst-el', true).classed('data-which', 'prose-summary').html(this.report.prose.summary);
+      inst.append('p').classed('inst-el', true).attr('data-which', 'prose-summary').html(this.report.prose.summary);
 
-      inst.append('p').classed('inst-el', true).classed('data-which', 'prose-full').html(this.report.prose.full);
+      inst.append('p').classed('inst-el', true).classed('expand', true).attr('data-open', 'false').on('click', function (d) {
+        var sel = select(this);
+        var open = !JSON.parse(sel.attr('data-open'));
+        sel.attr('data-open', open);
+        detail.classed('show', open);
+      });
+
+      var detail = inst.append('p').classed('inst-el', true).attr('data-which', 'prose-full').html(this.report.prose.full.replace(/(A|B) not/g, function (a) {
+        return '</br>' + a;
+      }).replace(/(Matches in A and B:|B not in A:|A not in B:)/g, function (a) {
+        return '<span>' + a + '</span>';
+      }));
     }
   };
 }

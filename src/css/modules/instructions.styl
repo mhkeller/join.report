@@ -1,8 +1,8 @@
 #instructions
   margin 20px auto 30px auto
-  width 100%
+  width 94%
   max-width 1160px
-  text-align center
+  // text-align center
   min-height 115px
   h2
     font-size 28px
@@ -13,8 +13,39 @@
     text-shadow -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   p
     font-size 14px
-    max-width 740px
-    margin 8px auto
+    max-width 800px
+    margin 0 0 3px 0
   .inst-el
-    +below(800px)
-      padding 0 20px
+    span
+      font-weight bold
+    &[data-which="prose-full"]
+      display none
+      max-height 200px
+      overflow-y scroll
+      &.show
+        display block
+  .expand
+    color #666
+    display inline-block
+    &:hover
+      &:before
+        text-decoration underline
+    &:before,
+    &:after
+      cursor pointer
+    &:before
+      content 'Expand'
+    &:after
+      position relative
+      content '‣'
+      display inline-block
+      font-size 28px
+      padding-left 3px
+    &[data-open="false"]:after
+      top 6px
+    &[data-open="true"]
+      &:before
+        content 'Close'
+      &:after
+        top 2px
+        transform rotate(90deg)

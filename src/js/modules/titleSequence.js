@@ -47,17 +47,31 @@ export default function titleSequence (dispatch) {
 
       inst.append('p')
         .classed('inst-el', true)
-        .html('Match status: ' + styleMatchStatus(this.report.matchStatus))
+        .html('<span>Match status:</span> ' + styleMatchStatus(this.report.matchStatus))
 
       inst.append('p')
         .classed('inst-el', true)
-        .classed('data-which', 'prose-summary')
+        .attr('data-which', 'prose-summary')
         .html(this.report.prose.summary)
 
       inst.append('p')
         .classed('inst-el', true)
-        .classed('data-which', 'prose-full')
-        .html(this.report.prose.full)
+        .classed('expand', true)
+        .attr('data-open', 'false')
+        .on('click', function (d) {
+          let sel = select(this)
+          var open = !JSON.parse(sel.attr('data-open'))
+          sel.attr('data-open', open)
+          detail.classed('show', open)
+        })
+
+      var detail = inst.append('p')
+        .classed('inst-el', true)
+        .attr('data-which', 'prose-full')
+        .html(this.report.prose.full
+            .replace(/(A|B) not/g, a => '</br>' + a)
+            .replace(/(Matches in A and B:|B not in A:|A not in B:)/g, a => '<span>' + a + '</span>')
+            )
     }
   }
 }
