@@ -15,6 +15,23 @@
     font-size 14px
     max-width 800px
     margin 0 0 3px 0
+  #download-result
+    margin-top 3px
+    &[data-open="true"]
+      .download-formats
+        display block
+        color #000
+        font-weight normal
+      .download-format
+        z-index 9
+    // span
+    //   top 1px
+    //   left -1px
+    //   transform rotate(90deg)
+    //   font-size 21px
+    //   display inline-block
+    //   position relative
+
   .inst-el
     .line-break
       display block
@@ -32,14 +49,13 @@
   .expand
     color #666
     display inline-block
+    min-width 100px
+    cursor pointer
     &:hover
       &:before
         text-decoration underline
-    &:before,
-    &:after
-      cursor pointer
     &:before
-      content 'Expand'
+      content 'Show details'
     &:after
       position relative
       content '‣'
@@ -50,7 +66,7 @@
       top 6px
     &[data-open="true"]
       &:before
-        content 'Close'
+        content 'Hide'
       &:after
         top 2px
         transform rotate(90deg)

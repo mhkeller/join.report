@@ -1,6 +1,7 @@
 import {select, event} from 'd3-selection'
 import styleMatchStatus from './utils/styleMatchStatus'
 import * as datastore from './datastore'
+import downloadFormats from './downloadFormats'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -43,7 +44,7 @@ export default function titleSequence (dispatch) {
       // Not sure why I need to remove this, the html update doesn't take effect
       inst.select('h2').remove()
       inst.append('h2')
-        .html('Join successful!')
+        .html('Join finished!')
 
       inst.append('p')
         .classed('inst-el', true)
@@ -54,7 +55,26 @@ export default function titleSequence (dispatch) {
         .attr('data-which', 'prose-summary')
         .html(this.report.prose.summary)
 
-      inst.append('p')
+      let downloadBtn = inst.append('div')
+        .attr('class', 'button button-primary button-sm')
+        .attr('id', 'download-result')
+        .html('Download as...')
+        .on('click', function (d) {
+          let sel = select(this)
+          var open = !JSON.parse(sel.attr('data-open'))
+          sel.attr('data-open', open)
+        })
+
+      let downloadFormatsContainer = downloadBtn.append('div')
+      .classed('download-formats', true)
+
+      downloadFormatsContainer.selectAll('.download-format').data(downloadFormats).enter()
+        .append('div')
+        .classed('download-format', true)
+        .html(d => d.name)
+        // .on('click', downloadData)
+
+      inst.append('div').append('p')
         .classed('inst-el', true)
         .classed('expand', true)
         .attr('data-open', 'false')
