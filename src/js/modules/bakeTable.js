@@ -204,10 +204,12 @@ export default function bakeTable (el, json, dispatch) {
       // let blob = new Blob(formattedData, {type: 'octet/stream'})
       // uri = window.URL.createObjectURL(formattedData)
     } else if (d.name.indexOf('json') > -1) {
-      uri = 'data:application/json;charset=utf-8,' + formattedData
+      uri = 'data:application/json;charset=utf-8,' + escape(formattedData)
     } else {
-      uri = 'data:text/csv;charset=utf-8,' + formattedData
+      uri = 'data:text/csv;charset=utf-8,' + escape(formattedData)
     }
+
+    console.log(uri)
 
     let downloadLink = document.createElement('a')
     downloadLink.href = uri
