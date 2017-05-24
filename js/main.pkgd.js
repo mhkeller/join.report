@@ -12492,6 +12492,43 @@ function styleMatchStatus(which) {
   return matchStyles[which]();
 }
 
+var datastore = { left: {}, right: {} };
+
+function setKey(side, joinKey) {
+  datastore[side].joinKey = joinKey;
+}
+
+function swap$1() {
+  var left = datastore.left;
+  var right = datastore.right;
+  datastore.left = right;
+  datastore.right = left;
+}
+
+function getAll() {
+  var sides = ['left', 'right'];
+  sides.forEach(function (side) {
+    datastore[side].json = selectAll('.sbs-single[data-side="' + side + '"] .table-row').data().filter(function (row) {
+      return row.___deleted___ !== true;
+    });
+  });
+  return datastore;
+}
+
+function hasJoined(__) {
+  if (__ === undefined) {
+    return datastore.hasJoined;
+  }
+  datastore.hasJoined = __;
+}
+
+var datastore$1 = Object.freeze({
+	setKey: setKey,
+	swap: swap$1,
+	getAll: getAll,
+	hasJoined: hasJoined
+});
+
 function titleSequence(dispatch) {
   dispatch.on('change-title', changeTitle);
 
@@ -12506,18 +12543,20 @@ function titleSequence(dispatch) {
 
   var steps = {
     'ready': function ready() {
-      var inst = select('#instructions');
+      if (hasJoined() !== true) {
+        var inst = select('#instructions');
 
-      var h2 = inst.select('h2').html('Ready to join!');
+        var h2 = inst.select('h2').html('Ready to join!');
 
-      inst.selectAll('.inst-el').remove();
+        inst.selectAll('.inst-el').remove();
 
-      inst.append('a').attr('class', 'button button-primary join-button').attr('href', '#').html('Go for it!').on('click', function () {
-        event.stopPropagation();
-        event.preventDefault();
-        h2.html('Processing...');
-        dispatch.call('join', null, select(this));
-      });
+        inst.append('a').attr('class', 'button button-primary join-button').attr('href', '#').html('Go for it!').on('click', function () {
+          event.stopPropagation();
+          event.preventDefault();
+          h2.html('Processing...');
+          dispatch.call('join', null, select(this));
+        });
+      }
     },
     'did-join': function didJoin() {
       var inst = select('#instructions');
@@ -15711,43 +15750,6 @@ function joinDataLeft(config) {
   }
   return { data: joinedDataWithNull, report: report };
 }
-
-var datastore = { left: {}, right: {} };
-
-function setKey(side, joinKey) {
-  datastore[side].joinKey = joinKey;
-}
-
-function swap$1() {
-  var left = datastore.left;
-  var right = datastore.right;
-  datastore.left = right;
-  datastore.right = left;
-}
-
-function getAll() {
-  var sides = ['left', 'right'];
-  sides.forEach(function (side) {
-    datastore[side].json = selectAll('.sbs-single[data-side="' + side + '"] .table-row').data().filter(function (row) {
-      return row.___deleted___ !== true;
-    });
-  });
-  return datastore;
-}
-
-function hasJoined(__) {
-  if (__ === undefined) {
-    return datastore.hasJoined;
-  }
-  datastore.hasJoined = __;
-}
-
-var datastore$1 = Object.freeze({
-	setKey: setKey,
-	swap: swap$1,
-	getAll: getAll,
-	hasJoined: hasJoined
-});
 
 function joinCheck() {
   var els = selectAll('.table-container input:checked');
