@@ -15827,6 +15827,8 @@ function didJoin(dispatch) {
 
     statusResult.call(el);
     bakeTable(el, joinResult.data, dispatch);
+
+    selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]').attr('data-has-joined', true);
   }
 }
 
