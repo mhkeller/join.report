@@ -66,9 +66,11 @@
     "node": "^4.4.3"
   },
   "dependencies": {
+    "buffer": "^5.0.6",
     "d3": "^4.7.4",
     "d3-dispatch": "^1.0.3",
     "d3-selection-multi": "^1.0.1",
+    "dbf": "^0.1.4",
     "indian-ocean": "github:mhkeller/indian-ocean#rollup",
     "joiner": "github:mhkeller/indian-ocean#3.0.0",
     "shapefile": "^0.6.2",

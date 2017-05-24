@@ -1,4 +1,4 @@
-import {select} from 'd3-selection'
+import {selectAll} from 'd3-selection'
 
 let datastore = {left: {}, right: {}}
 
@@ -16,8 +16,9 @@ export function swap () {
 export function getAll () {
   let sides = ['left', 'right']
   sides.forEach(side => {
-    datastore[side].json = select('.sbs-single[data-side="' + side + '"] .table-group')
-      .datum()
+    console.log('data', selectAll('.sbs-single[data-side="' + side + '"] .table-row').data())
+    datastore[side].json = selectAll('.sbs-single[data-side="' + side + '"] .table-row')
+      .data()
       .filter(row => row.___deleted___ !== true)
   })
   return datastore

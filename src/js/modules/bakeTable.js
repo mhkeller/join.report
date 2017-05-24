@@ -1,3 +1,4 @@
+/* globals Blob */
 import {select, event} from 'd3-selection'
 import {default as parent} from './utils/getParentByClass'
 
@@ -19,6 +20,8 @@ let returnKeys = {
 
 let disp
 
+// window.select = select
+
 function endContentEditable (tbodySel, skipSave) {
   if (skipSave !== true) {
     let cell = tbodySel.select('td[contentEditable="true"]')
@@ -26,7 +29,10 @@ function endContentEditable (tbodySel, skipSave) {
       let cellData = cell.datum()
       let cellHtml = cell.html()
       if (cellData[1] !== cellHtml) {
-        cellData[1] = cell.html()
+        let tableRow = select(parent(cell.node(), 'table-row'))
+        let rowDatum = tableRow.datum()
+        rowDatum[cellData[0]] = cell.html()
+        tableRow.datum(rowDatum)
         if (select(parent(tbodySel.node(), 'sbs-single')).attr('data-side') !== 'result') {
           disp.call('set-dirty', null, true)
         }
@@ -50,7 +56,7 @@ export default function bakeTable (el, json, dispatch) {
 
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
-    .datum(json)
+    // .datum(json)
 
   let pickColumn = tableGroup.append('div')
     .classed('pick-column', true)
@@ -191,11 +197,19 @@ export default function bakeTable (el, json, dispatch) {
   }
 
   function downloadData (d) {
-    let formattedData = d.format(tableGroup.datum().filter(d => d.___deleted___ !== true))
-    var type = d.name.indexOf('json') > -1 ? 'application/json' : 'text/csv'
-    var uri = 'data:' + type + ';charset=utf-8,' + formattedData
+    let formattedData = d.format(tableGroup.selectAll('.table-row').data().filter(d => d.___deleted___ !== true))
 
-    var downloadLink = document.createElement('a')
+    let uri
+    if (d.name === 'dbf') {
+      // let blob = new Blob(formattedData, {type: 'octet/stream'})
+      // uri = window.URL.createObjectURL(formattedData)
+    } else if (d.name.indexOf('json') > -1) {
+      uri = 'data:application/json;charset=utf-8,' + formattedData
+    } else {
+      uri = 'data:text/csv;charset=utf-8,' + formattedData
+    }
+
+    let downloadLink = document.createElement('a')
     downloadLink.href = uri
     downloadLink.download = 'data.' + d.name
 
