@@ -16,7 +16,6 @@ export function swap () {
 export function getAll () {
   let sides = ['left', 'right']
   sides.forEach(side => {
-    console.log('data', selectAll('.sbs-single[data-side="' + side + '"] .table-row').data())
     datastore[side].json = selectAll('.sbs-single[data-side="' + side + '"] .table-row')
       .data()
       .filter(row => row.___deleted___ !== true)

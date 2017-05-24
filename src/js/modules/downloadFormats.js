@@ -2,8 +2,6 @@ import {formatters} from 'indian-ocean/dist/indian-ocean.browser.es6.js'
 import dbf from './libs/dbf'
 import buf from 'buffer/'
 
-console.log(buf)
-
 const formats = [
   {
     name: 'csv',
