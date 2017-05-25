@@ -1,13 +1,11 @@
 import {formatters} from 'indian-ocean/dist/indian-ocean.browser.es6.js'
 import dbf from './libs/dbf'
-import buf from 'buffer/'
 
 const formats = [
   {
     name: 'dbf',
     format: function (json) {
-      var buf = dbf.structure(json)
-      return toBuffer(buf.buffer)
+      return dbf.structure(json).buffer
     }
   },
   {
@@ -31,23 +29,5 @@ const formats = [
     format: formatters.geojson
   }
 ]
-
-// function toBuffer (buf) {
-//   return String.fromCharCode.apply(null, new Uint8Array(buf));
-// }
-
-// function toBuffer (ab) {
-//   var string = new TextDecoder('utf-8').decode(ab);
-//   return string
-// }
-
-function toBuffer (ab) {
-  var buffer = new buf.Buffer(buf.Buffer.from(ab).byteLength)
-  var view = new Uint8Array(ab)
-  for (var i = 0; i < buffer.length; ++i) {
-    buffer[i] = view[i]
-  }
-  return buffer
-}
 
 export default formats

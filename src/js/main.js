@@ -44,6 +44,8 @@ selectAll('.upload-input')
       if (err) {
         console.error(err)
       } else {
+        console.log(json)
+        json.forEach(d => console.log(typeof d.date))
         statusTable.call(el)
         bakeTable(el, json, dispatch)
       }

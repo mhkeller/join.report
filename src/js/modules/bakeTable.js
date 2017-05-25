@@ -1,7 +1,7 @@
-/* globals Blob */
 import {select, event} from 'd3-selection'
 import {default as parent} from './utils/getParentByClass'
 
+import downloadData from './downloadData'
 import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
 import pairs from './utils/pairs'
@@ -81,7 +81,7 @@ export default function bakeTable (el, json, dispatch) {
     .append('div')
     .classed('download-format', true)
     .html(d => d.name)
-    .on('click', downloadData)
+    .on('click', downloadData(tableGroup))
 
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)
@@ -194,27 +194,5 @@ export default function bakeTable (el, json, dispatch) {
   function resetTable () {
     sbsStatusChange('upload-ready').call(el)
     tableGroup.remove()
-  }
-
-  function downloadData (d) {
-    let formattedData = d.format(tableGroup.selectAll('.table-row').data().filter(d => d.___deleted___ !== true))
-
-    let uri
-    if (d.name === 'dbf') {
-      // let blob = new Blob(formattedData, {type: 'octet/stream'})
-      // uri = window.URL.createObjectURL(formattedData)
-    } else if (d.name.indexOf('json') > -1) {
-      uri = 'data:application/json;charset=utf-8,' + escape(formattedData)
-    } else {
-      uri = 'data:text/csv;charset=utf-8,' + escape(formattedData)
-    }
-
-    let downloadLink = document.createElement('a')
-    downloadLink.href = uri
-    downloadLink.download = 'data.' + d.name
-
-    document.body.appendChild(downloadLink)
-    downloadLink.click()
-    document.body.removeChild(downloadLink)
   }
 }
