@@ -6,6 +6,7 @@ export default function downloadData (tableGroup) {
 
     let uri
     if (d.name === 'dbf') {
+      // courtesy @veltman
       let blob = new Blob([formattedData])
       uri = window.URL.createObjectURL(blob)
     } else if (d.name.indexOf('json') > -1) {
