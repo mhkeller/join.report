@@ -9969,6 +9969,7 @@ function downloadData(tableGroup) {
 
     var uri = void 0;
     if (d.name === 'dbf') {
+      // courtesy @veltman
       var blob = new Blob([formattedData]);
       uri = window.URL.createObjectURL(blob);
     } else if (d.name.indexOf('json') > -1) {
