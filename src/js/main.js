@@ -18,6 +18,7 @@ import * as datastore from './modules/datastore'
 import didJoin from './modules/didJoin'
 import setDirty from './modules/setDirty'
 import gutterSwap from './modules/gutterSwap'
+import exampleData from './modules/exampleData'
 
 const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
@@ -45,7 +46,7 @@ selectAll('.upload-input')
       if (err) {
         console.error(err)
       } else {
-        console.log(json)
+        console.log(el)
         statusTable.call(el)
         bakeTable(el, json, dispatch)
         dispatch.call('change-title', null, 'did-bake-table')
@@ -71,4 +72,16 @@ select('.rejoin-button-container .button[data-which="join"]')
     event.preventDefault()
     event.stopPropagation()
     dispatch.call('join', null, select(this))
+  })
+
+select('#load-example')
+  .on('click', function (d) {
+    selectAll('.sbs-single[data-status="upload-ready"')
+      .each(function () {
+        let el = select(this).select('.upload-input').node()
+        let json = exampleData[this.dataset.side]
+        statusTable.call(el)
+        bakeTable(el, json, dispatch)
+      })
+    dispatch.call('change-title', null, 'did-bake-table')
   })

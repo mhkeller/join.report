@@ -19,8 +19,6 @@ let returnKeys = {
 
 let disp
 
-// window.select = select
-
 function endContentEditable (tbodySel, skipSave) {
   if (skipSave !== true) {
     let cell = tbodySel.select('td[contentEditable="true"]')

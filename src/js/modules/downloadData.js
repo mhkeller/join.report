@@ -14,7 +14,6 @@ export default function downloadData (tableGroup) {
     } else {
       uri = 'data:text/csv;charset=utf-8,' + escape(formattedData)
     }
-    console.log(formattedData)
 
     let downloadLink = document.createElement('a')
     downloadLink.href = uri
