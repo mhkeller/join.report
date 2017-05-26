@@ -2,7 +2,9 @@ import {select, event} from 'd3-selection'
 import styleMatchStatus from './utils/styleMatchStatus'
 import * as datastore from './datastore'
 import downloadFormats from './downloadFormats'
-import * as helpers from './helpers'
+import downloadData from './downloadData'
+
+// import * as helpers from './helpers'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -86,13 +88,15 @@ export default function titleSequence (dispatch) {
         })
 
       let downloadFormatsContainer = downloadBtn.append('div')
-      .classed('download-formats', true)
+        .classed('download-formats', true)
+
+      let sbsSingle = select('.sbs-single[data-side="result"]')
 
       downloadFormatsContainer.selectAll('.download-format').data(downloadFormats).enter()
         .append('div')
         .classed('download-format', true)
         .html(d => d.name)
-        // .on('click', downloadData)
+        .on('click', downloadData(sbsSingle))
 
       inst.append('div').append('p')
         .classed('inst-el', true)

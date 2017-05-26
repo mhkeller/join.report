@@ -1,12 +1,11 @@
 import {select, event} from 'd3-selection'
 import {default as parent} from './utils/getParentByClass'
 
+import downloadFormats from './downloadFormats'
 import downloadData from './downloadData'
 import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
 import pairs from './utils/pairs'
-
-import downloadFormats from './downloadFormats'
 
 let escKeys = {
   keyCodes: [27],
