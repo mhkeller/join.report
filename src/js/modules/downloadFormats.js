@@ -23,10 +23,6 @@ const formats = [
   {
     name: 'json',
     format: formatters.json
-  },
-  {
-    name: 'geojson',
-    format: formatters.geojson
   }
 ]
 

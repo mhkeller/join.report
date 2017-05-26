@@ -30,7 +30,8 @@ const dispatch = Dispatch(
   'change-title',
   'get-keys',
   'did-join',
-  'set-dirty'
+  'set-dirty',
+  'did-bake-table'
 )
 
 setDirty(dispatch)
@@ -45,9 +46,9 @@ selectAll('.upload-input')
         console.error(err)
       } else {
         console.log(json)
-        json.forEach(d => console.log(typeof d.date))
         statusTable.call(el)
         bakeTable(el, json, dispatch)
+        dispatch.call('change-title', null, 'did-bake-table')
       }
     })
   })
