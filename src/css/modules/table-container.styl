@@ -27,23 +27,20 @@ $remove-width = 55px
     &:after
       content url('../img/download.svg')
 .download-formats
-  display none
-  position absolute
   right 0
   bottom 3px
   transform translate(90%, 0)
-  background-color #fff
-  padding 5px
   font-size 13px
-  border 1px solid #ccc
-  user-select none
-  .download-format
-    opacity .3
-    cursor pointer
-    &:active
-      color #999
-    &:hover
-      opacity 1
+  border 1px solid #000
+  &:before
+    content ' '
+    background-color transparent
+    position absolute
+    top -15px
+    right -10px
+    bottom 0
+    left -15px
+    z-index -1
 .table-btn-group,
 .pick-column
   position absolute
@@ -79,9 +76,8 @@ $remove-width = 55px
     margin 24px auto 20px auto
   tr
     &:hover
-      td
-        background-color $hover-color
-        cursor pointer
+      background-color $hover-color
+      cursor pointer
       td:last-child
         background-color #fff
         border-top 1px solid $hover-color
@@ -89,9 +85,10 @@ $remove-width = 55px
   th
     position relative
     white-space nowrap
-    text-align center
+    // text-align center
     // user-select none
     cursor pointer
+    overflow visible
     input[type='radio']
       position absolute
       width 100%

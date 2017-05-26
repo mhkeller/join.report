@@ -222,6 +222,30 @@
   position: absolute;
   background-size: contain;
 }
+.download-formats {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 50px;
+  box-shadow: 0 0 6px #fff;
+}
+.download-formats .download-format {
+  opacity: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+.download-formats .download-format:active {
+  color: #999;
+}
+.download-formats .download-format:hover {
+  background-color: #000;
+  color: #fff;
+  opacity: 1;
+}
 nav {
   position: relative;
   width: calc(100% - 10px);
@@ -253,10 +277,16 @@ nav {
   right: 0;
 }
 #instructions {
+  position: relative;
   margin: 20px auto 30px auto;
   width: 94%;
   max-width: 1160px;
   min-height: 115px;
+}
+#instructions .pre {
+  background-color: #ccc;
+  font-family: monospace;
+  padding: 0 2px;
 }
 #instructions h2 {
   font-size: 24px;
@@ -273,6 +303,9 @@ nav {
   max-width: 800px;
 }
 #instructions #download-result {
+  position: absolute;
+  top: 38px;
+  right: 0;
   margin-top: 3px;
 }
 #instructions #download-result[data-open="true"] .download-formats {
@@ -439,30 +472,22 @@ nav {
   content: url("../img/download.svg");
 }
 .download-formats {
-  display: none;
-  position: absolute;
   right: 0;
   bottom: 3px;
   -ms-transform: translate(90%, 0);
       transform: translate(90%, 0);
-  background-color: #fff;
-  padding: 5px;
   font-size: 13px;
-  border: 1px solid #ccc;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  border: 1px solid #000;
 }
-.download-formats .download-format {
-  opacity: 0.3;
-  cursor: pointer;
-}
-.download-formats .download-format:active {
-  color: #999;
-}
-.download-formats .download-format:hover {
-  opacity: 1;
+.download-formats:before {
+  content: ' ';
+  background-color: transparent;
+  position: absolute;
+  top: -15px;
+  right: -10px;
+  bottom: 0;
+  left: -15px;
+  z-index: -1;
 }
 .table-btn-group,
 .pick-column {
@@ -507,7 +532,7 @@ nav {
   border-collapse: collapse;
   margin: 24px auto 20px auto;
 }
-.table-container tr:hover td {
+.table-container tr:hover {
   background-color: #eee;
   cursor: pointer;
 }
@@ -519,8 +544,8 @@ nav {
 .table-container th {
   position: relative;
   white-space: nowrap;
-  text-align: center;
   cursor: pointer;
+  overflow: visible;
 }
 .table-container th input[type='radio'] {
   position: absolute;

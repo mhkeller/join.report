@@ -2,6 +2,7 @@ import {select, event} from 'd3-selection'
 import styleMatchStatus from './utils/styleMatchStatus'
 import * as datastore from './datastore'
 import downloadFormats from './downloadFormats'
+import * as helpers from './helpers'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -48,9 +49,11 @@ export default function titleSequence (dispatch) {
         inst.selectAll('.inst-el').remove()
 
         inst.append('p')
+          .classed('inst-el', true)
           .html('Select a column for each table that you want to join on. You can remove rows by clicking the `x` on the right. To undo, click the reverse arrow that appears.')
 
         inst.append('p')
+          .classed('inst-el', true)
           .html('Click on a cell to edit its contents directly. Hit `return` or click anywhere else to save your changes. Press `esc` to revert back.')
       }
     },
