@@ -10374,9 +10374,6 @@ var formats = [{
 }, {
   name: 'json',
   format: formatters.json
-}, {
-  name: 'geojson',
-  format: formatters.geojson
 }];
 
 var escKeys = {
@@ -10622,6 +10619,20 @@ function titleSequence(dispatch) {
           h2.html('Processing...');
           dispatch.call('join', null, select(this));
         });
+      }
+    },
+    'did-bake-table': function didBakeTable() {
+      console.log('here');
+      if (hasJoined() !== true) {
+        var inst = select('#instructions');
+
+        inst.select('h2').html('Setup your data...');
+
+        inst.selectAll('.inst-el').remove();
+
+        inst.append('p').html('Select a column for each table that you want to join on. You can remove rows by clicking the `x` on the right. To undo, click the reverse arrow that appears.');
+
+        inst.append('p').html('Click on a cell to edit its contents directly. Hit `return` or click anywhere else to save your changes. Press `esc` to revert back.');
       }
     },
     'did-join': function didJoin() {
@@ -13935,7 +13946,7 @@ var statusOver = sbsStatusChange('dragover');
 var statusDrop = sbsStatusChange('drop');
 var statusTable = sbsStatusChange('table');
 
-var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join', 'set-dirty');
+var dispatch$$1 = dispatch$1('col-selected', 'join', 'change-title', 'get-keys', 'did-join', 'set-dirty', 'did-bake-table');
 
 setDirty(dispatch$$1);
 didJoin(dispatch$$1);
@@ -13948,11 +13959,9 @@ selectAll('.upload-input').on('change', function () {
       console.error(err);
     } else {
       console.log(json);
-      json.forEach(function (d) {
-        return console.log(_typeof$1(d.date));
-      });
       statusTable.call(el);
       bakeTable(el, json, dispatch$$1);
+      dispatch$$1.call('change-title', null, 'did-bake-table');
     }
   });
 }).on('dragover', statusOver).on('dragleave', statusUploadReady).on('drop', statusDrop);
