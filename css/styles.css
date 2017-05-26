@@ -231,7 +231,6 @@
       -ms-user-select: none;
           user-select: none;
   width: 50px;
-  box-shadow: 0 0 6px #fff;
 }
 .download-formats .download-format {
   opacity: 1;
@@ -315,6 +314,18 @@ nav {
 }
 #instructions #download-result[data-open="true"] .download-format {
   z-index: 9;
+}
+#instructions #download-result .download-formats {
+  right: 0;
+  font-size: 13px;
+  border: 1px solid #000;
+  width: 140px;
+  -ms-transform: translate(1px, 8px);
+      transform: translate(1px, 8px);
+}
+#instructions #download-result .download-formats .download-format {
+  display: inline-block;
+  vertical-align: top;
 }
 #instructions .inst-el .line-break {
   display: block;
@@ -471,15 +482,16 @@ nav {
 .table-btn[data-which="download"]:after {
   content: url("../img/download.svg");
 }
-.download-formats {
+.table-btn .download-formats {
   right: 0;
   bottom: 3px;
   -ms-transform: translate(90%, 0);
       transform: translate(90%, 0);
   font-size: 13px;
   border: 1px solid #000;
+  box-shadow: 0 0 6px #fff;
 }
-.download-formats:before {
+.table-btn .download-formats:before {
   content: ' ';
   background-color: transparent;
   position: absolute;

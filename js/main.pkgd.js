@@ -9959,105 +9959,6 @@ function getParentByClass(el, klass) {
   return test ? element : null;
 }
 
-/* globals Blob */
-
-function downloadData(tableGroup) {
-  return function (d) {
-    var formattedData = d.format(tableGroup.selectAll('.table-row').data().filter(function (d) {
-      return d.___deleted___ !== true;
-    }));
-
-    var uri = void 0;
-    if (d.name === 'dbf') {
-      // courtesy @veltman
-      var blob = new Blob([formattedData]);
-      uri = window.URL.createObjectURL(blob);
-    } else if (d.name.indexOf('json') > -1) {
-      uri = 'data:application/json;charset=utf-8,' + escape(formattedData);
-    } else {
-      uri = 'data:text/csv;charset=utf-8,' + escape(formattedData);
-    }
-
-    var downloadLink = document.createElement('a');
-    downloadLink.href = uri;
-    downloadLink.download = 'data.' + d.name;
-
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  };
-}
-
-function sbsStatusChange(status) {
-  return function () {
-    select(this.className.indexOf('sbs-single') > -1 ? this : getParentByClass(this, 'sbs-single')).attr('data-status', status);
-  };
-}
-
-function sortTableRows(data, column, asc) {
-  return function (a, b) {
-    var numeric = true;
-
-    data.forEach(function (d, i) {
-      if (numeric && Object.keys(d).indexOf(column) > -1 && typeof d[column] !== 'number') {
-        numeric = false;
-      }
-    });
-
-    // Do numeric sort if all numbers, otherwise lexicographic
-    if (numeric) {
-      var s1 = void 0;
-      var s2 = void 0;
-      if (asc === true) {
-        s1 = a[column];
-        s2 = b[column];
-      } else {
-        s1 = b[column];
-        s2 = a[column];
-      }
-      if (typeof s1 !== 'number') return 1;
-      if (typeof s2 !== 'number') return -1;
-
-      s1 = parseFloat(s1);
-      s2 = parseFloat(s2);
-
-      if (s1 < s2) return -1;
-      if (s2 < s1) return 1;
-      return 0;
-    } else {
-      var _s = void 0;
-      var _s2 = void 0;
-      if (asc === false) {
-        _s = a[column];
-        _s2 = b[column];
-      } else {
-        _s = b[column];
-        _s2 = a[column];
-      }
-
-      if (!_s) return 1;
-      if (!_s2) return -1;
-
-      if (typeof _s !== 'string') _s = JSON.stringify(_s);
-      if (typeof _s2 !== 'string') _s2 = JSON.stringify(_s2);
-
-      if (_s < _s2) return -1;
-      if (_s2 < _s) return 1;
-      return 0;
-    }
-  };
-}
-
-function pairs$1(obj) {
-  var keys = Object.keys(obj);
-  var length = keys.length;
-  var pairs = Array(length);
-  for (var i = 0; i < length; i++) {
-    pairs[i] = [keys[i], obj[keys[i]]];
-  }
-  return pairs;
-}
-
 var commonjsGlobal$1 = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function commonjsRequire$1 () {
@@ -10376,6 +10277,106 @@ var formats = [{
   format: formatters.json
 }];
 
+/* globals Blob */
+
+function downloadData(tableGroup) {
+  return function (d) {
+    var formattedData = d.format(tableGroup.selectAll('.table-row').data().filter(function (d) {
+      return d.___deleted___ !== true;
+    }));
+
+    var uri = void 0;
+    if (d.name === 'dbf') {
+      // courtesy @veltman
+      var blob = new Blob([formattedData]);
+      uri = window.URL.createObjectURL(blob);
+    } else if (d.name.indexOf('json') > -1) {
+      uri = 'data:application/json;charset=utf-8,' + escape(formattedData);
+    } else {
+      uri = 'data:text/csv;charset=utf-8,' + escape(formattedData);
+    }
+    console.log(formattedData);
+
+    var downloadLink = document.createElement('a');
+    downloadLink.href = uri;
+    downloadLink.download = 'data.' + d.name;
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+}
+
+function sbsStatusChange(status) {
+  return function () {
+    select(this.className.indexOf('sbs-single') > -1 ? this : getParentByClass(this, 'sbs-single')).attr('data-status', status);
+  };
+}
+
+function sortTableRows(data, column, asc) {
+  return function (a, b) {
+    var numeric = true;
+
+    data.forEach(function (d, i) {
+      if (numeric && Object.keys(d).indexOf(column) > -1 && typeof d[column] !== 'number') {
+        numeric = false;
+      }
+    });
+
+    // Do numeric sort if all numbers, otherwise lexicographic
+    if (numeric) {
+      var s1 = void 0;
+      var s2 = void 0;
+      if (asc === true) {
+        s1 = a[column];
+        s2 = b[column];
+      } else {
+        s1 = b[column];
+        s2 = a[column];
+      }
+      if (typeof s1 !== 'number') return 1;
+      if (typeof s2 !== 'number') return -1;
+
+      s1 = parseFloat(s1);
+      s2 = parseFloat(s2);
+
+      if (s1 < s2) return -1;
+      if (s2 < s1) return 1;
+      return 0;
+    } else {
+      var _s = void 0;
+      var _s2 = void 0;
+      if (asc === false) {
+        _s = a[column];
+        _s2 = b[column];
+      } else {
+        _s = b[column];
+        _s2 = a[column];
+      }
+
+      if (!_s) return 1;
+      if (!_s2) return -1;
+
+      if (typeof _s !== 'string') _s = JSON.stringify(_s);
+      if (typeof _s2 !== 'string') _s2 = JSON.stringify(_s2);
+
+      if (_s < _s2) return -1;
+      if (_s2 < _s) return 1;
+      return 0;
+    }
+  };
+}
+
+function pairs$1(obj) {
+  var keys = Object.keys(obj);
+  var length = keys.length;
+  var pairs = Array(length);
+  for (var i = 0; i < length; i++) {
+    pairs[i] = [keys[i], obj[keys[i]]];
+  }
+  return pairs;
+}
+
 var escKeys = {
   keyCodes: [27],
   keys: ['Escape']
@@ -10655,10 +10656,11 @@ function titleSequence(dispatch) {
 
       var downloadFormatsContainer = downloadBtn.append('div').classed('download-formats', true);
 
+      var sbsSingle = select('.sbs-single[data-side="result"]');
+
       downloadFormatsContainer.selectAll('.download-format').data(formats).enter().append('div').classed('download-format', true).html(function (d) {
         return d.name;
-      });
-      // .on('click', downloadData)
+      }).on('click', downloadData(sbsSingle));
 
       inst.append('div').append('p').classed('inst-el', true).classed('expand', true).attr('data-open', 'false').on('click', function (d) {
         var sel = select(this);
