@@ -26,7 +26,7 @@ export default function titleSequence (dispatch) {
         let h2 = inst.select('h2')
           .html('Ready to join!')
 
-        inst.selectAll('.inst-el').remove()
+        inst.selectAll('.inst-el,.join-button').remove()
 
         inst.append('a')
           .attr('class', 'button button-primary join-button')
