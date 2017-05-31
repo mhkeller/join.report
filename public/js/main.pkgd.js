@@ -10408,6 +10408,10 @@ function bakeTable(el, json, dispatch) {
       trs.sort(sortTableRows(trs.data(), d, asc));
     });
 
+    var castOptions = ths.append('div').classed('cast-options-wrapper', true).html(' ');
+
+    castOptions.append('div').classed('cast-options-container', true).selectAll('.cast-option').data(['string', 'number']).enter().append('div').classed('cast-option', true);
+
     ths.append('input').attr('type', 'radio').attr('name', sbsId).attr('value', function (d) {
       return d;
     }).on('click', function (d, i) {
@@ -14964,6 +14968,7 @@ var datasets = {
  * --------------------------------------------
  */
 
+// import test from './modules/testd.js'
 var statusUploadReady = sbsStatusChange('upload-ready');
 var statusOver = sbsStatusChange('dragover');
 var statusDrop = sbsStatusChange('drop');
@@ -15014,3 +15019,4 @@ select('#load-example').on('click', function (d) {
 });
 
 }());
+//# sourceMappingURL=main.pkgd.js.map

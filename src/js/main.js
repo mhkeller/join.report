@@ -20,6 +20,8 @@ import setDirty from './modules/setDirty'
 import gutterSwap from './modules/gutterSwap'
 import exampleData from './modules/exampleData'
 
+var x = 'hey'
+// import test from './modules/testd.js'
 const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
 const statusDrop = sbsStatusChange('drop')

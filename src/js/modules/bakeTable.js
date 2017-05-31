@@ -112,6 +112,16 @@ export default function bakeTable (el, json, dispatch) {
         trs.sort(sortTableRows(trs.data(), d, asc))
       })
 
+    var castOptions = ths.append('div')
+      .classed('cast-options-wrapper', true)
+      .html(' ')
+
+
+    castOptions.append('div')
+      .classed('cast-options-container', true).selectAll('.cast-option').data(['string', 'number']).enter()
+      .append('div')
+        .classed('cast-option', true)
+
     ths.append('input')
       .attr('type', 'radio')
       .attr('name', sbsId)
