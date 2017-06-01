@@ -40,13 +40,16 @@ didJoin(dispatch)
 titleSequence(dispatch)
 join(dispatch)
 
+select('body')
+  .on('click', d => {
+    select('.cast-options-wrapper[data-open="true"]').attr('data-open', 'false')
+  })
 selectAll('.upload-input')
   .on('change', function () {
     readDroppedFile.call(this, function (err, el, json) {
       if (err) {
         console.error(err)
       } else {
-        console.log(el)
         statusTable.call(el)
         bakeTable(el, json, dispatch)
         dispatch.call('change-title', null, 'did-bake-table')

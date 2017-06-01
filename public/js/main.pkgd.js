@@ -10366,6 +10366,18 @@ function sortTableRows(data, column, asc) {
   };
 }
 
+var castFns = {
+  string: function string(d) {
+    return d.toString();
+  },
+  number: function number(d) {
+    return +d;
+  },
+  date: function date(d) {
+    return new Date(d);
+  }
+};
+
 function pairs$1(obj) {
   var keys = Object.keys(obj);
   var length = keys.length;
@@ -10452,9 +10464,23 @@ function bakeTable(el, json, dispatch) {
       return d;
     });
 
-    var castOptions = ths.append('div').classed('cast-options-wrapper', true).html(' ');
+    var castOptions = ths.append('div').classed('cast-options-wrapper', true).html(' ').on('click', function (d) {
+      event.stopPropagation();
+      var isOpen = !JSON.parse(this.dataset.open || 'false');
+      select(this).attr('data-open', isOpen);
+    });
 
-    castOptions.append('div').classed('cast-options-container', true).selectAll('.cast-option').data(['string', 'number']).enter().append('div').classed('cast-option', true);
+    castOptions.append('div').classed('cast-options-container', true).selectAll('.cast-option').data(function (d) {
+      return ['string', 'number', 'date'].map(function (q) {
+        return { key: d, type: q };
+      });
+    }).enter().append('div').classed('cast-option', true).html(function (d) {
+      return d.type;
+    }).on('click', function (d) {
+      event.stopPropagation();
+      console.log(castFns[d.type]('05'), d.key);
+      select(getParentByClass(this, 'cast-options-wrapper')).attr('data-open', 'false');
+    });
 
     // sortContainer
     ths.append('div').classed('sort-container', true).on('click', function (d) {
@@ -13963,12 +13989,14 @@ didJoin(dispatch$$1);
 titleSequence(dispatch$$1);
 join(dispatch$$1);
 
+select('body').on('click', function (d) {
+  select('.cast-options-wrapper[data-open="true"]').attr('data-open', 'false');
+});
 selectAll('.upload-input').on('change', function () {
   readDroppedFile.call(this, function (err, el, json) {
     if (err) {
       console.error(err);
     } else {
-      console.log(el);
       statusTable.call(el);
       bakeTable(el, json, dispatch$$1);
       dispatch$$1.call('change-title', null, 'did-bake-table');

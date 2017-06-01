@@ -5,6 +5,7 @@ import downloadFormats from './downloadFormats'
 import downloadData from './downloadData'
 import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
+import castFns from './utils/castFns'
 import pairs from './utils/pairs'
 
 let escKeys = {
@@ -107,11 +108,26 @@ export default function bakeTable (el, json, dispatch) {
     var castOptions = ths.append('div')
       .classed('cast-options-wrapper', true)
       .html(' ')
+      .on('click', function (d) {
+        event.stopPropagation()
+        let isOpen = !JSON.parse(this.dataset.open || 'false')
+        select(this).attr('data-open', isOpen)
+      })
 
     castOptions.append('div')
-      .classed('cast-options-container', true).selectAll('.cast-option').data(['string', 'number']).enter()
-      .append('div')
-        .classed('cast-option', true)
+      .classed('cast-options-container', true)
+      .selectAll('.cast-option')
+      .data(d => ['string', 'number', 'date'].map(q => {
+        return {key: d, type: q}
+      })).enter()
+        .append('div')
+          .classed('cast-option', true)
+          .html(d => d.type)
+          .on('click', function (d) {
+            event.stopPropagation()
+            console.log(castFns[d.type]('05'), d.key)
+            select(parent(this, 'cast-options-wrapper')).attr('data-open', 'false')
+          })
 
     // sortContainer
     ths.append('div')

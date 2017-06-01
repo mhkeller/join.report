@@ -129,7 +129,8 @@ $remove-width = 55px
     display inline-block
     vertical-align top
     right -3px
-    margin-right 20px
+    margin-right 15px
+    padding-right 10px
     &:after
       content ' '
       position relative
@@ -143,6 +144,24 @@ $remove-width = 55px
       cursor pointer
       &:after
         border-top-color #000
+    .cast-options-container
+      display none
+      position absolute
+      font-weight normal
+      background-color #fff
+      border 1px solid #ccc
+      top 13px
+      z-index 1
+    &[data-open="true"]
+      &:after
+        border-top-color #000
+      .cast-options-container
+        display block
+    .cast-option
+      padding 3px
+      &:hover
+        color #fff
+        background-color #000
 
   td,
   th
