@@ -10450,18 +10450,21 @@ function bakeTable(el, json, dispatch) {
 
     var ths = thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
       return d;
-    }).on('click', function (d) {
-      event.stopPropagation();
-      thead.select('th.sorted').classed('sorted', false);
-      endContentEditable(tbody);
-      var asc = !JSON.parse(this.dataset.asc || 'false');
-      select(this).classed('sorted', true).attr('data-asc', asc);
-      trs.sort(sortTableRows(trs.data(), d, asc));
     });
 
     var castOptions = ths.append('div').classed('cast-options-wrapper', true).html(' ');
 
     castOptions.append('div').classed('cast-options-container', true).selectAll('.cast-option').data(['string', 'number']).enter().append('div').classed('cast-option', true);
+
+    // sortContainer
+    ths.append('div').classed('sort-container', true).on('click', function (d) {
+      event.stopPropagation();
+      thead.select('.sort-container.sorted').classed('sorted', false);
+      endContentEditable(tbody);
+      var asc = !JSON.parse(this.dataset.asc || 'false');
+      select(this).classed('sorted', true).attr('data-asc', asc);
+      trs.sort(sortTableRows(trs.data(), d, asc));
+    });
 
     ths.append('input').attr('type', 'radio').attr('name', sbsId).attr('value', function (d) {
       return d;
@@ -10593,8 +10596,6 @@ var datastore$1 = Object.freeze({
 	getAll: getAll,
 	hasJoined: hasJoined
 });
-
-// import * as helpers from './helpers'
 
 function titleSequence(dispatch) {
   dispatch.on('change-title', changeTitle);
