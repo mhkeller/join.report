@@ -72,7 +72,7 @@
     "d3-selection-multi": "^1.0.1",
     "dbf": "^0.1.4",
     "indian-ocean": "github:mhkeller/indian-ocean#rollup",
-    "joiner": "github:mhkeller/indian-ocean#3.0.0",
+    "joiner": "github:mhkeller/joiner#3.0.0",
     "shapefile": "^0.6.2",
     "underscore": "^1.8.3"
   }

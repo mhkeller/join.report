@@ -86,7 +86,7 @@ $remove-width = 55px
   th
     position relative
     white-space nowrap
-    // text-align center
+    text-align left
     // user-select none
     cursor pointer
     overflow visible
@@ -104,7 +104,7 @@ $remove-width = 55px
       content '↑↓'
       positoin relative
       margin-top -3px
-      padding-left 3px
+      padding-left 10px
       color #ccc
       letter-spacing -2px
     &.sorted
@@ -116,6 +116,24 @@ $remove-width = 55px
         content '↑'
       &[data-asc="false"]:after
         content '↓'
+  .cast-options-wrapper
+    position relative
+    display inline-block
+    vertical-align top
+    right -2px
+    &:after
+      content ' '
+      position relative
+      top 6px
+      width 0
+      height 0
+      border-left 4px solid transparent
+      border-right 4px solid transparent
+      border-top 5px solid #ccc
+    &:hover
+      cursor pointer
+      &:after
+        border-top-color #000
 
   td,
   th
