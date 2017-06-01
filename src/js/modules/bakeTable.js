@@ -103,14 +103,6 @@ export default function bakeTable (el, json, dispatch) {
     let ths = thead.selectAll('th').data(Object.keys(json[0])).enter()
       .append('th')
       .html(d => d)
-      .on('click', function (d) {
-        event.stopPropagation()
-        thead.select('th.sorted').classed('sorted', false)
-        endContentEditable(tbody)
-        let asc = !JSON.parse(this.dataset.asc || 'false')
-        select(this).classed('sorted', true).attr('data-asc', asc)
-        trs.sort(sortTableRows(trs.data(), d, asc))
-      })
 
     var castOptions = ths.append('div')
       .classed('cast-options-wrapper', true)
@@ -120,6 +112,18 @@ export default function bakeTable (el, json, dispatch) {
       .classed('cast-options-container', true).selectAll('.cast-option').data(['string', 'number']).enter()
       .append('div')
         .classed('cast-option', true)
+
+    // sortContainer
+    ths.append('div')
+      .classed('sort-container', true)
+      .on('click', function (d) {
+        event.stopPropagation()
+        thead.select('.sort-container.sorted').classed('sorted', false)
+        endContentEditable(tbody)
+        let asc = !JSON.parse(this.dataset.asc || 'false')
+        select(this).classed('sorted', true).attr('data-asc', asc)
+        trs.sort(sortTableRows(trs.data(), d, asc))
+      })
 
     ths.append('input')
       .attr('type', 'radio')

@@ -88,7 +88,6 @@ $remove-width = 55px
     white-space nowrap
     text-align left
     // user-select none
-    cursor pointer
     overflow visible
     input[type='radio']
       position absolute
@@ -98,33 +97,43 @@ $remove-width = 55px
       left 0
       transform translate(0, -150%) scale(.9)
       cursor pointer
-    &:after
-      display inline-block
-      vertical-align top
-      content '↑↓'
-      positoin relative
-      margin-top -3px
-      padding-left 10px
-      color #ccc
-      letter-spacing -2px
-    &.sorted
-      &[data-asc="true"]:after,
-      &[data-asc="false"]:after
-        color #f0c
-        padding-right 6px
-      &[data-asc="true"]:after
-        content '↑'
-      &[data-asc="false"]:after
-        content '↓'
+    .sort-container
+      position absolute
+      right 5px
+      top 4px
+      &:hover
+        opacity 1
+        cursor pointer
+        &:after
+          color #000
+      &:after
+        display inline-block
+        vertical-align top
+        content '↑↓'
+        position relative
+        margin-top -3px
+        padding-left 10px
+        color #ccc
+        letter-spacing -2px
+      &.sorted
+        &[data-asc="true"]:after,
+        &[data-asc="false"]:after
+          color #f0c
+          padding-right 6px
+        &[data-asc="true"]:after
+          content '↑'
+        &[data-asc="false"]:after
+          content '↓'
   .cast-options-wrapper
     position relative
     display inline-block
     vertical-align top
-    right -2px
+    right -3px
+    margin-right 20px
     &:after
       content ' '
       position relative
-      top 6px
+      top 8px
       width 0
       height 0
       border-left 4px solid transparent
