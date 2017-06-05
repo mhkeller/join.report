@@ -5466,10 +5466,10 @@ function write(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 }
 
-var toString = {}.toString;
+var toString$1 = {}.toString;
 
 var isArray = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
+  return toString$1.call(arr) == '[object Array]';
 };
 
 /*!
@@ -10388,6 +10388,10 @@ function pairs$1(obj) {
   return pairs;
 }
 
+function getType(obj) {
+  return toString.call(obj).split(' ')[1].replace(']', '').toLowerCase();
+}
+
 var escKeys = {
   keyCodes: [27],
   keys: ['Escape']
@@ -10460,26 +10464,46 @@ function bakeTable(el, json, dispatch) {
     var thead = table.append('thead').classed('thead', true);
     var tbody = table.append('tbody').classed('tbody', true);
 
-    var ths = thead.selectAll('th').data(Object.keys(json[0])).enter().append('th').html(function (d) {
-      return d;
+    var ths = thead.selectAll('th').data(pairs$1(json[0])).enter().append('th').html(function (d) {
+      return d[0];
     });
 
-    var castOptions = ths.append('div').classed('cast-options-wrapper', true).html(' ').on('click', function (d) {
-      event.stopPropagation();
-      var isOpen = !JSON.parse(this.dataset.open || 'false');
-      select(this).attr('data-open', isOpen);
-    });
+    var castOptions = ths.append('div').classed('cast-options-wrapper', true).attr('data-type', function (d) {
+      return getType(d[1]);
+    }).html(' ');
+    // .on('click', function (d) {
+    //   event.stopPropagation()
+    //   console.log('here')
+    //   // let isOpen = !JSON.parse(this.dataset.open || 'false')
+    //   // select(this).attr('data-open', isOpen)
+    // })
 
     castOptions.append('div').classed('cast-options-container', true).selectAll('.cast-option').data(function (d) {
       return ['string', 'number', 'date'].map(function (q) {
-        return { key: d, type: q };
+        return { key: d[0], type: q };
       });
-    }).enter().append('div').classed('cast-option', true).html(function (d) {
+    }).enter().append('div').classed('cast-option', true).attr('data-type', function (d) {
+      return d.type;
+    }).html(function (d) {
       return d.type;
     }).on('click', function (d) {
       event.stopPropagation();
-      console.log(castFns[d.type]('05'), d.key);
-      select(getParentByClass(this, 'cast-options-wrapper')).attr('data-open', 'false');
+      var castedData = trs.data();
+      castedData.forEach(function (q) {
+        q[d.key] = castFns[d.type](q[d.key]);
+      });
+      trs.data(castedData);
+
+      // console.log(d.type, parent(this, 'cast-options-wrapper'))
+      select(getParentByClass(this, 'cast-options-wrapper')).attr('data-type', d.type);
+
+      trs.selectAll('td').data(function (q) {
+        return pairs$1(q);
+      }).attr('data-type', function (q) {
+        return getType(q[1]);
+      }).html(function (q) {
+        return q[1];
+      });
     });
 
     // sortContainer
@@ -10489,19 +10513,20 @@ function bakeTable(el, json, dispatch) {
       endContentEditable(tbody);
       var asc = !JSON.parse(this.dataset.asc || 'false');
       select(this).classed('sorted', true).attr('data-asc', asc);
-      trs.sort(sortTableRows(trs.data(), d, asc));
+      trs.sort(sortTableRows(trs.data(), d[0], asc));
     });
 
     ths.append('input').attr('type', 'radio').attr('name', sbsId).attr('value', function (d) {
-      return d;
+      return d[0];
     }).on('click', function (d, i) {
       event.stopPropagation();
+      // console.log(d)
       pickColumn.attr('data-col-selected', 'true');
       thead.selectAll('th').classed('active', function (q) {
-        return q === d;
+        return q && q[0] === d[0];
       });
       tbody.selectAll('td').classed('active', function (q) {
-        return q[0] === d;
+        return q && q[0] === d[0];
       });
       dispatch.call('col-selected', getParentByClass(this, 'sbs-group'));
       endContentEditable(tbody);
@@ -10511,7 +10536,9 @@ function bakeTable(el, json, dispatch) {
 
     trs.selectAll('td').data(function (d) {
       return pairs$1(d);
-    }).enter().append('td').html(function (d) {
+    }).enter().append('td').attr('data-type', function (d) {
+      return getType(d[1]);
+    }).html(function (d) {
       return d[1];
     }) // TODO, allow for multi-dimensional json
     .on('click', function (d) {
@@ -13037,11 +13064,11 @@ function baseToString(value) {
 
 var _baseToString = baseToString;
 
-function toString$1(value) {
+function toString$2(value) {
   return value == null ? '' : _baseToString(value);
 }
 
-var toString_1 = toString$1;
+var toString_1 = toString$2;
 
 function castPath(value, object) {
   if (isArray_1(value)) {

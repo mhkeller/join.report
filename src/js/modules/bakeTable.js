@@ -7,6 +7,7 @@ import sbsStatusChange from './sbsStatusChange'
 import sortTableRows from './utils/sortTableRows'
 import castFns from './utils/castFns'
 import pairs from './utils/pairs'
+import getType from './utils/getType'
 
 let escKeys = {
   keyCodes: [27],
@@ -101,32 +102,47 @@ export default function bakeTable (el, json, dispatch) {
     let thead = table.append('thead').classed('thead', true)
     let tbody = table.append('tbody').classed('tbody', true)
 
-    let ths = thead.selectAll('th').data(Object.keys(json[0])).enter()
+    let ths = thead.selectAll('th').data(pairs(json[0])).enter()
       .append('th')
-      .html(d => d)
+      .html(d => d[0])
 
     var castOptions = ths.append('div')
       .classed('cast-options-wrapper', true)
+      .attr('data-type', d => getType(d[1]))
       .html(' ')
-      .on('click', function (d) {
-        event.stopPropagation()
-        let isOpen = !JSON.parse(this.dataset.open || 'false')
-        select(this).attr('data-open', isOpen)
-      })
+      // .on('click', function (d) {
+      //   event.stopPropagation()
+      //   console.log('here')
+      //   // let isOpen = !JSON.parse(this.dataset.open || 'false')
+      //   // select(this).attr('data-open', isOpen)
+      // })
 
     castOptions.append('div')
       .classed('cast-options-container', true)
       .selectAll('.cast-option')
       .data(d => ['string', 'number', 'date'].map(q => {
-        return {key: d, type: q}
+        return {key: d[0], type: q}
       })).enter()
         .append('div')
           .classed('cast-option', true)
+          .attr('data-type', d => d.type)
           .html(d => d.type)
           .on('click', function (d) {
             event.stopPropagation()
-            console.log(castFns[d.type]('05'), d.key)
-            select(parent(this, 'cast-options-wrapper')).attr('data-open', 'false')
+            let castedData = trs.data()
+            castedData.forEach(q => {
+              q[d.key] = castFns[d.type](q[d.key])
+            })
+            trs.data(castedData)
+
+            // console.log(d.type, parent(this, 'cast-options-wrapper'))
+            select(parent(this, 'cast-options-wrapper'))
+              .attr('data-type', d.type)
+
+            trs.selectAll('td')
+              .data(q => pairs(q))
+              .attr('data-type', q => getType(q[1]))
+              .html(q => q[1])
           })
 
     // sortContainer
@@ -138,18 +154,19 @@ export default function bakeTable (el, json, dispatch) {
         endContentEditable(tbody)
         let asc = !JSON.parse(this.dataset.asc || 'false')
         select(this).classed('sorted', true).attr('data-asc', asc)
-        trs.sort(sortTableRows(trs.data(), d, asc))
+        trs.sort(sortTableRows(trs.data(), d[0], asc))
       })
 
     ths.append('input')
       .attr('type', 'radio')
       .attr('name', sbsId)
-      .attr('value', d => d)
+      .attr('value', d => d[0])
       .on('click', function (d, i) {
         event.stopPropagation()
+        // console.log(d)
         pickColumn.attr('data-col-selected', 'true')
-        thead.selectAll('th').classed('active', (q) => q === d)
-        tbody.selectAll('td').classed('active', (q) => q[0] === d)
+        thead.selectAll('th').classed('active', (q) => q && q[0] === d[0])
+        tbody.selectAll('td').classed('active', (q) => q && q[0] === d[0])
         dispatch.call('col-selected', parent(this, 'sbs-group'))
         endContentEditable(tbody)
       })
@@ -160,6 +177,7 @@ export default function bakeTable (el, json, dispatch) {
 
     trs.selectAll('td').data(d => pairs(d)).enter()
       .append('td')
+      .attr('data-type', d => getType(d[1]))
       .html(d => d[1]) // TODO, allow for multi-dimensional json
       .on('click', function (d) {
         event.stopPropagation()
