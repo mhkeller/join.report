@@ -1,7 +1,7 @@
-Data.join
+join.report
 ===========
 
-> Join data
+> Join data and get a report back of how well it went
 
 ## Attribution
 
