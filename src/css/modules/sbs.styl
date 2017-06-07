@@ -23,6 +23,25 @@ $gutter-width = 5%
     border 1px solid #ccc
   &[data-status="empty"]
     display none
+  &[data-status="table"]
+    &:after
+      position absolute
+      top 0
+      color #ccc
+      right 0
+      font-size 12px
+      font-weight bold
+      background-color #fff
+      border 1px solid #ccc
+      padding 4px
+      border-bottom-color #fff
+      transform translate(1px, -100%)
+    &[data-side="left"]
+      &:after
+        content 'existing data'
+    &[data-side="right"]
+      &:after
+        content 'data to join'
   &[data-status="result"]
     order 0
     width 100%
