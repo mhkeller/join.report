@@ -694,8 +694,8 @@ nav {
   display: none;
   position: absolute;
   font-weight: normal;
-  background-color: rgba(255,255,255,0.9);
-  border: 1px solid #ccc;
+  background-color: #fff;
+  border: 1px solid #000;
   top: 13px;
   z-index: 2;
 }
@@ -707,7 +707,8 @@ nav {
 }
 .table-container .cast-options-wrapper .cast-option {
   position: relative;
-  padding: 3px;
+  padding: 4px;
+  font-size: 13px;
   color: #ccc;
 }
 .table-container .cast-options-wrapper .cast-option:hover {
