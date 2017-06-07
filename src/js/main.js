@@ -40,11 +40,6 @@ didJoin(dispatch)
 titleSequence(dispatch)
 join(dispatch)
 
-select('body')
-  .on('click', d => {
-    select('td[contentEditable="true"]').attr('contentEditable', null)
-  })
-
 selectAll('.upload-input')
   .on('change', function () {
     readDroppedFile.call(this, function (err, el, json) {
