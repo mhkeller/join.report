@@ -33,6 +33,26 @@
 .sbs-single[data-status="empty"] {
   display: none;
 }
+.sbs-single[data-status="table"]:after {
+  position: absolute;
+  top: 0;
+  color: #ccc;
+  right: 0;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 4px;
+  border-bottom-color: #fff;
+  -ms-transform: translate(1px, -100%);
+      transform: translate(1px, -100%);
+}
+.sbs-single[data-status="table"][data-side="left"]:after {
+  content: 'existing data';
+}
+.sbs-single[data-status="table"][data-side="right"]:after {
+  content: 'data to join';
+}
 .sbs-single[data-status="result"] {
   -ms-flex-order: 0;
       order: 0;
@@ -696,7 +716,7 @@ nav {
 }
 .table-container td,
 .table-container th {
-  border: 1px solid #000;
+  border: 1px solid #ccc;
   padding: 5px;
 }
 .table-container td.active,
