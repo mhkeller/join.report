@@ -3,6 +3,7 @@ nav
   width calc(100% - 10px)
   height 20px
   margin 5px auto 0 auto
+  top 3px
   color #000
 
 #title,
@@ -17,8 +18,20 @@ nav
       text-decoration underline
       cursor pointer
 #title
-  left 0
   font-weight bold
+  position relative
+  left 3px
+  display inline-block
+  &:hover
+    text-decoration underline
+    cursor pointer
+  img
+    position absolute
+    padding-left 10px
+    top 0
+    right 0
+    transform translate(85%, -20%)
+    height 20px
 #by
   right 0
 
