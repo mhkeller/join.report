@@ -42,8 +42,9 @@ join(dispatch)
 
 select('body')
   .on('click', d => {
-    select('.cast-options-wrapper[data-open="true"]').attr('data-open', 'false')
+    select('td[contentEditable="true"]').attr('contentEditable', null)
   })
+
 selectAll('.upload-input')
   .on('change', function () {
     readDroppedFile.call(this, function (err, el, json) {
