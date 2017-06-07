@@ -74,7 +74,7 @@ export default function titleSequence (dispatch) {
       inst.append('p')
         .classed('inst-el', true)
         .attr('data-which', 'prose-summary')
-        .html(this.report.prose.summary)
+        .html('<span class="bold">Summary:</span> ' + this.report.prose.summary)
 
       let downloadBtn = inst.append('div')
         .attr('class', 'button button-primary button-sm')
