@@ -100,34 +100,30 @@ $remove-width = 55px
     .sort-container
       // background-color #f0c
       position absolute
-      right 5px
       top 5px
+      right 2px
       bottom 0
-      padding-right 5px
+      opacity .3
       &:hover
         opacity 1
         cursor pointer
-        &:after
-          color #000
       &:after
         display inline-block
         vertical-align top
-        content '↑↓'
+        content url(../img/sort.svg)
         position relative
-        width 10px
+        width 14px
         // margin-top -3px
         // padding-left 10px
-        color #ccc
-        letter-spacing -2px
       &.sorted
+        opacity 1
         &[data-asc="true"]:after,
         &[data-asc="false"]:after
           color #f0c
-          padding-right 6px
         &[data-asc="true"]:after
-          content '↑'
+          content url(../img/sort-ascending.svg)
         &[data-asc="false"]:after
-          content '↓'
+          content url(../img/sort-descending.svg)
   .cast-options-wrapper
     position relative
     display inline-block
