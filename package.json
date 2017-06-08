@@ -4,7 +4,8 @@
   "description": "Join data and get a report back of how well it went",
   "main": "package.json",
   "scripts": {
-    "deploy": "npm run build && git add -A && git commit -am 'build-for-deploy' && git subtree push --prefix public origin gh-pages",
+    "deploy": "git subtree push --prefix public origin gh-pages",
+    "publish": "npm run build && git add -A && git commit -am 'build-for-deploy' && git subtree push --prefix public origin gh-pages",
     "test": "standard src/js/**/*.js",
     "notify": "./build/notify-cli.js",
     "predev": "WSK_DEV=true npm run build --silent",
