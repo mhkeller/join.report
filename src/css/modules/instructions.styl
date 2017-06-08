@@ -20,11 +20,13 @@
     line-height 16px
     margin 0 0 3px 0
     max-width 800px
-  #download-result
+  #download-result,
+  #join-button
     position absolute
     top 38px
     right 0
     margin-top 3px
+  #download-result
     &[data-open="true"]
       .download-formats
         display block
@@ -42,12 +44,12 @@
         display inline-block
         vertical-align top
 
+  .bold
+    font-weight bold
   .inst-el
     .line-break
       display block
       margin-bottom 3px
-    .bold
-      font-weight bold
     &[data-which="prose-full"]
       display none
       max-height 200px
@@ -85,3 +87,42 @@
     cursor pointer
     &:hover
       text-decoration underline
+  .join-strats-container
+    display inline-block
+    vertical-align top
+    &:before
+      position relative
+      top 2px
+      content 'Pick a strategy: '
+      font-weight bold
+    .coming-soon
+      font-size 10px
+      display inline-block
+      background-color #0cf
+      position relative
+      border-radius 3px
+      top -2px
+      padding 2px 3px
+      a
+        color #000 !important
+        text-decoration none
+        &:hover
+          text-decoration underline
+
+  .join-strategy
+    display inline-block
+    vertical-align top
+    margin-right 7px
+    &:not([data-disabled="true"])
+      &:hover,
+      label,
+      input
+        cursor pointer
+    label
+      margin-left 1px
+  .join-strategy-descs
+    margin 10px 0 10px 0
+  .join-strategy-desc
+    display none
+    &.active
+      display block

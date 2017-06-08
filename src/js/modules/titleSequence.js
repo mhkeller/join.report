@@ -1,10 +1,9 @@
 import {select, event} from 'd3-selection'
 import styleMatchStatus from './utils/styleMatchStatus'
+import joinStrategies from './utils/joinStrategies'
 import * as datastore from './datastore'
 import downloadFormats from './downloadFormats'
 import downloadData from './downloadData'
-
-// import * as helpers from './helpers'
 
 export default function titleSequence (dispatch) {
   dispatch.on('change-title', changeTitle)
@@ -27,9 +26,47 @@ export default function titleSequence (dispatch) {
           .html('Ready to join!')
 
         inst.selectAll('.inst-el,.join-button').remove()
+        var joinStratsContainer = inst.append('div')
+          .classed('join-strats-container', true)
 
+        var joinStrategy = joinStratsContainer.selectAll('.join-strategy').data(joinStrategies).enter()
+          .append('div')
+            .classed('join-strategy', true)
+            .attr('data-disabled', d => d.disabled)
+
+        joinStrategy.append('input')
+          .attr('type', 'radio')
+          .attr('id', d => 'join-strategy_' + d.which)
+          .attr('name', 'join-strategy')
+          .attr('value', d => d.which)
+          .attr('disabled', d => d.disabled)
+          .attr('checked', d => d.checked)
+          .on('click', function () {
+            select('.join-strategy-desc.active').classed('active', false)
+            select('.join-strategy-desc[data-which="' + this.id + '"]').classed('active', true)
+          })
+
+        joinStrategy.append('label')
+          .attr('for', d => 'join-strategy_' + d.which)
+          .attr('name', 'join-strategy')
+          .html(d => d.which.charAt(0).toUpperCase() + d.which.substr(1, d.which.length))
+
+        var joinStrategyDescsContainer = inst.append('div')
+          .classed('join-strategy-descs', true)
+
+        joinStrategyDescsContainer.selectAll('.join-strategy-desc').data(joinStrategies).enter()
+          .append('p')
+            .classed('join-strategy-desc', true)
+            .classed('active', d => d.checked)
+            .attr('data-which', d => 'join-strategy_' + d.which)
+            .html(d => '<span class="bold">Description:</span> ' + d.desc)
+
+        joinStratsContainer.append('div')
+          .classed('coming-soon', true)
+          .html('<a href="https://github.com/mhkeller/joiner/issues" target="_blank" rel="noopener">Contribute a join strategy</a>!')
         inst.append('a')
-          .attr('class', 'button button-primary join-button')
+          .attr('class', 'button button-primary')
+          .attr('id', 'join-button')
           .attr('href', '#')
           .html('Go for it!')
           .on('click', function () {
