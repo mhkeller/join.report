@@ -28,6 +28,7 @@ export default function titleSequence (dispatch) {
         inst.selectAll('.inst-el,.join-button').remove()
         var joinStratsContainer = inst.append('div')
           .classed('join-strats-container', true)
+          .classed('inst-el', true)
 
         var joinStrategy = joinStratsContainer.selectAll('.join-strategy').data(joinStrategies).enter()
           .append('div')
@@ -53,6 +54,7 @@ export default function titleSequence (dispatch) {
 
         var joinStrategyDescsContainer = inst.append('div')
           .classed('join-strategy-descs', true)
+          .classed('inst-el', true)
 
         joinStrategyDescsContainer.selectAll('.join-strategy-desc').data(joinStrategies).enter()
           .append('p')
@@ -64,6 +66,7 @@ export default function titleSequence (dispatch) {
         joinStratsContainer.append('div')
           .classed('coming-soon', true)
           .html('<a href="https://github.com/mhkeller/joiner/issues" target="_blank" rel="noopener">Contribute a join strategy</a>!')
+
         inst.append('a')
           .attr('class', 'button button-primary')
           .attr('id', 'join-button')
