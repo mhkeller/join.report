@@ -110,40 +110,33 @@ export default function bakeTable (el, json, dispatch) {
       .classed('cast-options-wrapper', true)
       .attr('data-type', d => getType(d[1]))
       .html(' ')
-      // .on('click', function (d) {
-      //   event.stopPropagation()
-      //   console.log('here')
-      //   // let isOpen = !JSON.parse(this.dataset.open || 'false')
-      //   // select(this).attr('data-open', isOpen)
-      // })
 
-    castOptions.append('div')
-      .classed('cast-options-container', true)
-      .selectAll('.cast-option')
+    var castSelect = castOptions.append('select')
+      .on('change', function () {
+        event.stopPropagation()
+        var d = JSON.parse(this.value)
+        let castedData = trs.data()
+        castedData.forEach(q => {
+          q[d.key] = castFns[d.type](q[d.key])
+        })
+        trs.data(castedData)
+
+        select(parent(this, 'cast-options-wrapper'))
+          .attr('data-type', d.type)
+
+        trs.selectAll('td')
+          .data(q => pairs(q))
+          .attr('data-type', q => getType(q[1]))
+          .html(q => q[1])
+      })
+
+    castSelect.selectAll('option')
       .data(d => ['string', 'number', 'date'].map(q => {
         return {key: d[0], type: q}
       })).enter()
-        .append('div')
-          .classed('cast-option', true)
-          .attr('data-type', d => d.type)
-          .html(d => d.type)
-          .on('click', function (d) {
-            event.stopPropagation()
-            let castedData = trs.data()
-            castedData.forEach(q => {
-              q[d.key] = castFns[d.type](q[d.key])
-            })
-            trs.data(castedData)
-
-            // console.log(d.type, parent(this, 'cast-options-wrapper'))
-            select(parent(this, 'cast-options-wrapper'))
-              .attr('data-type', d.type)
-
-            trs.selectAll('td')
-              .data(q => pairs(q))
-              .attr('data-type', q => getType(q[1]))
-              .html(q => q[1])
-          })
+        .append('option')
+        .html(d => d.type)
+        .property('value', d => JSON.stringify(d))
 
     // sortContainer
     ths.append('div')
