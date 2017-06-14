@@ -420,11 +420,14 @@ nav {
   -ms-transform: rotate(90deg);
       transform: rotate(90deg);
 }
-#instructions #load-example {
+#instructions #load-example,
+#instructions a {
   color: #66baff;
   cursor: pointer;
+  text-decoration: none;
 }
-#instructions #load-example:hover {
+#instructions #load-example:hover,
+#instructions a:hover {
   text-decoration: underline;
 }
 #instructions .join-strats-container {
