@@ -719,26 +719,20 @@ nav {
       -ms-user-select: none;
           user-select: none;
 }
-.table-container .cast-options-wrapper:hover:after {
-  background-image: url("../img/arrow-black.png");
-}
-.table-container .cast-options-wrapper:after {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: #fff url("../img/arrow-gray.png") center left no-repeat;
-  background-size: 15%;
-  pointer-events: none;
-}
 .table-container .cast-options-wrapper select {
   position: relative;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  outline: none;
   border: 0;
+  font-size: 12px;
+  color: #ccc;
+  background-color: transparent;
+}
+.table-container .cast-options-wrapper select option {
+  background-color: #fff;
+  color: #000;
 }
 .table-container .cast-options-wrapper select:hover {
   cursor: pointer;
