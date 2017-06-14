@@ -19,31 +19,32 @@
     font-size 14px
     line-height 16px
     margin 0 0 3px 0
-    max-width 800px
+    max-width 80%
   #download-result,
   #join-button
     position absolute
     top 38px
     right 0
     margin-top 3px
-  .close-window
-    display none
-    position fixed
-    top 0
-    right 0
-    bottom 0
-    left 0
-    background-color #f0c
   #download-result
     &[data-open="true"]
-      .close-window
-        display block
+      z-index 2
+      &:after
+        content ' '
+        position absolute
+        top 0
+        right 0
+        width 150%
+        height 250%
+        z-index 1
+        background-color transparent
       .download-formats
         display block
         color #000
         font-weight normal
-      .download-format
         z-index 9
+      .download-format
+        z-index 10
     .download-formats
       right 0
       font-size 13px

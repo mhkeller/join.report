@@ -120,10 +120,11 @@ export default function titleSequence (dispatch) {
         .attr('class', 'button button-primary button-sm')
         .attr('id', 'download-result')
         .html('Download as...')
-        .on('click', function (d) {
-          let sel = select(this)
-          var open = !JSON.parse(sel.attr('data-open'))
-          sel.attr('data-open', open)
+        .on('mouseover', function (d) {
+          select(this).attr('data-open', true)
+        })
+        .on('mouseout', function (d) {
+          select(this).attr('data-open', false)
         })
 
       let downloadFormatsContainer = downloadBtn.append('div')

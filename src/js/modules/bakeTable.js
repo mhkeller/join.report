@@ -229,6 +229,7 @@ export default function bakeTable (el, json, dispatch) {
   }
 
   function resetTable () {
+    disp.call('set-dirty', null, false)
     sbsStatusChange('upload-ready').call(el)
     tableGroup.remove()
   }
