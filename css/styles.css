@@ -330,7 +330,7 @@ nav {
   font-size: 14px;
   line-height: 16px;
   margin: 0 0 3px 0;
-  max-width: 800px;
+  max-width: 80%;
 }
 #instructions #download-result,
 #instructions #join-button {
@@ -339,25 +339,27 @@ nav {
   right: 0;
   margin-top: 3px;
 }
-#instructions .close-window {
-  display: none;
-  position: fixed;
+#instructions #download-result[data-open="true"] {
+  z-index: 2;
+}
+#instructions #download-result[data-open="true"]:after {
+  content: ' ';
+  position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #f0c;
-}
-#instructions #download-result[data-open="true"] .close-window {
-  display: block;
+  width: 150%;
+  height: 250%;
+  z-index: 1;
+  background-color: transparent;
 }
 #instructions #download-result[data-open="true"] .download-formats {
   display: block;
   color: #000;
   font-weight: normal;
+  z-index: 9;
 }
 #instructions #download-result[data-open="true"] .download-format {
-  z-index: 9;
+  z-index: 10;
 }
 #instructions #download-result .download-formats {
   right: 0;

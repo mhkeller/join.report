@@ -10588,6 +10588,7 @@ function bakeTable(el, json, dispatch) {
   }
 
   function resetTable() {
+    disp.call('set-dirty', null, false);
     sbsStatusChange('upload-ready').call(el);
     tableGroup.remove();
   }
@@ -10758,10 +10759,10 @@ function titleSequence(dispatch) {
 
       inst.append('p').classed('inst-el', true).attr('data-which', 'prose-summary').html('<span class="bold">Summary:</span> ' + this.report.prose.summary);
 
-      var downloadBtn = inst.append('div').attr('class', 'button button-primary button-sm').attr('id', 'download-result').html('Download as...').on('click', function (d) {
-        var sel = select(this);
-        var open = !JSON.parse(sel.attr('data-open'));
-        sel.attr('data-open', open);
+      var downloadBtn = inst.append('div').attr('class', 'button button-primary button-sm').attr('id', 'download-result').html('Download as...').on('mouseover', function (d) {
+        select(this).attr('data-open', true);
+      }).on('mouseout', function (d) {
+        select(this).attr('data-open', false);
       });
 
       var downloadFormatsContainer = downloadBtn.append('div').classed('download-formats', true);
