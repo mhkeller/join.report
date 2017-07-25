@@ -4,7 +4,8 @@
   display: flex;
   max-width: 1160px;
   width: 94%;
-  height: 300px;
+  height: calc(100vh - 235px);
+  min-height: 100px;
   -ms-flex-pack: justify;
       justify-content: space-between;
   -ms-flex-wrap: wrap;
