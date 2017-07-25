@@ -1,4 +1,5 @@
 $gutter-width = 5%
+$border-blue = #66baff
 
 .sbs-group
   margin 0 auto
@@ -91,6 +92,26 @@ $gutter-width = 5%
     transform translate(-50%, -50%)
     display none
     left 50%
+  .paste-input,
+  .paste-container
+    width 100%
+    height @width
+  .input-options
+    position absolute
+    top 0
+    left 0
+    transform translate(0, -88%)
+    z-index 3
+  .input-option
+    display inline-block
+    vertical-align top
+    padding 2px 5px 8px 5px
+    border 3px dashed transparent
+    border-bottom none
+    &[data-active="true"]
+      border-color $border-blue
+      border-bottom none
+      background-color #fff
 .gutter-swap
   position relative
   height 100%
