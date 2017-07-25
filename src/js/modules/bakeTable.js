@@ -60,15 +60,10 @@ export default function bakeTable (el, json, dispatch) {
   let pickColumn = tableGroup.append('div')
     .classed('pick-column', true)
     .attr('data-col-selected', 'false')
-    .html('pick a column to join on')
+    // .html('pick a column to join on')
 
   let btnGroup = tableGroup.append('div')
     .classed('table-btn-group', true)
-
-  btnGroup.append('div')
-    .classed('table-btn', true)
-    .attr('data-which', 'reset')
-    .on('click', resetTable)
 
   let downloadFormatsContainer = btnGroup.append('div')
     .classed('table-btn', true)
@@ -81,6 +76,11 @@ export default function bakeTable (el, json, dispatch) {
     .classed('download-format', true)
     .html(d => d.name)
     .on('click', downloadData(tableGroup))
+
+  btnGroup.append('div')
+    .classed('table-btn', true)
+    .attr('data-which', 'reset')
+    .on('click', resetTable)
 
   let tableContainer = tableGroup.append('div')
     .classed('table-container', true)

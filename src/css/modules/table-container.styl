@@ -21,6 +21,7 @@ $remove-width = 55px
       content url('../img/trashcan.svg')
   &[data-which="download"]
     width 20px
+    z-index 2
     &:hover
       .download-formats
         display block
@@ -46,6 +47,8 @@ $remove-width = 55px
 .pick-column
   position absolute
   top 0
+.table-btn-group
+  right 0
 .pick-column
   white-space nowrap
   font-size 14px
@@ -56,6 +59,12 @@ $remove-width = 55px
   transform translate(-50%, -130%)
   &[data-col-selected='true']
     display none
+  &:before
+    content 'pick a column to join on'
+    +below(745px)
+      content 'pick a column'
+  +below(615px)
+    transform translate(-50%, -270%)
 .table-container
   position relative
   padding-left 10px
