@@ -230,7 +230,9 @@ export default function bakeTable (el, json, dispatch) {
 
   function resetTable () {
     disp.call('set-dirty', null, false)
-    sbsStatusChange('upload-ready').call(el)
+    console.log(el)
+    var which = select(parent(el, 'sbs-single')).select('.input-option[data-active="true"]').attr('data-which')
+    sbsStatusChange(which + '-ready').call(el)
     tableGroup.remove()
   }
 }

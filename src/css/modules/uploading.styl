@@ -42,10 +42,15 @@ $border-blue = #66baff
     .upload-label
       &:before
         content 'Existing data'
-  &&[data-side="right"]
+  &[data-side="right"]
     .upload-label
       &:before
         content 'New data to add'
+  &[data-status="upload-ready"]
+    .input-options
+      display block
+    .paste-container
+      display none
   &[data-status="upload-ready"],
   &[data-status="dragover"],
   &[data-status="drop"]

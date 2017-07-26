@@ -68,9 +68,8 @@
   },
   "dependencies": {
     "buffer": "^5.0.6",
-    "d3": "^4.7.4",
     "d3-dispatch": "^1.0.3",
-    "d3-selection-multi": "^1.0.1",
+    "d3-selection": "^1.1.0",
     "dbf": "^0.1.4",
     "indian-ocean": "github:mhkeller/indian-ocean#rollup",
     "joiner": "github:mhkeller/joiner#3.0.0",

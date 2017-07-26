@@ -1,0 +1,13 @@
+$border-blue = #66baff
+
+.sbs-single
+  &[data-status="paste-ready"]
+    .input-options,
+    .paste-container
+      display block
+    textarea
+      display block
+      height 80%
+      border 1px solid $border-blue
+      &:focus
+        outline 2px solid $border-blue

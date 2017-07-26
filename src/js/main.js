@@ -9,6 +9,7 @@ import {select, selectAll, event} from 'd3-selection'
 import {dispatch as Dispatch} from 'd3-dispatch'
 
 import readDroppedFile from './modules/readDroppedFile'
+import readPastedFile from './modules/readPastedFile'
 import bakeTable from './modules/bakeTable'
 
 import sbsStatusChange from './modules/sbsStatusChange'
@@ -19,6 +20,7 @@ import didJoin from './modules/didJoin'
 import setDirty from './modules/setDirty'
 import gutterSwap from './modules/gutterSwap'
 import exampleData from './modules/exampleData'
+import {default as parent} from './modules/utils/getParentByClass'
 
 const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
@@ -40,17 +42,37 @@ didJoin(dispatch)
 titleSequence(dispatch)
 join(dispatch)
 
+selectAll('.input-option')
+  .on('click', function () {
+    var sbs = select(parent(this, 'sbs-single'))
+      .attr('data-status', this.dataset.which + '-ready')
+    sbs.selectAll('.input-option').attr('data-active', 'false')
+    select(this).attr('data-active', 'true')
+  })
+
+var pasteContainers = selectAll('.paste-container')
+
+pasteContainers
+  .select('button')
+  .on('click', function () {
+    var pasteContainer = select(parent(this, 'paste-container'))
+
+    var sel = pasteContainer
+      .select('select').node()
+
+    var delimiter = sel.options[sel.selectedIndex].value
+
+    var pastedValue = pasteContainer
+      .select('textarea').node().value
+
+    console.log(delimiter)
+
+    readPastedFile.call(this, pastedValue, delimiter, initDatasetView)
+  })
+
 selectAll('.upload-input')
   .on('change', function () {
-    readDroppedFile.call(this, function (err, el, json) {
-      if (err) {
-        console.error(err)
-      } else {
-        statusTable.call(el)
-        bakeTable(el, json, dispatch)
-        dispatch.call('change-title', null, 'did-bake-table')
-      }
-    })
+    readDroppedFile.call(this, initDatasetView)
   })
   .on('dragover', statusOver)
   .on('dragleave', statusUploadReady)
@@ -75,7 +97,7 @@ select('.rejoin-button-container .button[data-which="join"]')
 
 select('#load-example')
   .on('click', function (d) {
-    selectAll('.sbs-single[data-status="upload-ready"')
+    selectAll('.sbs-single[data-status="upload-ready"],.sbs-single[data-status="paste-ready"]')
       .each(function () {
         let el = select(this).select('.upload-input').node()
         let json = exampleData[this.dataset.side]
@@ -84,3 +106,13 @@ select('#load-example')
       })
     dispatch.call('change-title', null, 'did-bake-table')
   })
+
+function initDatasetView (err, el, json) {
+  if (err) {
+    console.error(err)
+  } else {
+    statusTable.call(el)
+    bakeTable(el, json, dispatch)
+    dispatch.call('change-title', null, 'did-bake-table')
+  }
+}

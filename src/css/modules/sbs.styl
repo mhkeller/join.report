@@ -92,6 +92,8 @@ $border-blue = #66baff
     transform translate(-50%, -50%)
     display none
     left 50%
+  .paste-container
+    display none
   .paste-input,
   .paste-container
     width 100%
@@ -102,16 +104,21 @@ $border-blue = #66baff
     left 0
     transform translate(0, -88%)
     z-index 3
+    display none
   .input-option
     display inline-block
     vertical-align top
-    padding 2px 5px 8px 5px
-    border 3px dashed transparent
+    padding 10px 0
+    border 3px solid transparent
     border-bottom none
+    user-select none
+    &:hover
+      cursor pointer
     &[data-active="true"]
-      border-color $border-blue
-      border-bottom none
-      background-color #fff
+      color $border-blue
+      // text-shadow -1px -1px 0 $border-blue, 1px -1px 0 $border-blue, -1px 1px 0 $border-blue, 1px 1px 0 $border-blue;
+      &:hover
+        cursor default
 .gutter-swap
   position relative
   height 100%

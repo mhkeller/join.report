@@ -113,6 +113,9 @@
   display: none;
   left: 50%;
 }
+.sbs-single .paste-container {
+  display: none;
+}
 .sbs-single .paste-input,
 .sbs-single .paste-container {
   width: 100%;
@@ -125,18 +128,27 @@
   -ms-transform: translate(0, -88%);
       transform: translate(0, -88%);
   z-index: 3;
+  display: none;
 }
 .sbs-single .input-option {
   display: inline-block;
   vertical-align: top;
-  padding: 2px 5px 8px 5px;
-  border: 3px dashed transparent;
+  padding: 10px 0;
+  border: 3px solid transparent;
   border-bottom: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.sbs-single .input-option:hover {
+  cursor: pointer;
 }
 .sbs-single .input-option[data-active="true"] {
-  border-color: #66baff;
-  border-bottom: none;
-  background-color: #fff;
+  color: #66baff;
+}
+.sbs-single .input-option[data-active="true"]:hover {
+  cursor: default;
 }
 .gutter-swap {
   position: relative;
@@ -199,13 +211,13 @@
   background-position: -1px -1px;
   background-size: 110% 110%;
   background-color: #eff3f6;
-  color: #24292e;
+  color: #fff !important;
   border: 1px solid rgba(27,31,35,0.2);
   border-radius: 0.25em;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .button[data-open="true"],
 .button:active {
@@ -276,7 +288,7 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  width: 50px;
+  width: 40px;
 }
 .download-formats .download-format {
   opacity: 1;
@@ -568,8 +580,14 @@ nav {
 .sbs-single[data-side="left"] .upload-label:before {
   content: 'Existing data';
 }
-.sbs-single.sbs-single[data-side="right"] .upload-label:before {
+.sbs-single[data-side="right"] .upload-label:before {
   content: 'New data to add';
+}
+.sbs-single[data-status="upload-ready"] .input-options {
+  display: block;
+}
+.sbs-single[data-status="upload-ready"] .paste-container {
+  display: none;
 }
 .sbs-single[data-status="upload-ready"] .upload-container,
 .sbs-single[data-status="dragover"] .upload-container,
@@ -592,6 +610,18 @@ nav {
   content: 'Processing...';
   animation: rotateAnimation 1600ms linear infinite;
 }
+.sbs-single[data-status="paste-ready"] .input-options,
+.sbs-single[data-status="paste-ready"] .paste-container {
+  display: block;
+}
+.sbs-single[data-status="paste-ready"] textarea {
+  display: block;
+  height: 80%;
+  border: 1px solid #66baff;
+}
+.sbs-single[data-status="paste-ready"] textarea:focus {
+  outline: 2px solid #66baff;
+}
 .table-group {
   width: 100%;
   height: 100%;
@@ -604,6 +634,7 @@ nav {
   position: relative;
   opacity: 0.3;
   display: inline-block;
+  right: -3px;
   vertical-align: top;
   cursor: pointer;
   min-width: 18px;
@@ -617,6 +648,7 @@ nav {
 }
 .table-btn[data-which="download"] {
   width: 20px;
+  margin-right: 6px;
   z-index: 2;
 }
 .table-btn[data-which="download"]:hover .download-formats {
@@ -639,7 +671,7 @@ nav {
   background-color: transparent;
   position: absolute;
   top: -15px;
-  right: -10px;
+  right: -5px;
   bottom: 0;
   left: -15px;
   z-index: -1;
