@@ -7476,10 +7476,6 @@ formatsList.forEach(function (format) {
   });
 });
 
-/* --------------------------------------------
- * Browser-implementations of NodeJS path module, adapted from Rich Harris, https://github.com/rollup/rollup/blob/master/browser/path.js
- */
-
 var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/;
 
 function posixSplitPath(filename) {
@@ -7509,6 +7505,15 @@ function discernFormat(fileName) {
   return formatName;
 }
 
+/**
+ * Returns a formatter that will format json data to file type specified by the extension in `fileName`. Used internally by `.writeData` and `.writeDataSync`.
+ * @param {String} fileName the name of the file
+ * @returns {Object} a formatter that can write the file
+ *
+ * @example
+ * var formatter = io.discernFileFormatter('path/to/data.tsv')
+ * var csv = formatter(json)
+ */
 var csv$2 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return csvParse(str, parserOptions.map);
@@ -9475,6 +9480,18 @@ function discernParser(fileName, delimiter) {
   return parser;
 }
 
+/**
+ * Test whether a file name has the given extension
+ *
+ * @param {String} fileName The name of the file.
+ * @param {String} extension The extension to test. An empty string will match a file with no extension.
+ * @returns {Boolean} whether The extension matched or not.
+ *
+ * @example
+ * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
+ * console.log(matches) // `true`
+ */
+
 function readSource(source) {
   var results = [];
 
@@ -9901,7 +9918,7 @@ function readDbf(reader, file, cb) {
 
   reader.onload = function (e) {
     openDbf(e.target.result).then(readSource).then(function (results) {
-      return cb(null, _this, results);
+      return cb(null, _this, results, file.name);
     }) // results = array of feature properties
     .catch(function (err) {
       return cb(err.stack);
@@ -9917,20 +9934,10 @@ function readFileUtf(reader, file, cb) {
   var parser = discernParser(file.name);
   reader.onload = function (e) {
     var json = parser(e.target.result);
-    cb(null, _this2, json);
+    cb(null, _this2, json, file.name);
   };
 
   reader.readAsBinaryString(file);
-}
-
-function readDroppedFile$1(str, delimiter, cb) {
-  try {
-    var parser = discernParser(null, delimiter);
-    var json = parser(str);
-    cb(null, this, json);
-  } catch (err) {
-    cb(err);
-  }
 }
 
 /* --------------------------------------------
@@ -9952,6 +9959,19 @@ function getParentByClass(el, klass) {
   }
 
   return test ? element : null;
+}
+
+function readPastedFile(str, delimiter, cb) {
+  var side = select(getParentByClass(this, 'sbs-single')).attr('data-side');
+  var fileName = side + '-data';
+
+  try {
+    var parser = discernParser(null, delimiter);
+    var json = parser(str);
+    cb(null, this, json, fileName);
+  } catch (err) {
+    cb(err);
+  }
 }
 
 function commonjsRequire$1 () {
@@ -15118,9 +15138,7 @@ pasteContainers.select('button').on('click', function () {
 
   var pastedValue = pasteContainer.select('textarea').node().value;
 
-  console.log(delimiter);
-
-  readDroppedFile$1.call(this, pastedValue, delimiter, initDatasetView);
+  readPastedFile.call(this, pastedValue, delimiter, initDatasetView);
 });
 
 selectAll('.upload-input').on('change', function () {
@@ -15146,17 +15164,18 @@ select('#load-example').on('click', function (d) {
     var el = select(this).select('.upload-input').node();
     var json = datasets[this.dataset.side];
     statusTable.call(el);
-    bakeTable(el, json, dispatch$$1);
+    bakeTable(el, json, dispatch$$1, 'example-' + this.dataset.side + '.csv');
   });
   dispatch$$1.call('change-title', null, 'did-bake-table');
 });
 
-function initDatasetView(err, el, json) {
+function initDatasetView(err, el, json, fileName) {
   if (err) {
     console.error(err);
   } else {
+    console.log('filename', fileName);
     statusTable.call(el);
-    bakeTable(el, json, dispatch$$1);
+    bakeTable(el, json, dispatch$$1, fileName);
     dispatch$$1.call('change-title', null, 'did-bake-table');
   }
 }

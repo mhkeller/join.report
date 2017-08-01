@@ -19,7 +19,7 @@ function readDbf (reader, file, cb) {
   reader.onload = (e) => {
     openDbf(e.target.result)
       .then(readSource)
-      .then(results => cb(null, this, results)) // results = array of feature properties
+      .then(results => cb(null, this, results, file.name)) // results = array of feature properties
       .catch(err => cb(err.stack))
   }
 
@@ -30,7 +30,7 @@ function readFileUtf (reader, file, cb) {
   var parser = discernParser(file.name)
   reader.onload = (e) => {
     var json = parser(e.target.result)
-    cb(null, this, json)
+    cb(null, this, json, file.name)
   }
 
   reader.readAsBinaryString(file)

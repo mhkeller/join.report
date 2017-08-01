@@ -617,7 +617,6 @@ nav {
 .sbs-single[data-status="paste-ready"] textarea {
   display: block;
   height: 80%;
-  border: 1px solid #66baff;
 }
 .sbs-single[data-status="paste-ready"] textarea:focus {
   outline: 2px solid #66baff;

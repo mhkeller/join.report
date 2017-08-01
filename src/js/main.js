@@ -65,8 +65,6 @@ pasteContainers
     var pastedValue = pasteContainer
       .select('textarea').node().value
 
-    console.log(delimiter)
-
     readPastedFile.call(this, pastedValue, delimiter, initDatasetView)
   })
 
@@ -102,17 +100,18 @@ select('#load-example')
         let el = select(this).select('.upload-input').node()
         let json = exampleData[this.dataset.side]
         statusTable.call(el)
-        bakeTable(el, json, dispatch)
+        bakeTable(el, json, dispatch, 'example-' + this.dataset.side + '.csv')
       })
     dispatch.call('change-title', null, 'did-bake-table')
   })
 
-function initDatasetView (err, el, json) {
+function initDatasetView (err, el, json, fileName) {
   if (err) {
     console.error(err)
   } else {
+    console.log('filename', fileName)
     statusTable.call(el)
-    bakeTable(el, json, dispatch)
+    bakeTable(el, json, dispatch, fileName)
     dispatch.call('change-title', null, 'did-bake-table')
   }
 }
