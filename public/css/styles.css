@@ -355,11 +355,7 @@ nav {
   width: 94%;
   max-width: 1160px;
   min-height: 125px;
-}
-@media only screen and (max-width: 750px) {
-  #instructions {
-    margin-bottom: 50px;
-  }
+  margin-bottom: 50px;
 }
 #instructions h2 {
   font-size: 24px;
@@ -690,8 +686,8 @@ nav {
   background-color: #ff0;
   color: #000;
   padding: 0 3px;
-  -ms-transform: translate(-50%, -130%);
-      transform: translate(-50%, -130%);
+  -ms-transform: translate(-50%, -270%);
+      transform: translate(-50%, -270%);
 }
 .pick-column[data-col-selected='true'] {
   display: none;
@@ -699,15 +695,9 @@ nav {
 .pick-column:before {
   content: 'pick a column to join on';
 }
-@media only screen and (max-width: 745px) {
+@media only screen and (max-width: 400px) {
   .pick-column:before {
     content: 'pick a column';
-  }
-}
-@media only screen and (max-width: 615px) {
-  .pick-column {
-    -ms-transform: translate(-50%, -270%);
-        transform: translate(-50%, -270%);
   }
 }
 .table-container {
