@@ -109,7 +109,6 @@ function initDatasetView (err, el, json, fileName) {
   if (err) {
     console.error(err)
   } else {
-    console.log('filename', fileName)
     statusTable.call(el)
     bakeTable(el, json, dispatch, fileName)
     dispatch.call('change-title', null, 'did-bake-table')

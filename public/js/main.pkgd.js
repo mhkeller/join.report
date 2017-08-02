@@ -9963,7 +9963,7 @@ function getParentByClass(el, klass) {
 
 function readPastedFile(str, delimiter, cb) {
   var side = select(getParentByClass(this, 'sbs-single')).attr('data-side');
-  var fileName = side + '-data';
+  var fileName = side;
 
   try {
     var parser = discernParser(null, delimiter);
@@ -10257,7 +10257,6 @@ var formats = [{
 }];
 
 /* globals Blob */
-
 function downloadData(tableGroup) {
   return function (d) {
     var formattedData = d.format(tableGroup.selectAll('.table-row').data().filter(function (d) {
@@ -10275,9 +10274,13 @@ function downloadData(tableGroup) {
       uri = 'data:text/csv;charset=utf-8,' + escape(formattedData);
     }
 
+    console.log(tableGroup);
+
+    var fileName = tableGroup.attr('data-filename');
+
     var downloadLink = document.createElement('a');
     downloadLink.href = uri;
-    downloadLink.download = 'data.' + d.name;
+    downloadLink.download = fileName + '.' + d.name;
 
     document.body.appendChild(downloadLink);
     downloadLink.click();
@@ -10403,7 +10406,7 @@ function endContentEditable(tbodySel, skipSave) {
   tbodySel.selectAll('td').attr('contentEditable', null);
 }
 
-function bakeTable(el, json, dispatch) {
+function bakeTable(el, json, dispatch, fileName) {
   disp = dispatch;
   var sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : getParentByClass(el, 'sbs-single'));
   var sbsId = sbsContainer.attr('id');
@@ -10414,6 +10417,8 @@ function bakeTable(el, json, dispatch) {
   }
 
   select('.gutter-swap').classed('hidden', false);
+
+  sbsContainer.attr('data-filename', fileName);
 
   var tableGroup = sbsContainer.append('div').classed('table-group', true);
   // .datum(json)
@@ -15055,6 +15060,20 @@ function join(dispatch) {
   }
 }
 
+/* --------------------------------------------
+ * Browser-implementations of some NodeJS path module functions, adapted from Rich Harris, https://github.com/rollup/rollup/blob/master/browser/path.js
+ */
+
+function basename(path) {
+  return path.split(/(\/|\\)/).pop();
+}
+
+function extname$1(path) {
+  var match = /\.[^.]+$/.exec(basename(path));
+  if (!match) return '';
+  return match[0];
+}
+
 var statusResult = sbsStatusChange('result');
 
 function didJoin(dispatch) {
@@ -15066,10 +15085,19 @@ function didJoin(dispatch) {
 
     var el = select('.sbs-single[data-side="result"]').attr('data-dirty', null).node();
 
-    statusResult.call(el);
-    bakeTable(el, joinResult.data, dispatch);
+    var existingSbsSingles = selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]');
 
-    selectAll('.sbs-single[data-side="left"],.sbs-single[data-side="right"]').attr('data-has-joined', true);
+    var combinedFileName = [];
+    existingSbsSingles.each(function () {
+      var fileName = select(this).attr('data-filename');
+      var ext = extname$1(fileName);
+      combinedFileName.push(fileName.replace(new RegExp(ext + '$'), ''));
+    });
+
+    statusResult.call(el);
+    bakeTable(el, joinResult.data, dispatch, combinedFileName.join('_'));
+
+    existingSbsSingles.attr('data-has-joined', true);
   }
 }
 
@@ -15173,7 +15201,6 @@ function initDatasetView(err, el, json, fileName) {
   if (err) {
     console.error(err);
   } else {
-    console.log('filename', fileName);
     statusTable.call(el);
     bakeTable(el, json, dispatch$$1, fileName);
     dispatch$$1.call('change-title', null, 'did-bake-table');

@@ -1,4 +1,6 @@
 /* globals Blob */
+import {default as parent} from './utils/getParentByClass'
+import {select} from 'd3-selection'
 
 export default function downloadData (tableGroup) {
   return function (d) {
@@ -15,9 +17,13 @@ export default function downloadData (tableGroup) {
       uri = 'data:text/csv;charset=utf-8,' + escape(formattedData)
     }
 
+    console.log(tableGroup)
+
+    var fileName = tableGroup.attr('data-filename')
+
     let downloadLink = document.createElement('a')
     downloadLink.href = uri
-    downloadLink.download = 'data.' + d.name
+    downloadLink.download = fileName + '.' + d.name
 
     document.body.appendChild(downloadLink)
     downloadLink.click()

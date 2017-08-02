@@ -4,7 +4,7 @@ import {select} from 'd3-selection'
 
 export default function readPastedFile (str, delimiter, cb) {
   var side = select(parent(this, 'sbs-single')).attr('data-side')
-  var fileName = side + '-data'
+  var fileName = side
 
   try {
     let parser = discernParser(null, delimiter)

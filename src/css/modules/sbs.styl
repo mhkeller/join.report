@@ -25,6 +25,7 @@ $border-blue = #66baff
     border 1px solid #ccc
   &[data-status="empty"]
     display none
+  &[data-status="result"],
   &[data-status="table"]
     &:after
       position absolute
@@ -32,7 +33,7 @@ $border-blue = #66baff
       color #aaa
       left -2px
       font-size 12px
-      letter-spacing 1px
+      // letter-spacing 1px
       background-color #fff
       border 1px solid #ccc
       padding 4px
@@ -40,10 +41,13 @@ $border-blue = #66baff
       transform translate(1px, -100%)
     &[data-side="left"]
       &:after
-        content 'existing data'
+        content 'existing data (' attr(data-filename) ')'
     &[data-side="right"]
       &:after
-        content 'data to join'
+        content 'data to join (' attr(data-filename) ')'
+    &[data-side="result"]
+      &:after
+        content 'result (' attr(data-filename) ')'
   &[data-status="result"]
     order 0
     width 100%

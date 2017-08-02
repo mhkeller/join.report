@@ -41,7 +41,7 @@ function endContentEditable (tbodySel, skipSave) {
   tbodySel.selectAll('td').attr('contentEditable', null)
 }
 
-export default function bakeTable (el, json, dispatch) {
+export default function bakeTable (el, json, dispatch, fileName) {
   disp = dispatch
   let sbsContainer = select(el.className.indexOf('sbs-single') > -1 ? el : parent(el, 'sbs-single'))
   let sbsId = sbsContainer.attr('id')
@@ -52,6 +52,8 @@ export default function bakeTable (el, json, dispatch) {
   }
 
   select('.gutter-swap').classed('hidden', false)
+
+  sbsContainer.attr('data-filename', fileName)
 
   let tableGroup = sbsContainer.append('div')
     .classed('table-group', true)
