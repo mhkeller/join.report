@@ -1,15 +1,14 @@
 {
-  "rootUrl": "http://site.com",
-  "slug": "project-slug",
+  "rootUrl": "http://mhkeller.github.io/join.report",
+  "slug": "join.report",
   "title": "join.report",
-  "seoTitle": "Search engine title",
-  "fbTitle": "Facebook title",
-  "seoDek": "Search engine dek",
-  "fbDek": "Facebook dek",
-  "seoKeywords": "Search engine keywords",
-  "twText": "Twitter text",
-  "fbImg": "project-slug-facebook.png",
-  "twImg": "project-slug-twitter.png",
-  "twHandle": "@site-handle",
-  "storyCopy": "<[~ helpers.import('src/html/story-copy.aml') ]>"
+  "seoTitle": "join.report | join datasets in the browser",
+  "fbTitle": "join.report | join datasets in the browser",
+  "seoDek": "Upload or paste data in a variety of formats to join them.",
+  "fbDek": "Upload or paste data in a variety of formats to join them.",
+  "seoKeywords": "join report, join.report, sql join, joiner, data join, left join, join, data",
+  "twText": "Easily join data in the browser",
+  "fbImg": "comma.png",
+  "twImg": "comma.png",
+  "twHandle": "@mhkeller"
 }
