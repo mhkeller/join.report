@@ -10,7 +10,7 @@ import {dispatch as Dispatch} from 'd3-dispatch'
 
 import readDroppedFile from './modules/readDroppedFile'
 import readPastedFile from './modules/readPastedFile'
-import bakeTable from './modules/bakeTable'
+// import bakeTable from './modules/bakeTable'
 
 import sbsStatusChange from './modules/sbsStatusChange'
 import titleSequence from './modules/titleSequence'
@@ -20,13 +20,14 @@ import didJoin from './modules/didJoin'
 import setDirty from './modules/setDirty'
 import gutterSwap from './modules/gutterSwap'
 import exampleData from './modules/exampleData'
+import test from './modules/test'
 import {default as parent} from './modules/utils/getParentByClass'
 
 const statusUploadReady = sbsStatusChange('upload-ready')
 const statusOver = sbsStatusChange('dragover')
 const statusDrop = sbsStatusChange('drop')
 const statusTable = sbsStatusChange('table')
-
+// var x = 'hey'
 const dispatch = Dispatch(
   'col-selected',
   'join',
