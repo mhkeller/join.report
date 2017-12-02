@@ -7,7 +7,7 @@ join.report
 
 A browser-utility for performing sql-like joins on datasets. It supports reading and writing of  csv, tsv, psv, *json and dbf data files.
 
-![](screenshots/landing.png)
+![](screenshots/join.report.gif)
 
 ## FAQ
 
