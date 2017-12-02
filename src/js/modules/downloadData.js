@@ -17,7 +17,7 @@ export default function downloadData (tableGroup) {
       uri = 'data:text/csv;charset=utf-8,' + escape(formattedData)
     }
 
-    console.log(tableGroup)
+    // console.log(tableGroup)
 
     var fileName = tableGroup.attr('data-filename')
 
