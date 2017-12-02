@@ -1,11 +1,15 @@
 join.report
 ===========
 
-> Join data and get a report back of how well it went. A [csv soundsystem](csv.nyc) project.
+> Join data and get a report back of how well it went: http://join.report
 
 ## About
 
 A browser-utility for performing sql-like joins on datasets. It supports reading and writing of  csv, tsv, psv, *json and dbf data files.
+
+**Note**: No data leaves your computer. All work is done locally in your browser.
+
+A [csv soundsystem](csv.nyc) project.
 
 ![](screenshots/join.report.gif)
 
@@ -17,7 +21,11 @@ You can do joins in any number of languages and environments. I wanted something
 
 The command-line and NodeJS utility, [joiner](https://github.com/mhkeller/joiner), does the joining and diff reporting. This site provides the nice web interface.
 
-### Can I edit the data once I upload it?
+### Is my data sent to a server?
+
+No. All your data remains locally on your computer. The processing is handled 100 percent on your machine.
+
+### Can I edit the data once I add it?
 
 Yes! You can click into a cell to edit the value directly or click the X to the right to exclude an entire row. If you exclude a row by mistake, click on the arrow that appears in its place to undo.
 
