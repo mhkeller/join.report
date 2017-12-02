@@ -1,7 +1,7 @@
 join.report
 ===========
 
-> Join data and get a report back of how well it went
+> Join data and get a report back of how well it went. A [csv soundsystem](csv.nyc) project.
 
 ## About
 
