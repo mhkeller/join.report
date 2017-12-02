@@ -11,11 +11,11 @@
   </section>
 
   <section id="sbs-group-0" class="sbs-group">
-    <[ const idSlug = helpers.io.readDataSync('src/js/modules/utils/idSlug.json').slug ]>
+    <[ const idSlug = h.io.readDataSync('src/js/modules/utils/idSlug.json').slug ]>
     <[ const instances = [{status: 'upload-ready', side: 'left'}, {status: 'upload-ready', side: 'right'}, {status: 'empty', side: 'result'}] ]>
     <[ instances.forEach(d => { ]>
-      <[ d.uid = idSlug + helpers._.uniqueId() ]>
-      <[= helpers.readTemplate('src/html/_partials/sbs-single.partial.html', d)]>
+      <[ d.uid = idSlug + h._.uniqueId() ]>
+      <[= h.readTemplate('src/html/_partials/sbs-single.partial.html', d)]>
     <[ }) ]>
   </section>
 

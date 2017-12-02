@@ -1,6 +1,6 @@
 /* globals Blob */
-import {default as parent} from './utils/getParentByClass'
-import {select} from 'd3-selection'
+// import {default as parent} from './utils/getParentByClass'
+// import {select} from 'd3-selection'
 
 export default function downloadData (tableGroup) {
   return function (d) {

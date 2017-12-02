@@ -1,0 +1,84 @@
+{
+  "name": "join.report",
+  "version": "1.0.0",
+  "description": "join datasets in the browser.",
+  "scripts": {
+    "test": "standard --fix",
+    "predev": "npm run build --silent",
+    "dev:js": "node build/tasks/rollup/init-watch.js & node build/tasks/rollup/watch-for-new.js",
+    "dev:css": "node build/tasks/stylus/watch.js",
+    "dev:html": "node build/tasks/html/watch.js",
+    "dev:server": "node build/tasks/browserSync/cli.js",
+    "dev:statics": "node build/tasks/statics/watch.js",
+    "build:js": "node build/tasks/rollup/cli.js",
+    "build:css": "node build/tasks/stylus/cli.js",
+    "build:css-dev": "npm run build:css --silent -- -m true -c false",
+    "build:html": "node ./build/tasks/html/cli.js",
+    "build:statics": "node ./build/tasks/statics/cli.js",
+    "build-view": "npm run build --silent && npm run view --silent",
+    "view": "npm run dev:server",
+    "build": "npm run build:statics --silent && npm run build:js --silent && npm run build:css --silent && npm run build:html --silent",
+    "dev": "npm run dev:js --silent & npm run dev:html --silent & npm run dev:css --silent & npm run dev:statics --silent",
+    "publish": "git subtree push --prefix public origin gh-pages"
+  },
+  "keywords": [
+    "join data",
+    "sql join",
+    "left join"
+  ],
+  "author": "Michael Keller",
+  "license": "MIT",
+  "devDependencies": {
+    "archieml": "^0.3.1",
+    "autoprefixer-stylus": "^0.9.4",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.11.2",
+    "chalk": "^1.1.1",
+    "chokidar": "^1.4.3",
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "fs-extra": "^0.26.7",
+    "glob": "^7.0.5",
+    "indian-ocean": "^3.0.2",
+    "mkdirp": "^0.5.1",
+    "node-sass": "^4.6.1",
+    "queue-async": "^1.2.1",
+    "rimraf": "^2.5.2",
+    "rollup": "^0.52.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "rupture": "^0.6.1",
+    "semistandard": "^11.0.0",
+    "stylus": "<1.0.0",
+    "underscore": "^1.8.3",
+    "underscore-template-pipe": "^1.0.0",
+    "wsk": "^1.0.0",
+    "yargs": "^3.32.0"
+  },
+  "engines": {
+    "node": "^4.4.3"
+  },
+  "dependencies": {
+    "d3-dispatch": "^1.0.3",
+    "d3-selection": "^1.1.0",
+    "joiner": "github:mhkeller/joiner#7b348aa7940167004a4d6cbf1ecce9ee031a5226",
+    "shapefile": "^0.6.6"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhkeller/join.report.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mhkeller/join.report/issues"
+  },
+  "homepage": "https://github.com/mhkeller/join.report#readme"
+}

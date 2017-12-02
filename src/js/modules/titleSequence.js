@@ -32,8 +32,8 @@ export default function titleSequence (dispatch) {
 
         var joinStrategy = joinStratsContainer.selectAll('.join-strategy').data(joinStrategies).enter()
           .append('div')
-            .classed('join-strategy', true)
-            .attr('data-disabled', d => d.disabled)
+          .classed('join-strategy', true)
+          .attr('data-disabled', d => d.disabled)
 
         joinStrategy.append('input')
           .attr('type', 'radio')
@@ -58,10 +58,10 @@ export default function titleSequence (dispatch) {
 
         joinStrategyDescsContainer.selectAll('.join-strategy-desc').data(joinStrategies).enter()
           .append('p')
-            .classed('join-strategy-desc', true)
-            .classed('active', d => d.checked)
-            .attr('data-which', d => 'join-strategy_' + d.which)
-            .html(d => '<span class="bold">Description:</span> ' + d.desc)
+          .classed('join-strategy-desc', true)
+          .classed('active', d => d.checked)
+          .attr('data-which', d => 'join-strategy_' + d.which)
+          .html(d => '<span class="bold">Description:</span> ' + d.desc)
 
         joinStratsContainer.append('div')
           .classed('coming-soon', true)
@@ -107,6 +107,7 @@ export default function titleSequence (dispatch) {
       inst.append('h2')
         .html('Join finished!')
 
+      console.log(this.report)
       inst.append('p')
         .classed('inst-el', true)
         .html('<span class="bold">Match status:</span> ' + styleMatchStatus(this.report.matchStatus))
@@ -153,9 +154,9 @@ export default function titleSequence (dispatch) {
         .classed('inst-el', true)
         .attr('data-which', 'prose-full')
         .html(this.report.prose.full
-            .replace(/(A|B) not/g, a => '<span class="line-break"></span>' + a)
-            .replace(/(Matches in A and B:|B not in A:|A not in B:)/g, a => '<span class="bold">' + a + '</span>')
-            )
+          .replace(/(A|B) not/g, a => '<span class="line-break"></span>' + a)
+          .replace(/(Matches in A and B:|B not in A:|A not in B:)/g, a => '<span class="bold">' + a + '</span>')
+        )
     }
   }
 }
