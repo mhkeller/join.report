@@ -65,7 +65,7 @@ export default function titleSequence (dispatch) {
 
         joinStratsContainer.append('div')
           .classed('coming-soon', true)
-          .html('<a href="https://github.com/mhkeller/joiner/issues" target="_blank" rel="noopener">Contribute a join strategy</a>!')
+          .html('<a href="https://github.com/mhkeller/joiner/issues/10" target="_blank" rel="noopener">Contribute a join strategy</a>!')
 
         inst.append('a')
           .attr('class', 'button button-primary')
