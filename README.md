@@ -1,7 +1,7 @@
 join.report
 ===========
 
-> Join data and get a report back of how well it went: http://join.report
+> Join data and get a report back of how well it went: http://mhkeller.github.io/join.report
 
 ## About
 
